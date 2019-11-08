@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <MenuBar layoutY="-1.0" prefHeight="30.0" prefWidth="1100.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="메뉴">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="닫기" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="문의">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="의견 보내기" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <TabPane layoutY="29.0" prefHeight="774.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="제품조회">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TreeView layoutX="14.0" layoutY="14.0" prefHeight="715.0" prefWidth="252.0" />
+                        <GridPane gridLinesVisible="true" layoutX="282.0" layoutY="14.0" prefHeight="650.0" prefWidth="803.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="3" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                           </children>
+                        </GridPane>
+                        <Button layoutX="562.0" layoutY="685.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="이전" />
+                        <Button layoutX="707.0" layoutY="685.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="다음" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="주문하기">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="60.0" layoutY="136.0" text="주문번호">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="142.0" layoutY="134.0" prefHeight="23.0" prefWidth="169.0" />
+                        <Label layoutX="106.0" layoutY="44.0" text="[주문하기]">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="67.0" layoutY="203.0" text="고객ID">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="142.0" layoutY="201.0" prefHeight="23.0" prefWidth="169.0" />
+                        <Label layoutX="67.0" layoutY="266.0" text="고객명">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="142.0" layoutY="264.0" prefHeight="23.0" prefWidth="169.0" />
+                        <Label layoutX="42.0" layoutY="332.0" text="고객 전화번호">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="142.0" layoutY="330.0" prefHeight="23.0" prefWidth="169.0" />
+                        <Label layoutX="57.0" layoutY="401.0" text="고객 주소">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="142.0" layoutY="399.0" prefHeight="23.0" prefWidth="169.0" />
+                        <Label layoutX="45.0" layoutY="464.0" text="고객 이메일">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="138.0" layoutY="462.0" prefHeight="23.0" prefWidth="169.0" />
+                        <Label layoutX="350.0" layoutY="44.0" text="CPU">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="403.0" layoutY="42.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Label layoutX="60.0" layoutY="419.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Spinner layoutX="624.0" layoutY="42.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Label layoutX="725.0" layoutY="44.0" text="케이스">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="778.0" layoutY="42.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Spinner layoutX="999.0" layoutY="42.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Label layoutX="725.0" layoutY="117.0" text="쿨러">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="778.0" layoutY="115.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Spinner layoutX="999.0" layoutY="115.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Label layoutX="350.0" layoutY="119.0" text="RAM">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="403.0" layoutY="117.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Spinner layoutX="624.0" layoutY="117.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Label layoutX="350.0" layoutY="191.0" text="MB">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="403.0" layoutY="189.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Spinner layoutX="624.0" layoutY="189.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Label layoutX="728.0" layoutY="191.0" text="SW">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="781.0" layoutY="189.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Spinner layoutX="1002.0" layoutY="189.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Label layoutX="725.0" layoutY="268.0" text="키보드">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="778.0" layoutY="266.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Spinner layoutX="999.0" layoutY="266.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Label layoutX="350.0" layoutY="268.0" text="GPU">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="403.0" layoutY="266.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Spinner layoutX="624.0" layoutY="266.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Label layoutX="350.0" layoutY="345.0" text="SSD">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="403.0" layoutY="343.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Spinner layoutX="624.0" layoutY="343.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Label layoutX="725.0" layoutY="345.0" text="마우스">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="778.0" layoutY="343.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Spinner layoutX="999.0" layoutY="343.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Label layoutX="725.0" layoutY="421.0" text="스피커">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="778.0" layoutY="419.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Spinner layoutX="999.0" layoutY="419.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Label layoutX="350.0" layoutY="421.0" text="HDD">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="403.0" layoutY="419.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Spinner layoutX="624.0" layoutY="419.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Label layoutX="350.0" layoutY="501.0" text="파워">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="403.0" layoutY="499.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Spinner layoutX="624.0" layoutY="499.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Label layoutX="725.0" layoutY="501.0" text="모니터">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="778.0" layoutY="499.0" prefHeight="23.0" prefWidth="221.0" />
+                        <Spinner layoutX="999.0" layoutY="499.0" prefHeight="23.0" prefWidth="59.0" />
+                        <Separator layoutX="327.0" layoutY="26.0" orientation="VERTICAL" prefHeight="680.0" />
+                        <Label layoutX="723.0" layoutY="649.0" text="총 주문 금액">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="860.0" layoutY="642.0" prefHeight="38.0" prefWidth="194.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </TextField>
+                        <TextField layoutX="403.0" layoutY="69.0" />
+                        <TextField layoutX="403.0" layoutY="148.0" />
+                        <TextField layoutX="403.0" layoutY="215.0" />
+                        <TextField layoutX="403.0" layoutY="294.0" />
+                        <TextField layoutX="403.0" layoutY="373.0" />
+                        <TextField layoutX="403.0" layoutY="450.0" />
+                        <TextField layoutX="778.0" layoutY="450.0" />
+                        <TextField layoutX="778.0" layoutY="529.0" />
+                        <TextField layoutX="403.0" layoutY="529.0" />
+                        <TextField layoutX="778.0" layoutY="373.0" />
+                        <TextField layoutX="778.0" layoutY="294.0" />
+                        <TextField layoutX="781.0" layoutY="215.0" />
+                        <TextField layoutX="778.0" layoutY="148.0" />
+                        <TextField layoutX="778.0" layoutY="69.0" />
+                        <Button layoutX="122.0" layoutY="552.0" mnemonicParsing="false" text="주문신청">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
