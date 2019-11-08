@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane layoutY="27.0" prefHeight="773.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="재고관리">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="384.0" layoutY="114.0" prefHeight="558.0" prefWidth="653.0">
+                          <columns>
+                            <TableColumn prefWidth="98.0" text="제품구분" />
+                            <TableColumn prefWidth="109.0" text="제품번호" />
+                              <TableColumn prefWidth="191.0" text="제품명" />
+                              <TableColumn prefWidth="122.0" text="제품수량" />
+                              <TableColumn prefWidth="132.0" text="단가" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="65.0" layoutY="133.0" text="제품번호">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="73.0" layoutY="248.0" text="제품명">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="67.0" layoutY="305.0" text="제품수량">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="79.0" layoutY="464.0" text="크기">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="64.0" layoutY="191.0" text="제품구분">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="141.0" layoutY="131.0" prefHeight="23.0" prefWidth="169.0" />
+                        <TextField layoutX="143.0" layoutY="246.0" prefHeight="23.0" prefWidth="169.0" />
+                        <TextField layoutX="143.0" layoutY="303.0" prefHeight="23.0" prefWidth="169.0" />
+                        <TextField layoutX="143.0" layoutY="462.0" prefHeight="23.0" prefWidth="169.0" />
+                        <ComboBox layoutX="141.0" layoutY="189.0" prefHeight="23.0" prefWidth="168.0" />
+                        <TextField layoutX="509.0" layoutY="79.0" prefHeight="23.0" prefWidth="283.0" />
+                        <Button layoutX="788.0" layoutY="79.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="55.0" text="검색" />
+                        <ComboBox layoutX="384.0" layoutY="79.0" prefHeight="23.0" prefWidth="127.0" promptText="검색 구분" />
+                        <Label layoutX="79.0" layoutY="362.0" text="단가">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="143.0" layoutY="360.0" prefHeight="23.0" prefWidth="169.0" />
+                        <Label layoutX="65.0" layoutY="525.0" text="보증기간">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="144.0" layoutY="523.0" prefHeight="23.0" prefWidth="169.0" />
+                        <Label layoutX="73.0" layoutY="589.0" text="출시일">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="144.0" layoutY="587.0" prefHeight="23.0" prefWidth="169.0" />
+                        <Label layoutX="127.0" layoutY="43.0" text="[재고 현황]">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="매출관리">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="848.0" layoutY="28.0" text="[월 매출액]">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <BarChart layoutX="681.0" layoutY="53.0" prefHeight="304.0" prefWidth="377.0">
+                           <xAxis>
+                              <CategoryAxis label="주차" side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis label="매출금액" side="LEFT" />
+                           </yAxis>
+                        </BarChart>
+                        <LineChart layoutX="691.0" layoutY="406.0" prefHeight="292.0" prefWidth="363.0">
+                           <xAxis>
+                              <CategoryAxis label="월" side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis label="매출금액" side="LEFT" />
+                           </yAxis>
+                        </LineChart>
+                        <Label layoutX="848.0" layoutY="381.0" text="[연 매출액]">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <PieChart layoutX="374.0" layoutY="81.0" prefHeight="211.0" prefWidth="247.0" />
+                        <Label layoutX="434.0" layoutY="41.0" text="[월 매출 분포]">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="157.0" layoutY="41.0" text="[월 판매량]">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <BarChart layoutX="55.0" layoutY="67.0" prefHeight="238.0" prefWidth="279.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </BarChart>
+                        <Label layoutX="68.0" layoutY="357.0" text="[부품별 월 매출 순위]">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <TableView layoutX="64.0" layoutY="394.0" prefHeight="272.0" prefWidth="556.0">
+                          <columns>
+                            <TableColumn prefWidth="99.0" text="제품구분" />
+                            <TableColumn prefWidth="185.0" text="제품명" />
+                              <TableColumn prefWidth="93.0" text="판매수량" />
+                              <TableColumn text="단가" />
+                              <TableColumn prefWidth="98.0" text="매출액" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+          <Tab text="고객관리">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="389.0" layoutY="113.0" prefHeight="557.0" prefWidth="656.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="고객번호" />
+                            <TableColumn prefWidth="72.0" text="고객명" />
+                              <TableColumn prefWidth="75.0" text="고객ID" />
+                              <TableColumn prefWidth="75.0" text="고객PW" />
+                              <TableColumn prefWidth="108.0" text="고객 전화번호" />
+                              <TableColumn prefWidth="82.0" text="고객 주소" />
+                              <TableColumn prefWidth="94.0" text="고객 생년월일" />
+                              <TableColumn prefWidth="74.0" text="고객 이메일" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="127.0" layoutY="42.0" text="[고객 정보]">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="63.0" layoutY="120.0" text="고객번호">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="158.0" layoutY="120.0" prefHeight="23.0" prefWidth="172.0" />
+                        <Label layoutX="67.0" layoutY="177.0" text="고객명">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="154.0" layoutY="177.0" prefHeight="23.0" prefWidth="172.0" />
+                        <Label layoutX="67.0" layoutY="238.0" text="고객ID">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="155.0" layoutY="238.0" prefHeight="23.0" prefWidth="172.0" />
+                        <Label layoutX="64.0" layoutY="294.0" text="고객PW">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="155.0" layoutY="294.0" prefHeight="23.0" prefWidth="172.0" />
+                        <Label layoutX="45.0" layoutY="352.0" text="고객 전화번호">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="154.0" layoutY="352.0" prefHeight="23.0" prefWidth="172.0" />
+                        <Label layoutX="56.0" layoutY="411.0" text="고객 주소">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="154.0" layoutY="411.0" prefHeight="23.0" prefWidth="172.0" />
+                        <Label layoutX="41.0" layoutY="471.0" text="고객 생년월일">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="154.0" layoutY="471.0" prefHeight="23.0" prefWidth="172.0" />
+                        <Label layoutX="45.0" layoutY="530.0" text="고객 이메일">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="154.0" layoutY="528.0" prefHeight="23.0" prefWidth="172.0" />
+                        <ComboBox layoutX="389.0" layoutY="78.0" prefHeight="23.0" prefWidth="123.0" promptText="검색 기준" />
+                        <TextField layoutX="512.0" layoutY="78.0" prefHeight="23.0" prefWidth="279.0" />
+                        <Button layoutX="791.0" layoutY="78.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="57.0" text="검색" />
+                        <Button layoutX="76.0" layoutY="608.0" mnemonicParsing="false" text="고객 등록" />
+                        <Button layoutX="167.0" layoutY="608.0" mnemonicParsing="false" text="고객 수정" />
+                        <Button layoutX="260.0" layoutY="608.0" mnemonicParsing="false" text="고객 삭제" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="주문관리">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="41.0" layoutY="69.0" prefHeight="197.0" prefWidth="1015.0">
+                          <columns>
+                            <TableColumn prefWidth="88.0" text="고객주문번호" />
+                            <TableColumn prefWidth="62.0" text="고객ID" />
+                              <TableColumn prefWidth="75.0" text="고객명" />
+                              <TableColumn prefWidth="95.0" text="고객 전화번호" />
+                              <TableColumn prefWidth="159.0" text="고객 주소" />
+                              <TableColumn prefWidth="113.0" text="고객 이메일" />
+                              <TableColumn prefWidth="99.0" text="총 주문금액" />
+                              <TableColumn prefWidth="100.0" text="CPU 번호" />
+                              <TableColumn prefWidth="61.0" text="CPU수량" />
+                              <TableColumn prefWidth="99.0" text="RAM번호" />
+                              <TableColumn minWidth="0.0" prefWidth="63.0" text="RAM수량" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="471.0" layoutY="14.0" text="[주문 내역] ">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <TableView layoutX="41.0" layoutY="291.0" prefHeight="199.0" prefWidth="1015.0">
+                           <columns>
+                              <TableColumn prefWidth="89.0" text="고객주문번호" />
+                              <TableColumn prefWidth="78.0" text="MB번호" />
+                              <TableColumn prefWidth="58.0" text="MB수량" />
+                              <TableColumn prefWidth="75.0" text="GPU번호" />
+                              <TableColumn prefWidth="63.0" text="GPU수량" />
+                              <TableColumn prefWidth="78.0" text="SSD번호" />
+                              <TableColumn prefWidth="71.0" text="SSD수량" />
+                              <TableColumn prefWidth="79.0" text="HDD번호" />
+                              <TableColumn prefWidth="74.0" text="HDD수량" />
+                              <TableColumn prefWidth="83.0" text="파워번호" />
+                              <TableColumn prefWidth="86.0" text="파워수량" />
+                              <TableColumn prefWidth="86.0" text="케이스번호" />
+                              <TableColumn prefWidth="94.0" text="케이스수량" />
+                           </columns>
+                        </TableView>
+                        <TableView layoutX="41.0" layoutY="514.0" prefHeight="199.0" prefWidth="1015.0">
+                           <columns>
+                              <TableColumn prefWidth="87.0" text="고객주문번호" />
+                              <TableColumn prefWidth="82.0" text="쿨러번호" />
+                              <TableColumn prefWidth="58.0" text="쿨러수량" />
+                              <TableColumn prefWidth="73.0" text="SW번호" />
+                              <TableColumn prefWidth="64.0" text="SW수량" />
+                              <TableColumn prefWidth="89.0" text="키보드번호" />
+                              <TableColumn prefWidth="71.0" text="키보드수량" />
+                              <TableColumn prefWidth="79.0" text="마우스번호" />
+                              <TableColumn prefWidth="75.0" text="마우스수량" />
+                              <TableColumn prefWidth="98.0" text="스피커번호" />
+                              <TableColumn prefWidth="72.0" text="스피커수량" />
+                              <TableColumn prefWidth="91.0" text="모니터번호" />
+                              <TableColumn prefWidth="75.0" text="모니터수량" />
+                           </columns>
+                        </TableView>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="협력업체 관리">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="386.0" layoutY="35.0" text="[내 협력업체 목록]">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TableView layoutX="386.0" layoutY="334.0" prefHeight="375.0" prefWidth="651.0">
+                           <columns>
+                              <TableColumn prefWidth="91.0" text="도매업체번호" />
+                              <TableColumn prefWidth="84.0" text="도매업체명" />
+                              <TableColumn prefWidth="136.0" text="도매업체 전화번호" />
+                              <TableColumn prefWidth="221.0" text="도매업체 주소" />
+                              <TableColumn prefWidth="116.0" text="비고" />
+                           </columns>
+                        </TableView>
+                        <Label layoutX="386.0" layoutY="305.0" text="[도매업체 목록]">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TableView layoutX="387.0" layoutY="64.0" prefHeight="208.0" prefWidth="650.0">
+                          <columns>
+                            <TableColumn prefWidth="91.0" text="도매업체번호" />
+                            <TableColumn prefWidth="84.0" text="도매업체명" />
+                              <TableColumn prefWidth="136.0" text="도매업체 전화번호" />
+                              <TableColumn prefWidth="221.0" text="도매업체 주소" />
+                              <TableColumn prefWidth="116.0" text="비고" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="85.0" layoutY="27.0" text="[협력업체 정보]">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="49.0" layoutY="109.0" text="도매업체번호" />
+                        <Label layoutX="55.0" layoutY="170.0" text="도매업체명" />
+                        <Label layoutX="55.0" layoutY="233.0" text="도매업체ID" />
+                        <Label layoutX="61.0" layoutY="289.0" text="전화번호" />
+                        <Label layoutX="71.0" layoutY="344.0" text="주소" />
+                        <Label layoutX="71.0" layoutY="636.0" text="비고" />
+                        <Label layoutX="47.0" layoutY="488.0" text="업체 계좌번호" />
+                        <Label layoutX="51.0" layoutY="430.0" text="업체 계좌주" />
+                        <Label layoutX="47.0" layoutY="546.0" text="업체 계좌은행" />
+                        <TextField layoutX="139.0" layoutY="105.0" prefHeight="23.0" prefWidth="184.0" />
+                        <TextField layoutX="139.0" layoutY="166.0" prefHeight="23.0" prefWidth="184.0" />
+                        <TextField layoutX="139.0" layoutY="229.0" prefHeight="23.0" prefWidth="184.0" />
+                        <TextField layoutX="139.0" layoutY="285.0" prefHeight="23.0" prefWidth="184.0" />
+                        <TextField layoutX="139.0" layoutY="340.0" prefHeight="23.0" prefWidth="184.0" />
+                        <TextField layoutX="139.0" layoutY="426.0" prefHeight="23.0" prefWidth="184.0" />
+                        <TextField layoutX="139.0" layoutY="484.0" prefHeight="23.0" prefWidth="184.0" />
+                        <TextField layoutX="139.0" layoutY="542.0" prefHeight="23.0" prefWidth="184.0" />
+                        <TextField layoutX="139.0" layoutY="632.0" prefHeight="23.0" prefWidth="184.0" />
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="거래 관리">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="106.0" layoutY="311.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="133.0" text="발주 신청">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Button>
+                        <TableView layoutX="322.0" layoutY="78.0" prefHeight="304.0" prefWidth="724.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="발주번호" />
+                            <TableColumn prefWidth="86.0" text="도매업체번호" />
+                              <TableColumn prefWidth="87.0" text="제품번호" />
+                              <TableColumn prefWidth="148.0" text="제품명" />
+                              <TableColumn prefWidth="79.0" text="제품수량" />
+                              <TableColumn prefWidth="70.0" text="단가" />
+                              <TableColumn prefWidth="104.0" text="금액" />
+                              <TableColumn prefWidth="74.0" text="거래상태" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="322.0" layoutY="54.0" text="[발주 목록]">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="91.0" layoutY="632.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="164.0" text="명세 내역을 내 메일로 전송" />
+                        <Label layoutX="322.0" layoutY="436.0" text="[전자거래 명세 내역]">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TableView layoutX="322.0" layoutY="461.0" prefHeight="249.0" prefWidth="723.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="거래번호" />
+                              <TableColumn prefWidth="92.0" text="도매업체번호" />
+                              <TableColumn prefWidth="79.0" text="도매업체명" />
+                              <TableColumn prefWidth="64.0" text="계좌주" />
+                              <TableColumn prefWidth="179.0" text="계좌번호" />
+                              <TableColumn prefWidth="84.0" text="은행명" />
+                              <TableColumn prefWidth="149.0" text="총 지불금액" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="55.0" layoutY="246.0" text="총 금액">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="97.0" layoutY="36.0" text="[거래 내역]">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="134.0" layoutY="244.0" prefHeight="23.0" prefWidth="158.0" />
+                        <Label layoutX="59.0" layoutY="493.0" text="거래번호">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="138.0" layoutY="491.0" prefHeight="23.0" prefWidth="158.0" />
+                        <Label layoutX="49.0" layoutY="533.0" text="도매 업체명">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="138.0" layoutY="531.0" prefHeight="23.0" prefWidth="158.0" />
+                        <Label layoutX="64.0" layoutY="574.0" text="총 금액">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="138.0" layoutY="572.0" prefHeight="23.0" prefWidth="158.0" />
+                        <Separator layoutX="48.0" layoutY="414.0" prefWidth="250.0" />
+                        <TableView layoutX="52.0" layoutY="104.0" prefHeight="130.0" prefWidth="242.0">
+                          <columns>
+                            <TableColumn prefWidth="102.99996948242188" text="도매업체번호" />
+                            <TableColumn prefWidth="138.0" text="업체명" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <MenuBar layoutY="-3.0" prefHeight="30.0" prefWidth="1100.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="메뉴">
+            <items>
+              <MenuItem mnemonicParsing="false" text="닫기" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="문의">
+            <items>
+              <MenuItem mnemonicParsing="false" text="의견 보내기" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
