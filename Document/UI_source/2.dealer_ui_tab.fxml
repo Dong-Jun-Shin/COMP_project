@@ -36,67 +36,68 @@
                               <TableColumn prefWidth="132.0" text="단가" />
                           </columns>
                         </TableView>
-                        <Label layoutX="65.0" layoutY="133.0" text="제품번호">
+                        <Label layoutX="67.0" layoutY="116.0" text="제품번호">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="73.0" layoutY="248.0" text="제품명">
+                        <Label layoutX="72.0" layoutY="228.0" text="제품명">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="67.0" layoutY="305.0" text="제품수량">
+                        <Label layoutX="64.0" layoutY="277.0" text="제품수량">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="79.0" layoutY="421.0" text="크기">
+                        <Label layoutX="80.0" layoutY="395.0" text="크기">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="64.0" layoutY="191.0" text="제품구분">
+                        <Label layoutX="65.0" layoutY="163.0" text="제품구분">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="141.0" layoutY="131.0" prefHeight="23.0" prefWidth="169.0" />
-                        <TextField layoutX="143.0" layoutY="246.0" prefHeight="23.0" prefWidth="169.0" />
-                        <TextField layoutX="143.0" layoutY="303.0" prefHeight="23.0" prefWidth="169.0" />
-                        <TextField layoutX="143.0" layoutY="419.0" prefHeight="23.0" prefWidth="169.0" />
-                        <ComboBox layoutX="141.0" layoutY="189.0" prefHeight="23.0" prefWidth="168.0" />
+                        <TextField layoutX="143.0" layoutY="114.0" prefHeight="23.0" prefWidth="169.0" />
+                        <TextField layoutX="144.0" layoutY="226.0" prefHeight="23.0" prefWidth="169.0" />
+                        <TextField layoutX="145.0" layoutY="275.0" prefHeight="23.0" prefWidth="169.0" />
+                        <TextField layoutX="142.0" layoutY="393.0" prefHeight="23.0" prefWidth="169.0" />
+                        <ComboBox layoutX="142.0" layoutY="161.0" prefHeight="23.0" prefWidth="168.0" />
                         <TextField layoutX="509.0" layoutY="79.0" prefHeight="23.0" prefWidth="283.0" />
                         <Button layoutX="788.0" layoutY="79.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="55.0" text="검색" />
                         <ComboBox layoutX="384.0" layoutY="79.0" prefHeight="23.0" prefWidth="127.0" promptText="검색 구분" />
-                        <Label layoutX="79.0" layoutY="362.0" text="단가">
+                        <Label layoutX="81.0" layoutY="324.0" text="단가">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="143.0" layoutY="360.0" prefHeight="23.0" prefWidth="169.0" />
-                        <Label layoutX="65.0" layoutY="482.0" text="보증기간">
+                        <TextField layoutX="144.0" layoutY="322.0" prefHeight="23.0" prefWidth="169.0" />
+                        <Label layoutX="64.0" layoutY="443.0" text="보증기간">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="144.0" layoutY="480.0" prefHeight="23.0" prefWidth="169.0" />
-                        <Label layoutX="73.0" layoutY="546.0" text="출시일">
+                        <TextField layoutX="143.0" layoutY="441.0" prefHeight="23.0" prefWidth="169.0" />
+                        <Label layoutX="73.0" layoutY="491.0" text="출시일">
                            <font>
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="144.0" layoutY="544.0" prefHeight="23.0" prefWidth="169.0" />
+                        <TextField layoutX="144.0" layoutY="489.0" prefHeight="23.0" prefWidth="169.0" />
                         <Label layoutX="127.0" layoutY="43.0" text="[재고 현황]">
                            <font>
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <Button layoutX="265.0" layoutY="619.0" mnemonicParsing="false" text="고객 등록" />
-                        <Button layoutX="265.0" layoutY="619.0" mnemonicParsing="false" text="고객 수정" />
-                        <Button layoutX="265.0" layoutY="619.0" mnemonicParsing="false" text="제품 삭제" />
-                        <Button layoutX="168.0" layoutY="619.0" mnemonicParsing="false" text="제품 수정" />
-                        <Button layoutX="63.0" layoutY="619.0" mnemonicParsing="false" text="제품 등록" />
+                        <Button layoutX="254.0" layoutY="632.0" mnemonicParsing="false" text="제품 삭제" />
+                        <Button layoutX="165.0" layoutY="632.0" mnemonicParsing="false" text="제품 수정" />
+                        <Button layoutX="72.0" layoutY="632.0" mnemonicParsing="false" text="제품 등록" />
+                        <Label layoutX="58.0" layoutY="563.0" prefWidth="76.0" text="이미지 파일명" />
+                        <TextField layoutX="146.0" layoutY="559.0" prefHeight="23.0" prefWidth="169.0" />
+                        <Button layoutX="146.0" layoutY="582.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="169.0" text="찾아보기" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -235,7 +236,7 @@
                            </font>
                         </Label>
                         <TextField layoutX="154.0" layoutY="528.0" prefHeight="23.0" prefWidth="172.0" />
-                        <ComboBox layoutX="389.0" layoutY="78.0" prefHeight="23.0" prefWidth="123.0" promptText="검색 기준" />
+                        <ComboBox layoutX="389.0" layoutY="78.0" prefHeight="23.0" prefWidth="123.0" promptText="검색 구분" />
                         <TextField layoutX="512.0" layoutY="78.0" prefHeight="23.0" prefWidth="279.0" />
                         <Button layoutX="791.0" layoutY="78.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="57.0" text="검색" />
                         <Button layoutX="63.0" layoutY="606.0" mnemonicParsing="false" text="고객 등록" />
@@ -302,6 +303,9 @@
                               <TableColumn prefWidth="75.0" text="모니터수량" />
                            </columns>
                         </TableView>
+                        <Button layoutX="977.0" layoutY="39.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="79.0" text="주문취소" />
+                        <Label layoutX="782.0" layoutY="43.0" text="현재 선택된 주문 : " />
+                        <Label layoutX="885.0" layoutY="40.0" prefHeight="21.0" prefWidth="83.0" text="1911060001" />
                      </children></AnchorPane>
               </content>
             </Tab>
