@@ -1,8 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</BorderPane>
+<VBox alignment="TOP_CENTER" prefHeight="750.0" prefWidth="1100.0"
+	spacing="5.0" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.ManageMyInfoTabController">
+	<padding>
+		<Insets left="10.0" right="10.0" top="30.0" />
+	</padding>
+	<children>
+		<Label text="[내 정보 변경]">
+			<font>
+				<Font size="30.0" />
+			</font>
+			<VBox.margin>
+				<Insets />
+			</VBox.margin>
+			<padding>
+				<Insets bottom="30.0" left="10.0" top="10.0" />
+			</padding>
+		</Label>
+		<VBox alignment="TOP_CENTER" prefHeight="190.0"
+			prefWidth="1080.0" spacing="20.0">
+			<children>
+				<HBox alignment="CENTER" prefHeight="40.0" prefWidth="280.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="업체명" />
+						<TextField fx:id="txtDName" prefWidth="160.0" />
+					</children>
+				</HBox>
+				<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="ID" />
+						<TextField fx:id="txtDId" prefWidth="160.0" />
+					</children>
+				</HBox>
+				<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="PW" />
+						<PasswordField fx:id="pwDPasswd" prefWidth="160.0" />
+					</children>
+				</HBox>
+			</children>
+			<VBox.margin>
+				<Insets />
+			</VBox.margin>
+			<padding>
+				<Insets top="10.0" />
+			</padding>
+		</VBox>
+		<VBox alignment="TOP_CENTER" prefHeight="120.0"
+			prefWidth="1080.0" spacing="20.0">
+			<children>
+				<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="전화번호" />
+						<TextField fx:id="txtDPhone" prefWidth="160.0" />
+					</children>
+				</HBox>
+				<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="주소" />
+						<TextField fx:id="txtDAddress" prefWidth="160.0" />
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+		<VBox alignment="TOP_CENTER" prefHeight="180.0"
+			prefWidth="1080.0" spacing="20.0">
+			<children>
+				<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="계좌주" />
+						<TextField fx:id="txtDBOwner" prefWidth="160.0" />
+					</children>
+				</HBox>
+				<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="계좌번호" />
+						<TextField fx:id="txtDBNum" prefWidth="160.0">
+							<HBox.margin>
+								<Insets />
+							</HBox.margin>
+						</TextField>
+					</children>
+				</HBox>
+				<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="계좌은행" />
+						<TextField fx:id="txtDBName" prefWidth="160.0">
+							<HBox.margin>
+								<Insets />
+							</HBox.margin>
+						</TextField>
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+		<HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0"
+			spacing="20.0">
+			<children>
+				<Button fx:id="btnDUpdate" mnemonicParsing="false"
+					onAction="#btnDUpdate" prefHeight="30.0" prefWidth="100.0"
+					text="수정" />
+			</children>
+		</HBox>
+	</children>
+</VBox>
 

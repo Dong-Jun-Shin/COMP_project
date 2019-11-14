@@ -1,0 +1,278 @@
+﻿--------------[loginMain]
+ToggleGroup groupChoice
+TextField txtLoginId
+PasswordField pwLoginPasswd
+Button btnLogin
+Button btnIdFindPopup
+
+#salesLogin()
+#managerLogin()
+#btnLogin(ActionEvent event)
+#btnIdFindPopup(ActionEvent event)
+
+
+--------------[loginSub]
+ToggleGroup groupSearch
+TextField txtBOwner
+TextField txtBNum
+TextField txtSearchID
+Button btnIdSearch
+
+#idSearch()
+#pwSearch()
+#btnIdSearch(ActionEvent event)
+
+-------------[salesMain]
+TabPane salesMainPane
+Tab watch
+SalesWatchTabController salesWatchTabController
+Tab trade
+SalesTradeTabController salesTradeTabController
+
+
+-------------[salesWatchTab]
+TreeView productTreeView
+ImageView productImageView00
+ImageView productImageView10
+ImageView productImageView20
+ImageView productImageView30
+ImageView productImageView01
+ImageView productImageView11
+ImageView productImageView21
+ImageView productImageView31
+ImageView productImageView02
+ImageView productImageView12
+ImageView productImageView22
+ImageView productImageView32
+ImageView productImageView03
+ImageView productImageView13
+ImageView productImageView23
+ImageView productImageView33
+Button btnLast
+Button btnNext
+
+#imageSel(MouseEvent event)
+#btnPageMove(ActionEvent event)
+
+
+-------------[salesWatchSub]
+TextField txtPNum
+TextField txtPName
+TextField txtPPrice
+TextField txtPSize
+TextField txtPGrt
+TextField txtPDate
+Button btnSelProduct
+
+#btnSelProduct(ActionEvent event)
+
+
+-------------[salesTradeTab]
+TextField txtCDNum
+TextField txtCId
+TextField txtCName
+TextField txtCPhone
+TextField txtCAddress
+TextField txtCEmail
+TextField txtCPName
+TextField txtCPPrice
+TextField txtRName
+TextField txtRPrice
+TextField txtMBName
+TextField txtMBPrice
+TextField txtGName
+TextField txtGPrice
+TextField txtSSName
+TextField txtSSPrice
+TextField txtHName
+TextField txtHPrice
+TextField txtPOName
+TextField txtPOPrice
+TextField txtCAName
+TextField txtCAPrice
+TextField txtCOName
+TextField txtCOPrice
+TextField txtSWName
+TextField txtSWPrice
+TextField txtKName
+TextField txtKPrice
+TextField txtMOName
+TextField txtMOPrice
+TextField txtSPName
+TextField txtSPPrice
+TextField txtMNName
+TextField txtMNPrice
+TextField txtTotalPrice
+Button btnOrderInsert
+Spinner spinCPQty
+Spinner spinRQty
+Spinner spinMBQty
+Spinner spinGQty
+Spinner spinSSQty
+Spinner spinHQty
+Spinner spinPOQty
+Spinner spinCAQty
+Spinner spinCOQty
+Spinner spinSWQty
+Spinner spinKQty
+Spinner spinMOQty
+Spinner spinSPQty
+Spinner spinMNQty
+
+#btnOrderInsert(ActionEvent event)
+
+
+-------------[manageSummary]
+Label lblLoginDate
+Label lblDId
+Label lblDName
+TextArea txtNoticeArea
+Label lblOrderDate
+Label lblOrderCount
+TableView orderSummaryView
+Button btnManageMove
+BarChart mSalesBarChart
+LineChart ySalesLineChart
+
+#orderSummaryView(MouseEvent event)
+#btnManageMove(ActionEvent event)
+
+
+-------------[manageMain]
+TabPane manageMainPane
+Tab stock
+ManageStockTabController manageStockTabController
+Tab result
+ManageResultTabController manageResultTabController
+Tab customer
+ManageCustomerTabController manageCustomerTabController
+Tab order
+ManageOrderTabController manageOrderTabController
+Tab myInfo
+ManageMyInfoTabController manageMyInfoTabController
+Tab trader
+ManageTraderTabController manageTraderTabController
+
+
+-------------[manageStockTab]
+TextField txtPNum
+ComboBox cmbPSort
+TextField txtPName
+TextField txtPQty
+TextField txtPPrice
+TextField txtPSize
+TextField txtPGrt
+TextField txtPDate
+TextField txtPImg
+Button btnImgChoice
+Button btnPInsert
+Button btnPUpdate
+Button btnPDelete
+ComboBox cmbPSearchKey
+TextField txtPSearchValue
+Button btnPSearch
+Button btnWHPopup
+TableView productTableView
+
+#btnImgChoice(ActionEvent event)
+#btnPInsert(ActionEvent event)
+#btnPUpdate(ActionEvent event)
+#btnPDelete(ActionEvent event)
+#btnPSearch(ActionEvent event)
+#btnWHPopup(ActionEvent event)
+#productTableView(MouseEvent event)
+
+-------------[manageStockSub]
+TextField txtWHNum
+TextField txtTRNum
+TextField txtPNum
+TextField txtWHQty
+Button btnWHInsert
+Button btnWHDelete
+TableView whTableView
+
+#btnWHInsert(ActionEvent event)
+#btnWHDelete(ActionEvent event)
+#whTableView(MouseEvent event)
+
+
+-------------[manageResultTab]
+BarChart mOrderBarChart
+PieChart mSalesPieChart
+TableView mComponentRank
+BarChart mSalesBarChart
+LineChart ySalesLineChart
+
+#mComponentRank(MouseEvent event)
+
+
+-------------[manageCustomerTab]
+TextField txtCNum
+TextField txtCName
+TextField txtCId
+PasswordField pwCPasswd
+TextField txtCPhone
+TextField txtCAddress
+TextField txtCBrith
+TextField txtCEmail
+Button btnCInsert
+Button btnCUpdate
+Button btnCDelete
+ComboBox cmbCSearchKey
+TextField txtCSearchValue
+Button btnCSearch
+TableView customerTableView
+
+#btnCInsert(ActionEvent event)
+#btnCUpdate(ActionEvent event)
+#btnCDelete(ActionEvent event)
+#btnCSearch(ActionEvent event)
+#customerTableView(MouseEvent event)
+
+
+-------------[manageOrderTab]
+Label lblCDNum
+Button btnOrderCancel
+TableView orderProgressView
+TableView orderHistoryView
+
+#btnOrderCancel(ActionEvent event)
+#orderProgressView(MouseEvent event)
+#orderHistoryView(MouseEvent event)
+
+
+-------------[manageMyInfoTab]
+TextField txtDName
+TextField txtDId
+PasswordField pwDPasswd
+TextField txtDPhone
+TextField txtDAddress
+TextField txtDBOwner
+TextField txtDBNum
+TextField txtDBName
+Button btnDUpdate
+
+#btnDUpdate(ActionEvent event)
+
+
+-------------[manageTraderTab]
+TextField txtTRNum
+TextField txtTRName
+TextField txtTRPhone
+TextField txtTRAddress
+TextField txtTRBOwner
+TextField txtTRBNum
+TextField txtTRBName
+Button btnTRInsert
+Button btnTRUpdate
+Button btnTRDelete
+ComboBox cmbTRSearchKey
+TextField txtTRSearchValue
+Button btnTRSearch
+TableView traderTableView
+
+#btnTRInsert(ActionEvent event)
+#btnTRUpdate(ActionEvent event)
+#btnTRDelete(ActionEvent event)
+#btnTRSearch(ActionEvent event)
+#traderTableView(MouseEvent event)

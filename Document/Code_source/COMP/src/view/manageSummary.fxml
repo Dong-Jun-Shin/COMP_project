@@ -18,200 +18,228 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox prefHeight="800.0" prefWidth="1100.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
-   <children>
-      <MenuBar>
-        <menus>
-            <Menu mnemonicParsing="false" text="메뉴">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="종료" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="정보">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="문의하기" />
-                  <MenuItem mnemonicParsing="false" text="프로그램 정보" />
-               </items>
-            </Menu>
-        </menus>
-      </MenuBar>
-      <HBox prefHeight="788.0" prefWidth="1100.0">
-         <children>
-            <VBox prefHeight="200.0" prefWidth="550.0">
-               <children>
-                  <VBox prefHeight="100.0" prefWidth="100.0">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="550.0">
-                           <children>
-                              <Label prefWidth="100.0" text="로그인 일시 :">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label prefWidth="200.0" text="Label">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                           <padding>
-                              <Insets top="30.0" />
-                           </padding>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
-                           <children>
-                              <Label prefWidth="100.0" text="로그인  ID  :">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label prefWidth="150.0" text="Label">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label prefWidth="100.0" text="사용자명 :">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label prefWidth="100.0" text="Label">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                     </children>
-                     <padding>
-                        <Insets left="50.0" />
-                     </padding>
-                  </VBox>
-                  <VBox prefHeight="250.0" prefWidth="100.0">
-                     <children>
-                        <Label prefWidth="100.0" text="[공지 사항]">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets top="10.0" />
-                           </padding>
-                        </Label>
-                        <TextArea prefHeight="200.0" prefWidth="200.0" />
-                     </children>
-                     <padding>
-                        <Insets left="50.0" right="50.0" />
-                     </padding>
-                  </VBox>
-                  <Separator prefWidth="200.0">
-                     <padding>
-                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-                     </padding>
-                  </Separator>
-                  <VBox prefHeight="300.0" prefWidth="550.0">
-                     <padding>
-                        <Insets left="50.0" right="50.0" />
-                     </padding>
-                     <children>
-                        <HBox prefHeight="39.0" prefWidth="450.0">
-                           <children>
-                              <Label alignment="TOP_LEFT" prefHeight="35.0" prefWidth="200.0" text="[(현재 날짜) 주문량]">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </Label>
-                              <Label alignment="BOTTOM_RIGHT" prefHeight="35.0" prefWidth="190.0" text="현재 주문내역 : ">
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="BOTTOM_LEFT" prefHeight="35.0" prefWidth="58.0" text="(내역)건">
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <TableView prefHeight="266.0" prefWidth="450.0">
-                          <columns>
-                            <TableColumn prefWidth="200.0" text="주문번호" />
-                            <TableColumn prefWidth="100.0" text="주문자명" />
-                              <TableColumn prefWidth="150.0" text="주문금액" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="550.0">
-                     <padding>
-                        <Insets left="50.0" right="50.0" />
-                     </padding>
-                     <children>
-                        <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="450.0" text="관리 페이지로 이동" />
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="550.0" spacing="30.0">
-               <children>
-                  <VBox alignment="CENTER" prefHeight="400.0" prefWidth="100.0">
-                     <children>
-                        <Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="180.0" text="[월 매출액]">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets right="5.0" top="10.0" />
-                           </padding>
-                        </Label>
-                        <BarChart>
-                          <xAxis>
-                            <CategoryAxis endMargin="4.0" label="주차" side="BOTTOM" startMargin="1.0" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis label="매출금액(만)" side="LEFT" upperBound="10000.0" />
-                          </yAxis>
-                        </BarChart>
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="400.0" prefWidth="100.0">
-                     <children>
-                        <Label alignment="CENTER_RIGHT" prefWidth="180.0" text="[연 매출액]">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <padding>
-                              <Insets right="5.0" top="10.0" />
-                           </padding>
-                        </Label>
-                        <LineChart>
-                          <xAxis>
-                            <CategoryAxis endMargin="12.0" label="월" side="BOTTOM" startMargin="1.0" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis label="매출금액(만)" side="LEFT" upperBound="30000.0" />
-                          </yAxis>
-                        </LineChart>
-                     </children>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets bottom="30.0" left="50.0" right="50.0" top="30.0" />
-               </padding>
-            </VBox>
-         </children>
-      </HBox>
-   </children>
+<VBox prefHeight="800.0" prefWidth="1100.0"
+	xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.ManageSummaryController">
+	<children>
+		<MenuBar>
+			<menus>
+				<Menu mnemonicParsing="false" text="메뉴">
+					<items>
+						<MenuItem mnemonicParsing="false" text="종료" />
+					</items>
+				</Menu>
+				<Menu mnemonicParsing="false" text="정보">
+					<items>
+						<MenuItem mnemonicParsing="false" text="문의하기" />
+						<MenuItem mnemonicParsing="false" text="프로그램 정보" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+		<HBox prefHeight="788.0" prefWidth="1100.0">
+			<children>
+				<VBox prefHeight="200.0" prefWidth="550.0">
+					<children>
+						<VBox prefHeight="100.0" prefWidth="100.0">
+							<children>
+								<HBox alignment="CENTER_LEFT" prefHeight="50.0"
+									prefWidth="550.0">
+									<children>
+										<Label prefWidth="100.0" text="로그인 일시 :">
+											<font>
+												<Font size="15.0" />
+											</font>
+										</Label>
+										<Label fx:id="lblLoginDate" prefWidth="200.0"
+											text="lblLoginDate">
+											<font>
+												<Font size="15.0" />
+											</font>
+										</Label>
+									</children>
+									<padding>
+										<Insets top="30.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER_LEFT" prefHeight="50.0"
+									prefWidth="200.0">
+									<children>
+										<Label prefWidth="100.0" text="로그인  ID  :">
+											<font>
+												<Font size="15.0" />
+											</font>
+										</Label>
+										<Label fx:id="lblDId" prefWidth="150.0" text="lblDId">
+											<font>
+												<Font size="15.0" />
+											</font>
+										</Label>
+										<Label prefWidth="100.0" text="사용자명 :">
+											<font>
+												<Font size="15.0" />
+											</font>
+										</Label>
+										<Label fx:id="lblDName" prefWidth="100.0"
+											text="lblDName">
+											<font>
+												<Font size="15.0" />
+											</font>
+										</Label>
+									</children>
+								</HBox>
+							</children>
+							<padding>
+								<Insets left="50.0" />
+							</padding>
+						</VBox>
+						<VBox prefHeight="250.0" prefWidth="100.0">
+							<children>
+								<Label prefWidth="100.0" text="[공지 사항]">
+									<font>
+										<Font size="20.0" />
+									</font>
+									<padding>
+										<Insets top="10.0" />
+									</padding>
+								</Label>
+								<TextArea fx:id="txtNoticeArea" prefHeight="200.0"
+									prefWidth="200.0" />
+							</children>
+							<padding>
+								<Insets left="50.0" right="50.0" />
+							</padding>
+						</VBox>
+						<Separator prefWidth="200.0">
+							<padding>
+								<Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+							</padding>
+						</Separator>
+						<VBox prefHeight="300.0" prefWidth="550.0">
+							<padding>
+								<Insets left="50.0" right="50.0" />
+							</padding>
+							<children>
+								<HBox prefHeight="39.0" prefWidth="450.0">
+									<children>
+										<Label fx:id="lblOrderDate" alignment="TOP_LEFT"
+											prefHeight="35.0" prefWidth="140.0" text="[2019/11/29]">
+											<font>
+												<Font size="20.0" />
+											</font>
+											<padding>
+												<Insets top="10.0" />
+											</padding>
+											<HBox.margin>
+												<Insets />
+											</HBox.margin>
+										</Label>
+										<Label alignment="TOP_LEFT" prefHeight="35.0"
+											prefWidth="70.0" text="주문량">
+											<font>
+												<Font size="20.0" />
+											</font>
+											<padding>
+												<Insets top="10.0" />
+											</padding>
+										</Label>
+										<Label alignment="BOTTOM_RIGHT" prefHeight="35.0"
+											prefWidth="180.0" text="현재 주문내역 : ">
+											<padding>
+												<Insets top="10.0" />
+											</padding>
+											<font>
+												<Font size="15.0" />
+											</font>
+										</Label>
+										<Label fx:id="lblOrderCount" alignment="BOTTOM_LEFT"
+											prefHeight="35.0" prefWidth="58.0" text="(내역)건">
+											<padding>
+												<Insets top="10.0" />
+											</padding>
+											<font>
+												<Font size="15.0" />
+											</font>
+										</Label>
+									</children>
+								</HBox>
+								<TableView fx:id="orderSummaryView" prefHeight="266.0"
+									prefWidth="450.0">
+									<columns>
+										<TableColumn prefWidth="200.0" text="주문번호" />
+										<TableColumn prefWidth="100.0" text="주문자명" />
+										<TableColumn prefWidth="150.0" text="주문금액" />
+									</columns>
+								</TableView>
+							</children>
+						</VBox>
+						<VBox alignment="CENTER" prefHeight="100.0" prefWidth="550.0">
+							<padding>
+								<Insets left="50.0" right="50.0" />
+							</padding>
+							<children>
+								<Button fx:id="btnManageMove" mnemonicParsing="false"
+									onAction="#btnManageMove" onMouseClicked="#orderSummaryView"
+									prefHeight="30.0" prefWidth="450.0" text="관리 페이지로 이동" />
+							</children>
+						</VBox>
+					</children>
+				</VBox>
+				<VBox prefHeight="200.0" prefWidth="550.0" spacing="30.0">
+					<children>
+						<VBox alignment="CENTER" prefHeight="400.0" prefWidth="100.0">
+							<children>
+								<Label alignment="CENTER_RIGHT" prefHeight="35.0"
+									prefWidth="180.0" text="[월 매출액]">
+									<font>
+										<Font size="20.0" />
+									</font>
+									<padding>
+										<Insets right="5.0" top="10.0" />
+									</padding>
+								</Label>
+								<BarChart fx:id="mSalesBarChart">
+									<xAxis>
+										<CategoryAxis endMargin="4.0" label="주차"
+											side="BOTTOM" startMargin="1.0" />
+									</xAxis>
+									<yAxis>
+										<NumberAxis label="매출금액(만)" side="LEFT"
+											upperBound="10000.0" />
+									</yAxis>
+								</BarChart>
+							</children>
+						</VBox>
+						<VBox alignment="CENTER" prefHeight="400.0" prefWidth="100.0">
+							<children>
+								<Label alignment="CENTER_RIGHT" prefWidth="180.0"
+									text="[연 매출액]">
+									<font>
+										<Font size="20.0" />
+									</font>
+									<padding>
+										<Insets right="5.0" top="10.0" />
+									</padding>
+								</Label>
+								<LineChart fx:id="ySalesLineChart">
+									<xAxis>
+										<CategoryAxis endMargin="12.0" label="월"
+											side="BOTTOM" startMargin="1.0" />
+									</xAxis>
+									<yAxis>
+										<NumberAxis label="매출금액(만)" side="LEFT"
+											upperBound="30000.0" />
+									</yAxis>
+								</LineChart>
+							</children>
+						</VBox>
+					</children>
+					<padding>
+						<Insets bottom="30.0" left="50.0" right="50.0" top="30.0" />
+					</padding>
+				</VBox>
+			</children>
+		</HBox>
+	</children>
 </VBox>

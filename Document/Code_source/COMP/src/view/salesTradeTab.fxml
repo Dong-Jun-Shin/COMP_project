@@ -1,8 +1,510 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.text.Font?>
 
-<HBox xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<HBox prefHeight="750.0" prefWidth="1100.0"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.SalesTradeTabController">
+	<children>
+		<VBox alignment="TOP_CENTER" prefHeight="750.0" prefWidth="320.0"
+			spacing="5.0">
+			<padding>
+				<Insets left="10.0" right="10.0" top="30.0" />
+			</padding>
+			<children>
+				<Label text="[주문 신청]">
+					<font>
+						<Font size="30.0" />
+					</font>
+					<VBox.margin>
+						<Insets />
+					</VBox.margin>
+					<padding>
+						<Insets bottom="20.0" left="10.0" top="10.0" />
+					</padding>
+				</Label>
+				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="297.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="주문번호" />
+						<TextField fx:id="txtCDNum" prefWidth="160.0" />
+					</children>
+					<padding>
+						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+					</padding>
+				</HBox>
+				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="고객ID" />
+						<TextField fx:id="txtCId" prefWidth="160.0" />
+					</children>
+					<padding>
+						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+					</padding>
+				</HBox>
+				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="고객명" />
+						<TextField fx:id="txtCName" prefWidth="160.0" />
+					</children>
+					<padding>
+						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+					</padding>
+				</HBox>
+				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="전화번호" />
+						<TextField fx:id="txtCPhone" prefWidth="160.0" />
+					</children>
+					<padding>
+						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+					</padding>
+				</HBox>
+				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="주소" />
+						<TextField fx:id="txtCAddress" prefWidth="160.0" />
+					</children>
+					<padding>
+						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+					</padding>
+				</HBox>
+				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0"
+					spacing="20.0">
+					<children>
+						<Label alignment="CENTER" prefWidth="60.0" text="이메일" />
+						<TextField fx:id="txtCEmail" prefWidth="160.0" />
+					</children>
+					<padding>
+						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+					</padding>
+				</HBox>
+				<VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+					<children>
+						<Button fx:id="btnOrderInsert" mnemonicParsing="false"
+							onAction="#btnOrderInsert" text="주문신청">
+							<font>
+								<Font size="20.0" />
+							</font>
+						</Button>
+					</children>
+				</VBox>
+			</children>
+		</VBox>
+		<Separator orientation="VERTICAL" prefHeight="100.0">
+			<HBox.margin>
+				<Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+			</HBox.margin>
+		</Separator>
+		<VBox prefHeight="750.0" prefWidth="760.0">
+			<children>
+				<HBox prefHeight="601.0" prefWidth="757.0">
+					<children>
+						<VBox prefHeight="200.0" prefWidth="377.0" spacing="10.0">
+							<padding>
+								<Insets bottom="10.0" left="10.0" right="10.0" top="30.0" />
+							</padding>
+							<children>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="CPU" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtCPName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinCPQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtCPPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="RAM" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtRName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinRQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtRPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="MB" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtMBName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinMBQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtMBPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="GPU" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtGName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinGQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtGPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="SSD" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtSSName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinSSQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtSSPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="HDD" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtHName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinHQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtHPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="파워" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtPOName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinPOQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtPOPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+							</children>
+						</VBox>
+						<VBox prefHeight="200.0" prefWidth="380.0" spacing="10.0">
+							<padding>
+								<Insets bottom="10.0" left="10.0" right="10.0" top="30.0" />
+							</padding>
+							<children>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="케이스" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtCAName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinCAQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtCAPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="쿨러" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtCOName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinCOQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtCOPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="SW" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtSWName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinSWQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtSWPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="키보드" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtKName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinKQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtKPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="마우스" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtMOName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinMOQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtMOPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="스피커" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtSPName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinSPQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtSPPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
+									<children>
+										<Label alignment="CENTER" prefWidth="50.0" text="모니터" />
+										<VBox prefHeight="46.0" prefWidth="236.0">
+											<children>
+												<HBox prefHeight="22.0" prefWidth="297.0">
+													<children>
+														<TextField fx:id="txtMNName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinMNQty" editable="true" />
+													</children>
+												</HBox>
+												<TextField fx:id="txtMNPrice" prefWidth="62.0">
+													<VBox.margin>
+														<Insets right="100.0" />
+													</VBox.margin>
+												</TextField>
+											</children>
+										</VBox>
+									</children>
+									<padding>
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
+									</padding>
+								</HBox>
+							</children>
+						</VBox>
+					</children>
+				</HBox>
+				<HBox alignment="CENTER_RIGHT" prefHeight="170.0"
+					prefWidth="760.0" spacing="20.0">
+					<children>
+						<Label text="총 주문 금액">
+							<font>
+								<Font size="20.0" />
+							</font>
+						</Label>
+						<TextField fx:id="txtTotalPrice" prefHeight="30.0"
+							prefWidth="200.0" />
+					</children>
+					<padding>
+						<Insets right="30.0" />
+					</padding>
+				</HBox>
+			</children>
+		</VBox>
+	</children>
 </HBox>
 

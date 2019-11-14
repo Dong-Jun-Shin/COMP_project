@@ -9,76 +9,90 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-
-<HBox prefHeight="350.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
-   <children>
-      <VBox alignment="TOP_CENTER" prefHeight="750.0" prefWidth="250.0" spacing="5.0">
-         <padding>
-            <Insets left="10.0" top="30.0" />
-         </padding>
-         <children>
-            <Label text="[입고 내역]">
-               <font>
-                  <Font size="30.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <padding>
-                  <Insets bottom="20.0" left="10.0" top="10.0" />
-               </padding>
-            </Label>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
-                     <children>
-                        <Label alignment="CENTER" prefWidth="60.0" text="입고번호" />
-                        <TextField prefWidth="130.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="40.0" prefWidth="280.0" spacing="20.0">
-                     <children>
-                        <Label alignment="CENTER" prefWidth="60.0" text="거래처번호" />
-                        <TextField prefWidth="130.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
-                     <children>
-                        <Label alignment="CENTER" prefWidth="60.0" text="제품번호" />
-                        <TextField prefWidth="130.0" />
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
-                     <children>
-                        <Label alignment="CENTER" prefWidth="60.0" text="입고수량" />
-                        <TextField prefWidth="130.0" />
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-            <HBox alignment="CENTER" prefHeight="200.0" prefWidth="330.0" spacing="20.0">
-               <children>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="등록" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="삭제" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-      <VBox alignment="CENTER" prefHeight="350.0" prefWidth="350.0">
-         <children>
-            <TableView prefHeight="262.0" prefWidth="320.0">
-              <columns>
-                <TableColumn text="입고번호" />
-                <TableColumn text="거래처번호" />
-                  <TableColumn text="제품번호" />
-                  <TableColumn text="입고수량" />
-              </columns>
-            </TableView>
-         </children>
-         <padding>
-            <Insets left="10.0" right="20.0" />
-         </padding>
-      </VBox>
-   </children>
+fx:controller="controller."
+<HBox prefHeight="350.0" prefWidth="600.0"
+	xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.ManageStockSubController">
+	<children>
+		<VBox alignment="TOP_CENTER" prefHeight="750.0" prefWidth="250.0"
+			spacing="5.0">
+			<padding>
+				<Insets left="10.0" top="30.0" />
+			</padding>
+			<children>
+				<Label text="[입고 내역]">
+					<font>
+						<Font size="30.0" />
+					</font>
+					<VBox.margin>
+						<Insets />
+					</VBox.margin>
+					<padding>
+						<Insets bottom="20.0" left="10.0" top="10.0" />
+					</padding>
+				</Label>
+				<VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0"
+					spacing="20.0">
+					<children>
+						<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0"
+							spacing="20.0">
+							<children>
+								<Label alignment="CENTER" prefWidth="60.0" text="입고번호" />
+								<TextField fx:id="txtWHNum" prefWidth="130.0" />
+							</children>
+						</HBox>
+						<HBox alignment="CENTER" prefHeight="40.0" prefWidth="280.0"
+							spacing="20.0">
+							<children>
+								<Label alignment="CENTER" prefWidth="60.0" text="거래처번호" />
+								<TextField fx:id="txtTRNum" prefWidth="130.0" />
+							</children>
+						</HBox>
+						<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0"
+							spacing="20.0">
+							<children>
+								<Label alignment="CENTER" prefWidth="60.0" text="제품번호" />
+								<TextField fx:id="txtPNum" prefWidth="130.0" />
+							</children>
+						</HBox>
+						<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0"
+							spacing="20.0">
+							<children>
+								<Label alignment="CENTER" prefWidth="60.0" text="입고수량" />
+								<TextField fx:id="txtWHQty" prefWidth="130.0" />
+							</children>
+						</HBox>
+					</children>
+				</VBox>
+				<HBox alignment="CENTER" prefHeight="200.0" prefWidth="330.0"
+					spacing="20.0">
+					<children>
+						<Button fx:id="btnWHInsert" mnemonicParsing="false"
+							onAction="#btnWHInsert" prefHeight="25.0" prefWidth="70.0"
+							text="등록" />
+						<Button fx:id="btnWHDelete" mnemonicParsing="false"
+							onAction="#btnWHDelete" prefHeight="25.0" prefWidth="70.0"
+							text="삭제" />
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+		<VBox alignment="CENTER" prefHeight="350.0" prefWidth="350.0">
+			<children>
+				<TableView fx:id="whTableView"
+					onMouseClicked="#whTableView" prefHeight="262.0" prefWidth="320.0">
+					<columns>
+						<TableColumn text="입고번호" />
+						<TableColumn text="거래처번호" />
+						<TableColumn text="제품번호" />
+						<TableColumn text="입고수량" />
+					</columns>
+				</TableView>
+			</children>
+			<padding>
+				<Insets left="10.0" right="20.0" />
+			</padding>
+		</VBox>
+	</children>
 </HBox>
