@@ -217,18 +217,18 @@ public class CD_orderDAO {
 	public boolean cd_orderInsert(CD_OrderVO cvo) {
 		boolean result = false;
 		StringBuffer sql = new StringBuffer();
-		sql.append("INSERT INTO cd_order (cd_num, cd_sort, cd_price, c_num)");
+		sql.append("INSERT INTO cd_order (cd_num, cd_price, c_num)");
 		sql.append("VALUES (TO_CHAR(SYSDATE, 'yymmdd')||LPAD(TO_CHAR(cd_num_seq.NEXTVAL),4,'0')");
-		sql.append(", ?, ?, ?) ");
+		sql.append(", ?, ?) ");
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, cvo.getCd_sort());
-			pstmt.setInt(2, cvo.getCd_price());
-			pstmt.setString(3, cvo.getC_num());
+			
+			pstmt.setInt(1, cvo.getCd_price());
+			pstmt.setString(2, cvo.getC_num());
 			
 			int i = pstmt.executeUpdate();
 			if(i ==1) {
