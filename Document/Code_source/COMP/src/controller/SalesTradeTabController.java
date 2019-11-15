@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 @SuppressWarnings("rawtypes")
 public class SalesTradeTabController implements Initializable {
@@ -116,6 +117,11 @@ public class SalesTradeTabController implements Initializable {
 	@FXML
 	private Spinner spinMNQty;
 	
+	private Stage primaryStage;
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

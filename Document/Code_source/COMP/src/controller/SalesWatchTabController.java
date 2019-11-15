@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class SalesWatchTabController implements Initializable {
 	@FXML
@@ -51,6 +52,11 @@ public class SalesWatchTabController implements Initializable {
 	@FXML
 	private Button btnNext;
 	
+	private Stage primaryStage;
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

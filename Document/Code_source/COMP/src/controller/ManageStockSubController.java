@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class ManageStockSubController implements Initializable {
 	@FXML
@@ -27,6 +28,12 @@ public class ManageStockSubController implements Initializable {
 	@FXML
 	private TableView whTableView;
 
+	private Stage primaryStage;
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
