@@ -67,8 +67,4 @@ public class DataUtil {
 		}
 		return true;
 	}
-	
-	
-	
-	
 }

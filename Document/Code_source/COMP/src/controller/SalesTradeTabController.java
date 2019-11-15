@@ -13,6 +13,7 @@ import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
 import javafx.scene.control.TextField;
 import model.DataUtil;
 import model.ProductVO;
+import javafx.stage.Stage;
 
 @SuppressWarnings("rawtypes")
 public class SalesTradeTabController implements Initializable {
@@ -121,6 +122,12 @@ public class SalesTradeTabController implements Initializable {
 	private Spinner<Integer> spinMNQty;
 	
 	private ProductVO pvo;
+
+	private Stage primaryStage;
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

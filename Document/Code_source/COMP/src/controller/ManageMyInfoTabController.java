@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class ManageMyInfoTabController implements Initializable {
 	@FXML
@@ -30,6 +31,11 @@ public class ManageMyInfoTabController implements Initializable {
 	@FXML
 	private Button btnDUpdate;
 	
+	private Stage primaryStage;
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
+	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
