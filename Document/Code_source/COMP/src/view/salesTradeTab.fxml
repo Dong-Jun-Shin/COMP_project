@@ -123,7 +123,7 @@
 													<children>
 														<TextField fx:id="txtCPName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinCPQty" editable="true" />
+														<Spinner fx:id="spinCPQty" editable="true" onMouseClicked="#setProductPriceAction"/>
 													</children>
 												</HBox>
 												<TextField fx:id="txtCPPrice" prefWidth="62.0">
@@ -149,7 +149,7 @@
 													<children>
 														<TextField fx:id="txtRName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinRQty" editable="true" />
+														<Spinner fx:id="spinRQty" editable="true" onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtRPrice" prefWidth="62.0">
@@ -175,7 +175,7 @@
 													<children>
 														<TextField fx:id="txtMBName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinMBQty" editable="true" />
+														<Spinner fx:id="spinMBQty" editable="true" onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtMBPrice" prefWidth="62.0">
@@ -201,7 +201,7 @@
 													<children>
 														<TextField fx:id="txtGName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinGQty" editable="true" />
+														<Spinner fx:id="spinGQty" editable="true"  onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtGPrice" prefWidth="62.0">
@@ -227,7 +227,7 @@
 													<children>
 														<TextField fx:id="txtSSName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinSSQty" editable="true" />
+														<Spinner fx:id="spinSSQty" editable="true" onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtSSPrice" prefWidth="62.0">
@@ -253,7 +253,7 @@
 													<children>
 														<TextField fx:id="txtHName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinHQty" editable="true" />
+														<Spinner fx:id="spinHQty" editable="true" onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtHPrice" prefWidth="62.0">
@@ -279,7 +279,7 @@
 													<children>
 														<TextField fx:id="txtPOName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinPOQty" editable="true" />
+														<Spinner fx:id="spinPOQty" editable="true" onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtPOPrice" prefWidth="62.0">
@@ -312,7 +312,7 @@
 													<children>
 														<TextField fx:id="txtCAName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinCAQty" editable="true" />
+														<Spinner fx:id="spinCAQty" editable="true" onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtCAPrice" prefWidth="62.0">
@@ -338,7 +338,7 @@
 													<children>
 														<TextField fx:id="txtCOName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinCOQty" editable="true" />
+														<Spinner fx:id="spinCOQty" editable="true" onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtCOPrice" prefWidth="62.0">
@@ -364,7 +364,7 @@
 													<children>
 														<TextField fx:id="txtSWName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinSWQty" editable="true" />
+														<Spinner fx:id="spinSWQty" editable="true" onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtSWPrice" prefWidth="62.0">
@@ -390,7 +390,7 @@
 													<children>
 														<TextField fx:id="txtKName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinKQty" editable="true" />
+														<Spinner fx:id="spinKQty" editable="true" onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtKPrice" prefWidth="62.0">
@@ -416,7 +416,7 @@
 													<children>
 														<TextField fx:id="txtMOName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinMOQty" editable="true" />
+														<Spinner fx:id="spinMOQty" editable="true" onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtMOPrice" prefWidth="62.0">
@@ -442,7 +442,7 @@
 													<children>
 														<TextField fx:id="txtSPName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinSPQty" editable="true" />
+														<Spinner fx:id="spinSPQty" editable="true" onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtSPPrice" prefWidth="62.0">
@@ -468,7 +468,7 @@
 													<children>
 														<TextField fx:id="txtMNName" prefHeight="23.0"
 															prefWidth="260.0" />
-														<Spinner fx:id="spinMNQty" editable="true" />
+														<Spinner fx:id="spinMNQty" editable="true" onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtMNPrice" prefWidth="62.0">
