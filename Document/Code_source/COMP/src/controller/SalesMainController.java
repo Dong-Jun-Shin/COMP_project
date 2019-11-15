@@ -3,6 +3,7 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
@@ -33,4 +34,15 @@ public class SalesMainController implements Initializable {
 
 	}
 	
+	public void menuClose(ActionEvent event) {
+		MenuController.menuClose();
+	}
+
+	public void menuConnectInfo(ActionEvent event) {
+		MenuController.menuConnectInfo();
+	}
+
+	public void menuProgramInfo(ActionEvent event) {
+		MenuController.menuProgramInfo();
+	}
 }
