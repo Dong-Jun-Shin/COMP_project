@@ -97,8 +97,8 @@ public class TraderDAO {
 	
 	/**
 	 * getTraderSelected(String category, String searchWord) : 특정 거래처 정보 조회 메소드
-	 * @param category : 검색 구분
-	 * @param searchWord : 검색 키워드
+	 * @param (String) category : 검색 구분
+	 * @param (String) searchWord : 검색 키워드
 	 * @returnArrayList<TraderVO>
 	 */
 	public ArrayList<TraderVO> getTraderSelected(String category, String searchWord){
@@ -160,7 +160,7 @@ public class TraderDAO {
 	
 	/**
 	 * traderInsert(TraderVO tvo) : 거래처 정보 등록 메소드
-	 * @param tvo
+	 * @param tvo (TraderVO) : 등록할 거래처
 	 * @return boolean
 	 */
 	public boolean traderInsert(TraderVO tvo) {
@@ -217,8 +217,8 @@ public class TraderDAO {
 	}
 	
 	/**
-	 * traderUpdate(TraderVO tvo)
-	 * @param tvo
+	 * traderUpdate(TraderVO tvo) : 거래처 정보 수정 메소드
+	 * @param tvo (TraderVO) : 수정할 거래처
 	 * @return boolean
 	 */
 	public boolean traderUpdate(TraderVO tvo) {
@@ -274,7 +274,7 @@ public class TraderDAO {
 		
 	/**
 	 * traderDelete(TraderVO tvo) : 거래처 정보 삭제 메소드
-	 * @param tvo
+	 * @param tvo (TraderVO) : 삭제할 거래처
 	 * @return boolean
 	 */
 	public boolean traderDelete(TraderVO tvo) {
@@ -318,14 +318,5 @@ public class TraderDAO {
 		}
 		return result;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

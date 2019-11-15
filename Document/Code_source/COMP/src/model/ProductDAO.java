@@ -103,7 +103,7 @@ public class ProductDAO {
 	
 	/**
 	 * getProductSelected(String p_num) : 선택한 제품 조회 메소드
-	 * @param p_num
+	 * @param p_num (String) : 조회할 제품 번호
 	 * @return ArrayList<ProductVO>
 	 * @throws SQLException, Exception
 	 */
@@ -170,7 +170,7 @@ public class ProductDAO {
 
 	/**
 	 * productInsert(ProductVO pvo) : 제품 등록 메소드
-	 * @param pvo
+	 * @param pvo (ProductVO) : 등록할 제품
 	 * @return boolean;
 	 */
 	public boolean productInsert(ProductVO pvo) {
@@ -236,7 +236,7 @@ public class ProductDAO {
 	
 	/**
 	 * productUpdate(ProductVO pvo) : 제품 수정 메소드
-	 * @param pvo
+	 * @param pvo (ProductVO) : 수정할 제품
 	 * @return boolean
 	 */
 	public boolean productUpdate(ProductVO pvo) {
@@ -300,7 +300,7 @@ public class ProductDAO {
 	
 	/**
 	 * productDelete(ProductVO pvo) : 제품 삭제 메소드
-	 * @param pvo
+	 * @param pvo (ProductVO) : 삭제할 제품
 	 * @return boolean
 	 */
 	public boolean productDelete(ProductVO pvo) {
@@ -346,7 +346,5 @@ public class ProductDAO {
 			
 		return result;
 	}
-	
-	
 	
 }

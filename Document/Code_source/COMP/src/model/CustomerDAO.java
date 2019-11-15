@@ -37,7 +37,8 @@ public class CustomerDAO {
 	
 	/**
 	 *  customerLoginOverlap() : 로그인 ID/PW 조회 메소드 
-	 * @param c_id, c_pw
+	 * @param c_id	(String) : 입력한 ID
+	 * @param c_pw	(String) : 입력한 PW
 	 * @return boolean
 	 * @throws SQLException, Exception
 	 */
@@ -158,8 +159,8 @@ public class CustomerDAO {
 	
 	/**
 	 * getCustomerSelected(String category, String searchWord) : 특정 고객 정보 조회 메소드
-	 * @param category : 검색 구분
-	 * @param searchWord : 검색 키워드
+	 * @param category (String) : 검색 구분
+	 * @param searchWord (String) : 검색 키워드
 	 * @return ArrayList<CustomerVO>
 	 */
 	public ArrayList<CustomerVO> getCustomerSelected(String category, String searchWord){
@@ -223,7 +224,7 @@ public class CustomerDAO {
 	
 	/**
 	 * customerInsert(CustomerVO cvo) : 계정 정보 등록 메소드
-	 * @param cvo
+	 * @param cvo		(CustomerVO) : 등록할 계정
 	 * @return boolean
 	 */
 	public boolean customerInsert(CustomerVO cvo) {
@@ -281,7 +282,7 @@ public class CustomerDAO {
 	
 	/**
 	 * customerUpdate(CustomerVO cvo) : 계정 정보 수정 메소드
-	 * @param cvo
+	 * @param cvo		(CustomerVO) : 수정할 계정
 	 * @return boolean
 	 */
 	public boolean customerUpdate(CustomerVO cvo) {
@@ -338,7 +339,7 @@ public class CustomerDAO {
 	
 	/**
 	 * customerDelete(CustomerVO cvo) : 계정 정보 삭제 메소드
-	 * @param cvo
+	 * @param cvo 		(CustomerVO) : 삭제할 계정
 	 * @return boolean
 	 */
 	public boolean customerDelete(CustomerVO cvo) {
@@ -382,6 +383,5 @@ public class CustomerDAO {
 		}
 		return result;
 	}
-	
 	
 }

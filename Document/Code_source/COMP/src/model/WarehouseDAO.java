@@ -97,15 +97,15 @@ public class WarehouseDAO {
 	
 	/**
 	 * warehouseInsert(WarehouseVO wvo) : 입고 내역 등록 메소드
-	 * @param wvo
+	 * @param wvo 	(WarehouseVO) : 등록할 입고 내역
 	 * @return boolean
 	 */
 	public boolean warehouseInsert(WarehouseVO wvo) {
 		Boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO warehouse (wh_num, wh_qty,tr_num, p_num)");
-		sql.append("VALUES (? , ? , ? , ?  )");
-		
+		sql.append("VALUES ( 'WH_'||LPAD(TO_CHAR(wh_num_seq.NEXTVAL),4,'0')");
+		sql.append(", ? , ? , ?  )");
 		PreparedStatement pstmt = null;
 		Connection con = null;
 		
@@ -113,10 +113,9 @@ public class WarehouseDAO {
 		try {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, wvo.getWh_num());
-			pstmt.setInt(2, wvo.getWh_qty());
-			pstmt.setString(3, wvo.getTr_num());
-			pstmt.setString(4, wvo.getP_num());
+			pstmt.setInt(1, wvo.getWh_qty());
+			pstmt.setString(2, wvo.getTr_num());
+			pstmt.setString(3, wvo.getP_num());
 			int i = pstmt.executeUpdate();
 			if(i ==1) {
 				result = true;
@@ -153,7 +152,7 @@ public class WarehouseDAO {
 	
 	/**
 	 * warehouseDelete(WarehouseVO wvo) : 입고 내역 삭제 메소드
-	 * @param wvo
+	 * @param wvo		(WarehouseVO) : 삭제할 입고 내역
 	 * @return boolean
 	 */
 	public boolean warehouseDelete(WarehouseVO wvo) {

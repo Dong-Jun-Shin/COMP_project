@@ -47,8 +47,17 @@ public class ManageCustomerTabController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	public void btnCInsert(ActionEvent event) {

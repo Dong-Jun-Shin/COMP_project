@@ -9,10 +9,9 @@ import javafx.scene.control.Alert.AlertType;
 
 public class DataUtil {
 
-	
 	/**
 	 * fieldName(Object obj) : 파일 유효성 검사 메소드
-	 * @param obj
+	 * @param obj (Object) : 검사 대상
 	 * @return List<String>
 	 **/
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -33,8 +32,8 @@ public class DataUtil {
 	
 	/**
 	 * validityCheck(String value, String data) : 값 입력 체크 메소드
-	 * @param value
-	 * @param data
+	 * @param value (String) : 입력 대상
+	 * @param data (String) : 출력문
 	 * @return boolean
 	 */
 	public static boolean validityCheck(String value, String data) {
@@ -53,7 +52,7 @@ public class DataUtil {
 	
 	/**
 	 *  isBlank(String str) : 공백 여부 확인 메소드
-	 * @param str
+	 * @param str (String) : 확인 대상
 	 * @return boolean
 	 */
 	public static boolean isBlank(String str) {

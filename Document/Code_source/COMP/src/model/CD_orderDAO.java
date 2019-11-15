@@ -36,7 +36,7 @@ public class CD_orderDAO {
 	}
 	
 	/**
-	 * getProceedingOrderList() : 거래 중인 주문내역 조회 메소드
+	 * getProceedingOrderList() : 거래 중인 주문 리스트 조회 메소드
 	 * @return ArrayList<Order_ChartVO>
 	 */
 	public ArrayList<CD_OrderVO> getProceedingOrderList(){
@@ -98,7 +98,7 @@ public class CD_orderDAO {
 	}
 	
 	/**
-	 *  getCompletedOrderList() : 완료된 주문내역 리스트 조회 메소드
+	 *  getCompletedOrderList() : 완료된 주문 리스트 조회 메소드
 	 * @return
 	 */
 	public ArrayList<CD_OrderVO> getCompletedOrderList(){
@@ -156,13 +156,112 @@ public class CD_orderDAO {
 		return list;
 	}
 	
+	/**
+	 * cd_orderUpdate(CD_OrderVO cvo) : 거래 완료 상태 업데이트 메소드
+	 * @param cvo		(CD_OrderVO) : 수정할 주문
+	 * @return boolean
+	 */
+	public boolean cd_orderUpdate(CD_OrderVO cvo) {
+		boolean result = false;
+		StringBuffer sql = new StringBuffer();
+		sql.append("UPDATE cd_order SET cd_sort = ?");
+		sql.append(" WHERE cd_num = ?");
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			
+			pstmt.setString(1, cvo.getCd_sort());
+			pstmt.setString(2, cvo.getCd_num());
+			
+			int i = pstmt.executeUpdate();
+			if(i ==1) {
+				result = true;
+			}
+			
+		}catch(SQLException sqle) {
+			System.out.println("[  cd_orderUpdate(CD_OrderVO cvo)  ] [  SQLException  ]");
+			sqle.printStackTrace();
+			result = false;
+		}catch(Exception e) {
+			System.out.println("[  cd_orderUpdate(CD_OrderVO cvo)  ] [  Exception  ]");
+			e.printStackTrace();
+			result = false;
+		}finally {
+			
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			}catch(Exception e) {
+				System.out.println("[  cd_orderUpdate(CD_OrderVO cvo)  ] [  closed Error  ]");
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return result;
+	}
 	
-	//TODO 진행중
-	
-	
-	
-	
-	
-	
+	/**
+	 * cd_orderInsert(CD_OrderVO cvo) : 주문 등록 메소드
+	 * @param cvo		(CD_OrderVO) : 등록할 주문
+	 * @return boolean
+	 */
+	public boolean cd_orderInsert(CD_OrderVO cvo) {
+		boolean result = false;
+		StringBuffer sql = new StringBuffer();
+		sql.append("INSERT INTO cd_order (cd_num, cd_sort, cd_price, c_num)");
+		sql.append("VALUES (TO_CHAR(SYSDATE, 'yymmdd')||LPAD(TO_CHAR(cd_num_seq.NEXTVAL),4,'0')");
+		sql.append(", ?, ?, ?) ");
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, cvo.getCd_sort());
+			pstmt.setInt(2, cvo.getCd_price());
+			pstmt.setString(3, cvo.getC_num());
+			
+			int i = pstmt.executeUpdate();
+			if(i ==1) {
+				result = true;
+			}
+			
+		}catch(SQLException sqle) {
+			System.out.println("[  cd_orderInsert(CD_OrderVO cvo)  ] [  SQLException  ]");
+			sqle.printStackTrace();
+			result = false;
+		}catch(Exception e) {
+			System.out.println("[  cd_orderInsert(CD_OrderVO cvo)  ] [  Exception  ]");
+			e.printStackTrace();
+			result = false;
+		}finally {
+			
+			try {
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(con != null) {
+					con.close();
+				}
+			}catch(Exception e) {
+				System.out.println("[  cd_orderInsert(CD_OrderVO cvo)  ] [  closed Error  ]");
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return result;
+		
+		
+	}
 	
 }
