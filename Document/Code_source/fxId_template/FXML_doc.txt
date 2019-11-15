@@ -9,6 +9,9 @@ Button btnIdFindPopup
 #managerLogin()
 #btnLogin(ActionEvent event)
 #btnIdFindPopup(ActionEvent event)
+#menuClose(ActionEvent event)
+#menuConnectInfo(ActionEvent event)
+#menuProgramInfo(ActionEvent event)
 
 
 --------------[loginSub]
@@ -28,6 +31,10 @@ Tab watch
 SalesWatchTabController salesWatchTabController
 Tab trade
 SalesTradeTabController salesTradeTabController
+
+#menuClose(ActionEvent event)
+#menuConnectInfo(ActionEvent event)
+#menuProgramInfo(ActionEvent event)
 
 
 -------------[salesWatchTab]
@@ -152,6 +159,10 @@ Tab myInfo
 ManageMyInfoTabController manageMyInfoTabController
 Tab trader
 ManageTraderTabController manageTraderTabController
+
+#menuClose(ActionEvent event)
+#menuConnectInfo(ActionEvent event)
+#menuProgramInfo(ActionEvent event)
 
 
 -------------[manageStockTab]

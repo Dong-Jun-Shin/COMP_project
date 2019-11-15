@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
@@ -12,12 +13,18 @@
 	xmlns="http://javafx.com/javafx/8.0.171"
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="controller.LoginSubController">
+	<fx:define>
+		<ToggleGroup fx:id="groupSearch" />
+	</fx:define>
 	<children>
 		<HBox alignment="CENTER" prefHeight="53.0" prefWidth="350.0"
 			spacing="60.0">
 			<children>
-				<RadioButton mnemonicParsing="false" text="ID찾기" />
-				<RadioButton mnemonicParsing="false" text="PW찾기" />
+				<!--TODO 라디오 버튼 유저 아이디랑 부여 -->
+				<RadioButton mnemonicParsing="false" text="ID찾기" selected="true"
+					userData="idSearch" toggleGroup="$groupSearch" />
+				<RadioButton mnemonicParsing="false" text="PW찾기"
+					userData="pwSearch" toggleGroup="$groupSearch" />
 			</children>
 		</HBox>
 		<VBox alignment="CENTER" prefHeight="133.0" prefWidth="350.0">
@@ -40,7 +47,7 @@
 					</children>
 				</HBox>
 				<HBox alignment="CENTER" prefHeight="40.0" prefWidth="200.0"
-					spacing="30.0">
+					spacing="30.0" visible="false" fx:id="idBox">
 					<children>
 						<Label alignment="CENTER" prefWidth="50.0" text="ID"
 							textAlignment="CENTER" />
@@ -50,7 +57,7 @@
 				</HBox>
 			</children>
 		</VBox>
-		<Button fx:id="btnIdSearch" mnemonicParsing="false"
+		<Button id="btnIdSearch" mnemonicParsing="false"
 			onAction="#btnIdSearch" prefHeight="25.0" prefWidth="80.0" text="확인">
 			<VBox.margin>
 				<Insets top="30.0" />

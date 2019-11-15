@@ -9,35 +9,35 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="800.0" prefWidth="1100.0"
-	xmlns="http://javafx.com/javafx/8.0.171"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="controller.LoginMainController">
+<BorderPane prefHeight="800.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginMainController">
+	<fx:define>
+		<ToggleGroup fx:id="groupChoice" />
+	</fx:define>
 	<top>
 		<MenuBar BorderPane.alignment="CENTER">
 			<menus>
 				<Menu mnemonicParsing="false" text="메뉴">
 					<items>
-						<MenuItem mnemonicParsing="false" text="종료" />
+						<MenuItem mnemonicParsing="false" text="종료" onAction="#menuClose"/>
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="정보">
 					<items>
-						<MenuItem mnemonicParsing="false" text="문의하기" />
-						<MenuItem mnemonicParsing="false" text="프로그램 정보" />
+						<MenuItem mnemonicParsing="false" text="문의하기" onAction="#menuConnectInfo"/>
+						<MenuItem mnemonicParsing="false" text="프로그램 정보" onAction="#menuProgramInfo"/>
 					</items>
 				</Menu>
 			</menus>
 		</MenuBar>
 	</top>
 	<center>
-		<VBox alignment="CENTER" prefHeight="756.0" prefWidth="1029.0"
-			BorderPane.alignment="CENTER">
+		<VBox alignment="CENTER" prefHeight="756.0" prefWidth="1029.0" BorderPane.alignment="CENTER">
 			<BorderPane.margin>
 				<Insets bottom="200.0" left="300.0" right="300.0" top="100.0" />
 			</BorderPane.margin>
@@ -53,48 +53,44 @@
 						<Insets bottom="30.0" />
 					</padding>
 				</Label>
-				<HBox alignment="BOTTOM_LEFT" prefHeight="26.0"
-					prefWidth="490.0" spacing="80.0">
+				<HBox alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="490.0" spacing="80.0">
 					<children>
-						<RadioButton mnemonicParsing="false" text="판매">
+						<RadioButton mnemonicParsing="false" selected="true" text="판매" toggleGroup="$groupChoice" userData="salesLogin">
 							<font>
 								<Font size="15.0" />
 							</font>
 						</RadioButton>
-						<RadioButton mnemonicParsing="false" text="관리">
+						<RadioButton mnemonicParsing="false" text="관리" toggleGroup="$groupChoice" userData="managerLogin">
 							<font>
 								<Font size="15.0" />
 							</font>
 						</RadioButton>
 					</children>
 					<VBox.margin>
-						<Insets bottom="5.0" left="30.0" />
+						<Insets />
 					</VBox.margin>
 					<padding>
-						<Insets left="80.0" />
+						<Insets bottom="5.0" left="150.0" />
 					</padding>
 				</HBox>
 				<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
 					<children>
 						<VBox prefHeight="100.0" prefWidth="266.0">
 							<children>
-								<HBox alignment="CENTER" prefHeight="100.0"
-									prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="100.0" prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="40.0" text="ID">
 											<font>
 												<Font size="20.0" />
 											</font>
 										</Label>
-										<TextField fx:id="txtLoginId" prefHeight="25.0"
-											prefWidth="160.0" />
+										<TextField fx:id="txtLoginId" prefHeight="25.0" prefWidth="160.0" />
 									</children>
 									<VBox.margin>
 										<Insets right="10.0" />
 									</VBox.margin>
 								</HBox>
-								<HBox alignment="CENTER" prefHeight="100.0"
-									prefWidth="244.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="100.0" prefWidth="244.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="40.0" text="PW">
 											<font>
@@ -104,8 +100,7 @@
 												<Insets />
 											</HBox.margin>
 										</Label>
-										<PasswordField fx:id="pwLoginPasswd"
-											prefHeight="25.0" prefWidth="160.0" />
+										<PasswordField fx:id="pwLoginPasswd" prefHeight="25.0" prefWidth="160.0" />
 									</children>
 									<VBox.margin>
 										<Insets right="10.0" />
@@ -113,14 +108,10 @@
 								</HBox>
 							</children>
 						</VBox>
-						<Button fx:id="btnLogin" mnemonicParsing="false"
-							onAction="#btnLogin" prefHeight="80.0" prefWidth="80.0"
-							text="로그인" />
+						<Button fx:id="btnLogin" mnemonicParsing="false" onAction="#btnLogin" prefHeight="80.0" prefWidth="80.0" text="로그인" />
 					</children>
 				</HBox>
-				<Button fx:id="btnIdFindPopup" mnemonicParsing="false"
-					onAction="#btnIdFindPopup" prefHeight="25.0" prefWidth="320.0"
-					text="ID/PW 찾기">
+				<Button fx:id="btnIdFindPopup" mnemonicParsing="false" onAction="#btnIdFindPopup" prefHeight="25.0" prefWidth="320.0" text="ID/PW 찾기">
 					<VBox.margin>
 						<Insets left="30.0" top="10.0" />
 					</VBox.margin>
