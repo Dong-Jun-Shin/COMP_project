@@ -91,11 +91,7 @@ public class LoginMainController implements Initializable {
 				System.out.println("btnLogin() error = " + e.getMessage());
 			}
 		} else {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setHeaderText("로그인 결과");
-
-			alert.setContentText("ID 또는 PW가 맞지 않습니다.\n다시 입력해주세요.");
-			alert.showAndWait();
+			DataUtil.showAlert("로그인 결과", "ID 또는 PW가 맞지 않습니다.\n다시 입력해주세요.");
 		}
 	}
 

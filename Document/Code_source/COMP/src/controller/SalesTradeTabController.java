@@ -30,7 +30,6 @@ public class SalesTradeTabController implements Initializable {
 	private TextField txtCAddress;
 	@FXML
 	private TextField txtCEmail;
-	
 	@FXML
 	private TextField txtCPName;
 	@FXML
@@ -127,18 +126,22 @@ public class SalesTradeTabController implements Initializable {
 	private CD_OrderVO cvo;
 	private Stage primaryStage;
 
+	public void setPvo(ProductVO pvo) {
+		this.pvo = pvo;
+	}
+
+
+
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
+	
+	
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		editable();
 		reset();
-		
-		
-		
-		
 	}
 	
 	/*
@@ -147,12 +150,18 @@ public class SalesTradeTabController implements Initializable {
 	public void btnOrderInsert(ActionEvent event) {
 		//TODO 작동여부 미확인상태
 		
-		if(!DataUtil.validityCheck(txtCDNum.getText(), "주문번호")) {return;
+		if(!DataUtil.validityCheck(txtCDNum.getText(), "주문번호")) {
+			return;
 		}else if(!DataUtil.validityCheck(txtCId.getText(), "ID")) {
+			return;
 		}else if(!DataUtil.validityCheck(txtCName.getText(), "고객명")) {
+			return;
 		}else if(!DataUtil.validityCheck(txtCPhone.getText(), "전화번호")) {
+			return;
 		}else if(!DataUtil.validityCheck(txtCAddress.getText(), "주소")) {
+			return;
 		}else if(!DataUtil.validityCheck(txtCEmail.getText(), "이메일")) {
+			return;
 		}else {
 			cvo = new CD_OrderVO();
 			if(txtCPName.getText() !=null) {
@@ -221,6 +230,20 @@ public class SalesTradeTabController implements Initializable {
 	 * editable() : 필드 입력 불가 지정 메소드
 	 */
 	public void editable() {
+		txtCPName.setEditable(false);
+		txtRName.setEditable(false);
+		txtMBName.setEditable(false);
+		txtGName.setEditable(false);
+		txtSSName.setEditable(false);
+		txtHName.setEditable(false);
+		txtPOName.setEditable(false);
+		txtCAName.setEditable(false);
+		txtCOName.setEditable(false);
+		txtSWName.setEditable(false);
+		txtKName.setEditable(false);
+		txtMOName.setEditable(false);
+		txtSPName.setEditable(false);
+		txtMNName.setEditable(false);
 		txtCPPrice.setEditable(false);
 		txtRPrice.setEditable(false);
 		txtMBPrice.setEditable(false);
@@ -423,18 +446,79 @@ public class SalesTradeTabController implements Initializable {
 		txtSPPrice.setText((Integer.parseInt(txtSPPrice.getText()))*spinSPQty.getValue()+"");
 		txtMNPrice.setText((Integer.parseInt(txtMNPrice.getText()))*spinMNQty.getValue()+"");
 		
-		
 		setTotalPrice();
 		
 	}
 	
 	
-	public void insertCvoSetting(String c_num, int cd_price) {
-		cvo.setC_num(c_num);
+	public void insertCvoSetting(String p_num, int cd_price) {
+		cvo.setC_num(p_num);
 		cvo.setCd_price(cd_price);
 		cddao.cd_orderInsert(cvo);
 	}
 	
-	
-	
+	public void setField() {
+		String key = pvo.getP_num().substring(0, pvo.getP_num().indexOf("_"));
+		switch (key) {
+		case "CP":
+			txtCPName.setText(pvo.getP_name());
+			txtCPPrice.setText(pvo.getP_price()+"");
+			break;
+		case "R":
+			txtRName.setText(pvo.getP_name());
+			txtRPrice.setText(pvo.getP_price()+"");
+			break;
+		case "MB":
+			txtMBName.setText(pvo.getP_name());
+			txtMBPrice.setText(pvo.getP_price()+"");
+			break;
+		case "G":
+			txtGName.setText(pvo.getP_name());
+			txtGPrice.setText(pvo.getP_price()+"");
+			break;
+		case "SS":
+			txtSSName.setText(pvo.getP_name());
+			txtSSPrice.setText(pvo.getP_price()+"");
+			break;
+		case "H":
+			txtHName.setText(pvo.getP_name());
+			txtHPrice.setText(pvo.getP_price()+"");
+			break;
+		case "PO":
+			txtPOName.setText(pvo.getP_name());
+			txtPOPrice.setText(pvo.getP_price()+"");
+			break;
+		case "CA":
+			txtCAName.setText(pvo.getP_name());
+			txtCAPrice.setText(pvo.getP_price()+"");
+			break;
+		case "CO":
+			txtCOName.setText(pvo.getP_name());
+			txtCOPrice.setText(pvo.getP_price()+"");
+			break;
+		case "SW":
+			txtSWName.setText(pvo.getP_name());
+			txtSWPrice.setText(pvo.getP_price()+"");
+			break;
+		case "K":
+			txtKName.setText(pvo.getP_name());
+			txtKPrice.setText(pvo.getP_price()+"");
+			break;
+		case "MO":
+			txtMOName.setText(pvo.getP_name());
+			txtMOPrice.setText(pvo.getP_price()+"");
+			break;
+		case "SP":
+			txtSPName.setText(pvo.getP_name());
+			txtSPPrice.setText(pvo.getP_price()+"");
+			break;
+		case "MN":
+			txtMNName.setText(pvo.getP_name());
+			txtMNPrice.setText(pvo.getP_price()+"");
+			break;
+		}
+	}
 }
+
+//TODO order_ChartVO로 인서트 여러번 수행하도록 구현
+//TODO 전달받은 pvo로 각 p_num과 단가를 보관해두는 방법 찾기 (배열??)

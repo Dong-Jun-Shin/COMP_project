@@ -41,3 +41,7 @@ public class Main extends Application {
 		launch(args);
 	}
 }
+
+
+//TODO 다 끝나면 printStack 찾아서 getMessage로 바꾸기
+//TODO 다 끝나면 주석 확인하기

@@ -85,3 +85,13 @@
 .tree-view > .virtual-flow > .scroll-bar > .decrement-button{
     -fx-background-color: transparent;
 }
+
+.image-view:hover {
+
+-fx-border-color: skyblue;
+
+-fx-background-color: yellow;
+
+}
+
+

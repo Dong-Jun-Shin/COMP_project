@@ -67,4 +67,16 @@ public class DataUtil {
 		}
 		return true;
 	}
+	
+	/**
+	 * showAlert() : 경고창을 보여준다.
+	 * @param head 제목
+	 * @param content 내용
+	 */
+	public static void showAlert(String head, String content) {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setHeaderText(head);
+		alert.setContentText(content);
+		alert.showAndWait();
+	}
 }

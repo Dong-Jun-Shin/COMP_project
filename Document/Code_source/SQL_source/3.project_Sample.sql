@@ -1,4 +1,4 @@
-INSERT INTO trader
+﻿INSERT INTO trader
 (tr_num, tr_name, tr_phone, tr_add, tr_bowner, tr_bnum, tr_bname)
 VALUES('TR_'||LPAD(TO_CHAR(tr_num_seq.NEXTVAL),3,'0')
 ,'더나와','02-7845-2236','서울특별시 용산구','이재민','213-224321-07563','하나은행');
@@ -15,19 +15,21 @@ INSERT INTO product
 VALUES('Microsoft Office 365 Personal (PKC 한글)',54660
 ,NULL,'1년','2014/04/01','SW_001',1,'SW_'||LPAD(TO_CHAR(p_sw_num_seq.NEXTVAL),3,'0'));
 
-
+--고객번호.시퀀스 변경값에 맞춰서 넣기
 INSERT INTO cd_order
 (cd_num, cd_price, c_num)
 VALUES(TO_CHAR(SYSDATE, 'yymmdd')||LPAD(TO_CHAR(cd_num_seq.NEXTVAL),4,'0')
 ,2120000,'C_003');
 
-
+--주문번호.날짜와 시퀀스에 따라 생성된 값에 맞춰서 넣기
+--제품번호.시퀀스 값에 따라 생성된 값에 맞춰서 넣기
 INSERT INTO order_chart
 (ch_num, cd_num, ch_qty, p_num)
 VALUES('O_'||LPAD(TO_CHAR(ch_num_seq.NEXTVAL),4,'0'),
 '1911130009',1,'SW_004');
 
-
+--거래내역.값에 맞춰서 넣기
+--제품번호.값에 맞춰서 넣기
 INSERT INTO warehouse
 (wh_num, wh_qty, tr_num, p_num)
 VALUES('WH_'||LPAD(TO_CHAR(wh_num_seq.NEXTVAL),4,'0'),

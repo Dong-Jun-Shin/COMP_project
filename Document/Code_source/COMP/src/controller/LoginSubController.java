@@ -70,8 +70,6 @@ public class LoginSubController implements Initializable {
 			return success;
 		
 		//입력 정보를 판단 후, 결과 출력
-		Alert alert = new Alert(AlertType.WARNING);
-		alert.setHeaderText("ID & PW 결과");
 		StringBuffer sb = new StringBuffer();
 
 		if (txtBOwner.getText().equals(dVO.getdBOwner()) && txtBNum.getText().equals(dVO.getdBNum())) {
@@ -90,9 +88,7 @@ public class LoginSubController implements Initializable {
 			sb.append("계좌주 또는 계좌번호가 잘못되었습니다.\n");
 			sb.append("다시 입력해주세요.\n");
 		}
-		
-		alert.setContentText(sb.toString());
-		alert.showAndWait();
+		DataUtil.showAlert("ID & PW 결과", sb.toString());
 
 		return success;
 	}

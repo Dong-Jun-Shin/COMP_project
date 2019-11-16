@@ -3,10 +3,10 @@ package model;
 public class CD_OrderVO {
 
 	private String cd_sort;		//Default
-	private String cd_num;	//시퀀스 생성
+	private String cd_num;		//시퀀스 생성
 	private String c_num;		//입력 필요한 값(FK)
 	private String cd_reg;		//Default
-	private int cd_price;			//입력 필요한 값
+	private int cd_price;		//입력 필요한 값
 	
 	public String getCd_sort() {
 		return cd_sort;

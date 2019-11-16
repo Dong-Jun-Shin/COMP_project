@@ -67,5 +67,12 @@ public class ProductVO {
 		this.p_reg = p_reg;
 	}
 	
+	@Override
+	public String toString() {
+		return "ProductVO [p_num=" + p_num + ", p_qty=" + p_qty + ", p_name=" + p_name + ", p_price=" + p_price
+				+ ", p_size=" + p_size + ", p_grt=" + p_grt + ", p_date=" + p_date + ", p_img=" + p_img + ", p_reg="
+				+ p_reg + "]";
+	}
+	
 
 }

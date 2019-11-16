@@ -87,7 +87,7 @@
 		<VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
 			<children>
 				<Button fx:id="btnSelProduct" mnemonicParsing="false"
-					onAction="#btnSelProduct" text="제품 선택">
+					text="제품 선택">
 					<font>
 						<Font size="15.0" />
 					</font>
