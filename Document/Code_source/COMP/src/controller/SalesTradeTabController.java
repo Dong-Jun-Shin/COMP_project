@@ -164,6 +164,8 @@ public class SalesTradeTabController implements Initializable {
 			return;
 		}else {
 			cvo = new CD_OrderVO();
+			
+			
 			if(txtCPName.getText() !=null) {
 				insertCvoSetting(txtCPName.getText(),Integer.parseInt(txtCPPrice.getText()));
 			};
