@@ -85,8 +85,7 @@ public class SalesWatchSubController implements Initializable {
 	/**
 	 * btnSelProduct() : 주문하기 탭으로 제품명과, 단가를 전달
 	 * 
-	 * @param parent
-	 * @return
+	 * @return success 값이 전달되었는지 여부를 반환
 	 */
 	@SuppressWarnings("unused")
 	public boolean btnSelProduct() {

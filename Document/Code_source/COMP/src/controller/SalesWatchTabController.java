@@ -330,7 +330,7 @@ public class SalesWatchTabController implements Initializable {
 	/**
 	 * getFileCount() : 폴더 내 jpg의 개수를 센다.
 	 * 
-	 * @return
+	 * @return count jpg의 개수를 반환
 	 */
 	private int getFileCount() {
 		File dir = new File("src" + localUrl);

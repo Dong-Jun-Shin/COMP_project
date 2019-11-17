@@ -72,7 +72,7 @@ public class LoginMainController implements Initializable {
 			return;
 		
 		// 로그인
-		if (txtLoginId.getText().equals(dVO.getdId()) && pwLoginPasswd.getText().equals(dVO.getdPasswd())) {
+		if (txtLoginId.getText().equals(dVO.getDId()) && pwLoginPasswd.getText().equals(dVO.getDPasswd())) {
 			try {
 				Parent root = null;
 				// 라디오 버튼에 따른 창을 로드

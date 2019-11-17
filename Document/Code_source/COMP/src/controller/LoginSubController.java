@@ -72,12 +72,12 @@ public class LoginSubController implements Initializable {
 		//입력 정보를 판단 후, 결과 출력
 		StringBuffer sb = new StringBuffer();
 
-		if (txtBOwner.getText().equals(dVO.getdBOwner()) && txtBNum.getText().equals(dVO.getdBNum())) {
+		if (txtBOwner.getText().equals(dVO.getDBOwner()) && txtBNum.getText().equals(dVO.getDBNum())) {
 			sb.append("ID : ");
-			sb.append(dVO.getdId());
-			if(txtSearchID.getText().equals(dVO.getdId())) {
+			sb.append(dVO.getDId());
+			if(txtSearchID.getText().equals(dVO.getDId())) {
 				sb.append("\nPW : ");
-				sb.append(dVO.getdPasswd());
+				sb.append(dVO.getDPasswd());
 				success = true;
 			}else if(idBox.isVisible()){
 				sb = new StringBuffer();

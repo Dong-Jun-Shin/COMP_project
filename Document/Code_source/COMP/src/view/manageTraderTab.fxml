@@ -133,6 +133,7 @@
 						<TableColumn prefWidth="119.0" text="계좌주" />
 						<TableColumn prefWidth="139.0" text="계좌번호" />
 						<TableColumn prefWidth="131.0" text="계좌은행" />
+						<TableColumn prefWidth="131.0" text="등록일" />
 					</columns>
 				</TableView>
 			</children>
