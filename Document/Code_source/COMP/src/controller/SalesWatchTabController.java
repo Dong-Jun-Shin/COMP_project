@@ -176,7 +176,7 @@ public class SalesWatchTabController implements Initializable {
 
 				// pvo 값 호출
 //				ArrayList<ProductVO> list = pdDao.getProductSelected(key + "_" + selectFileName[imgIdx]); 
-				ArrayList<ProductVO> list = pdDao.getProductSelected("SW_002");
+				ArrayList<ProductVO> list = pdDao.getProductSelected("p_num","SW_002");
 				ProductVO pvo = new ProductVO();
 
 				if (list.size() > 0) {

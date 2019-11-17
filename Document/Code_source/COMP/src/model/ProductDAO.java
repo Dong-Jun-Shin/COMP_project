@@ -112,13 +112,13 @@ public class ProductDAO {
 	 * @return ArrayList<ProductVO>
 	 * @throws SQLException, Exception
 	 */
-	public ArrayList<ProductVO> getProductSelected(String p_num) {
+	public ArrayList<ProductVO> getProductSelected(String category, String searchWord) {
 
 		StringBuffer sql = new StringBuffer();
 		ArrayList<ProductVO> list = new ArrayList<ProductVO>();
 		sql.append("SELECT p_name ,p_price ,p_size ,p_grt ,p_date ,p_img ,p_qty ,p_num ,p_reg ");
 		sql.append("FROM product ");
-		sql.append("WHERE p_num = ?");
+		sql.append("WHERE ? = ?");
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ProductVO pvo = null;
@@ -127,7 +127,8 @@ public class ProductDAO {
 		try {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, p_num);
+			pstmt.setString(1, category );
+			pstmt.setString(2, "%"+searchWord+"%");
 
 			rs = pstmt.executeQuery();
 
