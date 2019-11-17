@@ -3,6 +3,7 @@ package controller;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -224,14 +225,13 @@ public class SalesWatchTabController implements Initializable {
 			if (sPage) {
 				setImgView(-1);
 			}
-			setPageBtn(sPage, -1);
 		} else if (event.getSource() == btnNext) {
 			// 끝 페이지 확인. false = 끝 페이지
 			if (ePage) {
 				setImgView(1);
 			}
-			setPageBtn(ePage, 1);
 		}
+		setPageBtn();
 	}
 
 	/**
@@ -240,25 +240,19 @@ public class SalesWatchTabController implements Initializable {
 	 * @param bool    페이지가 처음이거나 끝인지 판단. false면 처음이거나 끝.
 	 * @param selFunc 이전버튼으로 인한 앞으로 이동인지, 다음버튼으로 인한 뒤로 이동인지 판단.
 	 */
-	private void setPageBtn(boolean bool, int selFunc) {
-		// 기능이 실행되면 다음버튼 활성화 상태
-		if (bool && selFunc == -1) {
-			btnNext.setDisable(false);
-		}
-
+	private void setPageBtn() {
 		// 첫 페이지면 이전버튼 비활성화
 		if (0 == pPageNum) {
 			btnLast.setDisable(true);
-		}
-
-		// 기능이 실행되면 이전 버튼 활성화 상태
-		if (bool && selFunc == 1) {
+		}else {
 			btnLast.setDisable(false);
 		}
-
+		
 		// 끝 페이지면 다음버튼 비활성화
 		if (pPageNum == getFileCount() / 16) {
 			btnNext.setDisable(true);
+		}else {
+			btnNext.setDisable(false);
 		}
 	}
 
@@ -268,50 +262,16 @@ public class SalesWatchTabController implements Initializable {
 	 * @param id 판단할 ID
 	 */
 	private void setKey(String id) {
-		switch (id) {
-		case "CPU":
-			key = "CP";
-			break;
-		case "RAM":
-			key = "R";
-			break;
-		case "MB":
-			key = "MB";
-			break;
-		case "GPU":
-			key = "G";
-			break;
-		case "SSD":
-			key = "SS";
-			break;
-		case "HDD":
-			key = "H";
-			break;
-		case "파워":
-			key = "PO";
-			break;
-		case "케이스":
-			key = "CA";
-			break;
-		case "쿨러":
-			key = "CO";
-			break;
-		case "SW":
-			key = "SW";
-			break;
-		case "키보드":
-			key = "K";
-			break;
-		case "마우스":
-			key = "MO";
-			break;
-		case "스피커":
-			key = "SP";
-			break;
-		case "모니터":
-			key = "MN";
-			break;
+		String idKey[] = {"CPU", "RAM", "MB", "GPU", "SSD", "HDD", "파워", "케이스", "쿨러", "SW", "키보드", "마우스", "스피커", "모니터"};
+		String idVal[] = {"CP", "R", "MB", "G", "SS", "H", "PO", "CA", "CO", "SW", "K", "MO", "SP", "MN"};
+		
+		HashMap<String, String> dicKey = new HashMap<String, String>();
+		
+		for (int i = 0; i < idKey.length; i++) {
+			dicKey.put(idKey[i], idVal[i]);
 		}
+	
+		key = dicKey.get(id);
 	}
 
 	/**
@@ -407,7 +367,7 @@ public class SalesWatchTabController implements Initializable {
 						// ImageView에 첫 페이지 이미지 설정
 						setImgView(0);
 						// 이동에 따른 첫 페이지 초기화
-						setPageBtn(true, -1);
+						setPageBtn();
 					}
 				}
 			});

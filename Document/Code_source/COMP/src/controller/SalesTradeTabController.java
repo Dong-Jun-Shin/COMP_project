@@ -521,4 +521,6 @@ public class SalesTradeTabController implements Initializable {
 }
 
 //TODO order_ChartVO로 인서트 여러번 수행하도록 구현
-//TODO 전달받은 pvo로 각 p_num과 단가를 보관해두는 방법 찾기 (배열??)
+//TODO 전달받은 pvo로 각 p_num과 단가를 보관해두는 방법 찾기 
+// PVO pvoList 배열, TextField txtNameList 배열, TextField txtPriceList, 
+// String keyMap(key, int), Spinner spinQtyList(배열 내 원소의 순서를 맞춰서 작성 후 반복문으로 변경)
