@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CD_orderDAO {
+public class CdOrderDAO {
 
-	private static CD_orderDAO instance = null;
+	private static CdOrderDAO instance = null;
 	
-	private CD_orderDAO() {
+	private CdOrderDAO() {
 		
 	}
 	
@@ -28,9 +28,9 @@ public class CD_orderDAO {
 	 * getInstance() : 인스턴스 생성 메소드
 	 * @return CD_orderDAO
 	 */
-	public static CD_orderDAO getInstance() {
+	public static CdOrderDAO getInstance() {
 		if(instance ==null) {
-			instance = new CD_orderDAO();
+			instance = new CdOrderDAO();
 		}
 		return instance;
 	}
@@ -39,12 +39,12 @@ public class CD_orderDAO {
 	 * getProceedingOrderList() : 거래 중인 주문 리스트 조회 메소드
 	 * @return ArrayList<Order_ChartVO>
 	 */
-	public ArrayList<CD_OrderVO> getProceedingOrderList(){
-		ArrayList<CD_OrderVO> list = new ArrayList<CD_OrderVO>();
+	public ArrayList<CdOrderVO> getProceedingOrderList(){
+		ArrayList<CdOrderVO> list = new ArrayList<CdOrderVO>();
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT cd_num, cd_sort, cd_reg, cd_price, c_num");
 		sql.append("FROM cd_order WHERE cd_sort like '거래중' ");
-		CD_OrderVO cvo = null;
+		CdOrderVO cvo = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -53,7 +53,7 @@ public class CD_orderDAO {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
-			cvo = new CD_OrderVO();
+			cvo = new CdOrderVO();
 			
 			
 			while(rs.next()) {
@@ -101,12 +101,12 @@ public class CD_orderDAO {
 	 *  getCompletedOrderList() : 완료된 주문 리스트 조회 메소드
 	 * @return
 	 */
-	public ArrayList<CD_OrderVO> getCompletedOrderList(){
-		ArrayList<CD_OrderVO> list = new ArrayList<CD_OrderVO>();
+	public ArrayList<CdOrderVO> getCompletedOrderList(){
+		ArrayList<CdOrderVO> list = new ArrayList<CdOrderVO>();
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT cd_num, cd_sort, cd_reg, cd_price, c_num");
 		sql.append("FROM cd_order WHERE cd_sort like '거래완료' OR cd_sort like '거래취소' ");	
-		CD_OrderVO cvo = null;
+		CdOrderVO cvo = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -115,7 +115,7 @@ public class CD_orderDAO {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
-			cvo = new CD_OrderVO();
+			cvo = new CdOrderVO();
 			
 			while(rs.next()) {
 				cvo.setCd_num(rs.getString("cd_num"));
@@ -161,7 +161,7 @@ public class CD_orderDAO {
 	 * @param cvo		(CD_OrderVO) : 수정할 주문
 	 * @return boolean
 	 */
-	public boolean cd_orderUpdate(CD_OrderVO cvo) {
+	public boolean cd_orderUpdate(CdOrderVO cvo) {
 		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE cd_order SET cd_sort = ?");
@@ -214,7 +214,7 @@ public class CD_orderDAO {
 	 * @param cvo		(CD_OrderVO) : 등록할 주문
 	 * @return boolean
 	 */
-	public boolean cd_orderInsert(CD_OrderVO cvo) {
+	public boolean cd_orderInsert(CdOrderVO cvo) {
 		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO cd_order (cd_num, cd_price, c_num)");

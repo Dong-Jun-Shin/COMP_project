@@ -74,11 +74,11 @@ public class SalesWatchTabController implements Initializable {
 	private Stage primaryStage;
 
 	private SalesTradeTabController sttController;
-	
+
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
-	
+
 	public void setSttController(SalesTradeTabController sttController) {
 		this.sttController = sttController;
 	}
@@ -104,48 +104,33 @@ public class SalesWatchTabController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TreeItem에 사용할 이미지와 TreeItem 객체 생성
-		Image comChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/COM.png"), 10, 10, false, false);
-		Image cpChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/CP.png"), 16, 16, false, false);
-		Image rChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/R.png"), 16, 16, false, false);
-		Image mbChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/MB.png"), 16, 16, false, false);
-		Image gChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/G.png"), 16, 16, false, false);
-		Image ssChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/SS.png"), 16, 16, false, false);
-		Image hChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/H.png"), 16, 16, false, false);
-		Image poChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/PO.png"), 16, 16, false, false);
-		Image caChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/CA.png"), 16, 16, false, false);
-		Image coChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/CO.png"), 16, 16, false, false);
-		Image swChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/SW.png"), 16, 16, false, false);
-		Image kChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/K.png"), 16, 16, false, false);
-		Image moChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/MO.png"), 16, 16, false, false);
-		Image spChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/SP.png"), 16, 16, false, false);
-		Image mnChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/MN.png"), 16, 16, false, false);
+		String[] imgName = DataUtil.getKey("id");
+		String[] itemName = DataUtil.getKey("pSort");
+		Object[] itemList = new Object[itemName.length];
 
-		TreeItem<String> CP = new TreeItem<String>("CPU", new ImageView(cpChildIcon));
-		TreeItem<String> R = new TreeItem<String>("RAM", new ImageView(rChildIcon));
-		TreeItem<String> MB = new TreeItem<String>("MB", new ImageView(mbChildIcon));
-		TreeItem<String> G = new TreeItem<String>("GPU", new ImageView(gChildIcon));
-		TreeItem<String> SS = new TreeItem<String>("SSD", new ImageView(ssChildIcon));
-		TreeItem<String> H = new TreeItem<String>("HDD", new ImageView(hChildIcon));
-		TreeItem<String> PO = new TreeItem<String>("파워", new ImageView(poChildIcon));
-		TreeItem<String> CA = new TreeItem<String>("케이스", new ImageView(caChildIcon));
-		TreeItem<String> CO = new TreeItem<String>("쿨러", new ImageView(coChildIcon));
-		TreeItem<String> SW = new TreeItem<String>("SW", new ImageView(swChildIcon));
-		TreeItem<String> K = new TreeItem<String>("키보드", new ImageView(kChildIcon));
-		TreeItem<String> MO = new TreeItem<String>("마우스", new ImageView(moChildIcon));
-		TreeItem<String> SP = new TreeItem<String>("스피커", new ImageView(spChildIcon));
-		TreeItem<String> MN = new TreeItem<String>("모니터", new ImageView(mnChildIcon));
+		for (int i = 0; i < itemName.length; i++) {
+			StringBuffer imgPath = new StringBuffer();
+			imgPath.append("/image/TreeView/");
+			imgPath.append(imgName[i]);
+			imgPath.append(".png");
+
+			Image pChildIcon = new Image(getClass().getResourceAsStream(imgPath.toString()), 10, 10, false, false);
+			itemList[i] = new TreeItem<String>(itemName[i], new ImageView(pChildIcon));
+		}
 
 		// CSS 적용
 		productTreeView.getStylesheets().add("/application/treeView.css");
 		productTreeView.getStyleClass().add("my-tree-view");
 
-		// TreeView 생성
-		TreeItem<String> root = new TreeItem("제품구성", new ImageView(comChildIcon));
-		Object[] subRoot = { CP, R, MB, G, SS, H, PO, CA, CO, SW, K, MO, SP, MN };
 
+		// root 설정
+		Image comChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/COM.png"), 10, 10, false, false);
+		TreeItem<String> root = new TreeItem("제품구성", new ImageView(comChildIcon));
 		root.setExpanded(true);
-		for (int i = 0; i < subRoot.length; i++) {
-			TreeItem<String> item = (TreeItem<String>) subRoot[i];
+		
+		// TreeView 생성
+		for (int i = 0; i < itemList.length; i++) {
+			TreeItem<String> item = (TreeItem<String>) itemList[i];
 			root.getChildren().add(item);
 		}
 
@@ -175,10 +160,10 @@ public class SalesWatchTabController implements Initializable {
 				int imgIdx = (col) + (row * 4);
 
 				// pvo 값 호출
-				ArrayList<ProductVO> list = pdDao.getProductSelected("p_num", (key + "_" + selectFileName[imgIdx])); 
+				ArrayList<ProductVO> list = pdDao.getProductSelected("p_num", (key + "_" + selectFileName[imgIdx]));
 //				ArrayList<ProductVO> list = pdDao.getProductSelected("p_num","SW_002");
 				ProductVO pvo = new ProductVO();
-				
+
 				if (list.size() > 0) {
 					pvo = list.get(0);
 				}
@@ -244,14 +229,14 @@ public class SalesWatchTabController implements Initializable {
 		// 첫 페이지면 이전버튼 비활성화
 		if (0 == pPageNum) {
 			btnLast.setDisable(true);
-		}else {
+		} else {
 			btnLast.setDisable(false);
 		}
-		
+
 		// 끝 페이지면 다음버튼 비활성화
 		if (pPageNum == getFileCount() / 16) {
 			btnNext.setDisable(true);
-		}else {
+		} else {
 			btnNext.setDisable(false);
 		}
 	}
@@ -262,15 +247,15 @@ public class SalesWatchTabController implements Initializable {
 	 * @param id 판단할 ID
 	 */
 	private void setKey(String id) {
-		String idKey[] = {"CPU", "RAM", "MB", "GPU", "SSD", "HDD", "파워", "케이스", "쿨러", "SW", "키보드", "마우스", "스피커", "모니터"};
-		String idVal[] = {"CP", "R", "MB", "G", "SS", "H", "PO", "CA", "CO", "SW", "K", "MO", "SP", "MN"};
-		
+		String idKey[] = DataUtil.getKey("pSort");
+		String idVal[] = DataUtil.getKey("id");
+
 		HashMap<String, String> dicKey = new HashMap<String, String>();
-		
+
 		for (int i = 0; i < idKey.length; i++) {
 			dicKey.put(idKey[i], idVal[i]);
 		}
-	
+
 		key = dicKey.get(id);
 	}
 

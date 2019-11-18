@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class Order_chartDAO {
+public class OrderChartDAO {
 
-	private static Order_chartDAO instance = null;
+	private static OrderChartDAO instance = null;
 	
-	private Order_chartDAO() {
+	private OrderChartDAO() {
 		
 	}
 	
@@ -28,9 +28,9 @@ public class Order_chartDAO {
 	 * getInstance() : 인스턴스 생성 메소드
 	 * @return Order_chartDAO
 	 */
-	public static Order_chartDAO getInstance() {
+	public static OrderChartDAO getInstance() {
 		if(instance == null) {
-			instance = new Order_chartDAO();
+			instance = new OrderChartDAO();
 		}
 		return instance;
 	}
@@ -39,17 +39,17 @@ public class Order_chartDAO {
 	 * getOrder_ChartList() : 주문 내역 조회 메소드
 	 * @return ArrayList<Order_ChartVO>
 	 */
-	public ArrayList<Order_ChartVO> getOrder_ChartList(){
-		ArrayList<Order_ChartVO> list = new ArrayList<Order_ChartVO>();
+	public ArrayList<OrderChartVO> getOrder_ChartList(){
+		ArrayList<OrderChartVO> list = new ArrayList<OrderChartVO>();
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ch_num, cd_num, ch_qty, p_num FROM order_chart");
-		Order_ChartVO ovo = null;
+		OrderChartVO ovo = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
-			ovo = new Order_ChartVO();
+			ovo = new OrderChartVO();
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
@@ -96,7 +96,7 @@ public class Order_chartDAO {
 	 * @param ovo			(Order_ChartVO) : 등록할 주문 내역
 	 * @return boolean
 	 */
-	public boolean order_ChartInsert(Order_ChartVO ovo) {
+	public boolean order_ChartInsert(OrderChartVO ovo) {
 		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO order_chart(ch_num, cd_num, ch_qty, p_num)");

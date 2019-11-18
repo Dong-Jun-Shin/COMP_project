@@ -110,6 +110,7 @@ TextField txtSPPrice
 TextField txtMNName
 TextField txtMNPrice
 TextField txtTotalPrice
+Button btnIdChk
 Button btnOrderInsert
 Spinner spinCPQty
 Spinner spinRQty
@@ -125,9 +126,26 @@ Spinner spinKQty
 Spinner spinMOQty
 Spinner spinSPQty
 Spinner spinMNQty
+Button btnCP
+Button btnR
+Button btnMB
+Button btnG
+Button btnSS
+Button btnH
+Button btnPO
+Button btnCA
+Button btnCO
+Button btnSW
+Button btnK
+Button btnMO
+Button btnSP
+Button btnMN
+Button btnAll
 
 #btnOrderInsert(ActionEvent event)
-
+#btnCancel(ActionEvent event)
+#btnIdChk(ActionEvent event)
+#btnAllCancel(ActionEvent event)
 
 -------------[manageSummary]
 Label lblLoginDate

@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 
-public class DealerVO implements Serializable{
+public class DealerVO implements Serializable {
 	private static final long serialVersionUID = -1576767060432378767L;
 	private String dName;
 //	private String dId = "infinityCM88";
@@ -16,7 +16,7 @@ public class DealerVO implements Serializable{
 	private String dBOwner;
 	private String dBNum;
 	private String dBName;
-	
+
 //	private String dName = "명륜컴퓨터";
 ////	private String dId = "infinityCM88";
 ////	private String dPasswd = "unli88mite";
@@ -114,7 +114,7 @@ public class DealerVO implements Serializable{
 	public static void setInstance(DealerVO instance) {
 		DealerVO.instance = instance;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return dId.hashCode();
@@ -124,7 +124,7 @@ public class DealerVO implements Serializable{
 	public boolean equals(Object obj) {
 		if (obj instanceof DealerVO) {
 			DealerVO other = (DealerVO) obj;
-			if(dId.compareTo(other.dId)==0) {
+			if (dId.compareTo(other.dId) == 0) {
 				return true;
 			}
 		}
@@ -136,6 +136,5 @@ public class DealerVO implements Serializable{
 		return "DealerVO [dName=" + dName + ", dId=" + dId + ", dPasswd=" + dPasswd + ", dPhone=" + dPhone
 				+ ", dAddress=" + dAddress + ", dBOwner=" + dBOwner + ", dBNum=" + dBNum + ", dBName=" + dBName + "]";
 	}
-	
-	
+
 }

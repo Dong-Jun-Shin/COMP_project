@@ -84,6 +84,30 @@ public class DataUtil {
 		return result;
 	}
 
+	public static String[] getKey(String sel) {
+		String key[]; 
+		switch (sel) {
+		case "id":
+			key = new String[]{ "CP", "R", "MB", "G", "SS", "H", "PO", "CA", "CO", "SW", "K", "MO", "SP", "MN" };			
+			break;
+		case "pSort":
+			key = new String[]{"CPU", "RAM", "MB", "GPU", "SSD", "HDD", "파워", "케이스", "쿨러", "SW", "키보드", "마우스", "스피커", "모니터"};			
+			break;
+		default:
+			key = null;
+			break;
+		}
+
+		return key;
+	}
+	
+	public static Integer[] getIdxVal() {
+		Integer idxVal[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
+		
+		return idxVal;
+	}
+	
+	
 	/**
 	 * showAlert() : 경고창을 보여준다.
 	 * 

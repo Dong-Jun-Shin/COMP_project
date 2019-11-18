@@ -36,41 +36,39 @@ public class CustomerDAO {
 	}
 	
 	/**
-	 *  customerLoginOverlap() : 로그인 ID/PW 조회 메소드 
+	 *  customerLoginOverlap() : ID 조회 메소드 
 	 * @param c_id	(String) : 입력한 ID
-	 * @param c_pw	(String) : 입력한 PW
 	 * @return boolean
 	 * @throws SQLException, Exception
 	 */
-	public boolean customerLoginOverlap(String c_id, String c_pw){
+	public boolean customerLoginOverlap(String c_id){
 		StringBuffer sql = new StringBuffer();
 		ResultSet rs = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		boolean result = false;
 		
-		sql.append("SELECT c_num ,c_name ,c_id ,c_pw ,c_phone ,c_add ,c_birth ,c_email ,c_reg");
-		sql.append("FROM customer");
-		sql.append("where c_id = ? and c_pw = ?");
+		sql.append("SELECT c_num ,c_name ,c_id ,c_pw ,c_phone ,c_add ,c_birth ,c_email ,c_reg ");
+		sql.append("FROM customer ");
+		sql.append("WHERE c_id = ?");
 		
 		try {
 			
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, c_id);
-			pstmt.setString(2, c_pw);
 			rs = pstmt.executeQuery();
 			
-			while(!rs.next()) {
+			if(rs.next()) {
 				result = true;
 			}
 			
 		}catch(SQLException sqle) {
-			System.out.println("[  CustomerLogin(String c_id, String c_pw)  ]    [ SQLException ]");
+			System.out.println("[  CustomerLogin(String c_id)  ]    [ SQLException ]");
 			sqle.printStackTrace();
 			return false;
 		}catch(Exception e) {
-			System.out.println("[  CustomerLogin(String c_id, String c_pw)  ]    [ Unknown Exception ]");
+			System.out.println("[  CustomerLogin(String c_id)  ]    [ Unknown Exception ]");
 			e.printStackTrace();
 			return false;
 		}finally {
@@ -86,7 +84,7 @@ public class CustomerDAO {
 				}
 				
 			}catch(Exception e) {
-				System.out.println("[  public ArrayList<ProductVO>  getCustomerList()  ]    [ Connect Closed Exception ]");
+				System.out.println("[  CustomerLogin(String c_id)  ]    [ Connect Closed Exception ]");
 				e.printStackTrace();
 			}
 			
@@ -167,7 +165,7 @@ public class CustomerDAO {
 		ArrayList<CustomerVO> list = new ArrayList<CustomerVO>();
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT c_num ,c_name ,c_id ,c_pw ,c_phone ,c_add ,c_birth ,c_email ,c_reg ");
-		sql.append("FROM customer where "+category+" like "+searchWord);
+		sql.append("FROM customer where "+category+" like ?");
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Connection con =null;
@@ -177,6 +175,7 @@ public class CustomerDAO {
 		try{
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, searchWord);
 			rs = pstmt.executeQuery();
 			cvo = new CustomerVO();
 			
