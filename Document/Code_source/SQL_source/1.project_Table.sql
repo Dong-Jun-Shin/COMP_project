@@ -1,4 +1,4 @@
-﻿CREATE TABLE trader
+CREATE TABLE trader
 (
 	tr_num               VARCHAR2(6) NOT NULL ,
 	tr_name              VARCHAR2(30) NOT NULL ,
