@@ -87,7 +87,6 @@ public class SalesWatchSubController implements Initializable {
 	 * 
 	 * @return success 값이 전달되었는지 여부를 반환
 	 */
-	@SuppressWarnings("unused")
 	public boolean btnSelProduct() {
 		boolean success = false;
 		try {

@@ -175,14 +175,14 @@ public class SalesWatchTabController implements Initializable {
 				int imgIdx = (col) + (row * 4);
 
 				// pvo 값 호출
-//				ArrayList<ProductVO> list = pdDao.getProductSelected(key + "_" + selectFileName[imgIdx]); 
-				ArrayList<ProductVO> list = pdDao.getProductSelected("p_num","SW_002");
+				ArrayList<ProductVO> list = pdDao.getProductSelected("p_num", (key + "_" + selectFileName[imgIdx])); 
+//				ArrayList<ProductVO> list = pdDao.getProductSelected("p_num","SW_002");
 				ProductVO pvo = new ProductVO();
-
+				
 				if (list.size() > 0) {
 					pvo = list.get(0);
 				}
-				pvo.setP_num(key + "_001");
+//				pvo.setP_num(key + "_001");
 				// 팝업의 FXML 로드
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/salesWatchSub.fxml"));
 				Parent parent = loader.load();

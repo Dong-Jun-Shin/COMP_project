@@ -113,12 +113,19 @@ public class ProductDAO {
 	 * @throws SQLException, Exception
 	 */
 	public ArrayList<ProductVO> getProductSelected(String category, String searchWord) {
-
 		StringBuffer sql = new StringBuffer();
 		ArrayList<ProductVO> list = new ArrayList<ProductVO>();
 		sql.append("SELECT p_name ,p_price ,p_size ,p_grt ,p_date ,p_img ,p_qty ,p_num ,p_reg ");
 		sql.append("FROM product ");
-		sql.append("WHERE ? = ?");
+		switch (category) {
+		case "p_num":
+			sql.append("WHERE p_num LIKE ?");
+			break;
+		case "p_name":
+			sql.append("WHERE p_name LIKE ?");
+			break;
+		}
+		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ProductVO pvo = null;
@@ -127,11 +134,9 @@ public class ProductDAO {
 		try {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, category );
-			pstmt.setString(2, "%"+searchWord+"%");
-
+			pstmt.setString(1, "%"+searchWord+"%");
+			
 			rs = pstmt.executeQuery();
-
 			pvo = new ProductVO();
 
 			while (rs.next()) {
@@ -139,7 +144,7 @@ public class ProductDAO {
 				pvo.setP_price(rs.getInt("p_price"));
 				pvo.setP_size(rs.getString("p_size"));
 				pvo.setP_grt(rs.getString("p_grt"));
-				pvo.setP_date(rs.getDate("p_date").toString());
+				pvo.setP_date(rs.getString("p_date"));
 				pvo.setP_img(rs.getString("p_img"));
 				pvo.setP_qty(rs.getInt("p_qty"));
 				pvo.setP_num(rs.getString("p_num"));

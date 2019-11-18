@@ -1,6 +1,7 @@
 package controller;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -88,10 +89,10 @@ public class SalesTradeTabController implements Initializable {
 	private TextField txtMNPrice;
 	@FXML
 	private TextField txtTotalPrice;
-	
+
 	@FXML
 	private Button btnOrderInsert;
-	
+
 	@FXML
 	private Spinner<Integer> spinCPQty;
 	@FXML
@@ -120,409 +121,256 @@ public class SalesTradeTabController implements Initializable {
 	private Spinner<Integer> spinSPQty;
 	@FXML
 	private Spinner<Integer> spinMNQty;
-	
-	private ProductVO pvo;
+
+	private HashMap<String, Integer> dicKey = new HashMap<String, Integer>();
+	private TextField[] txtNameList;
+	private TextField[] txtPriceList;
+	private Object[] spinQtyList;
+
+	private int keyIdx;
+	private ProductVO[] pvoList;
 	private CD_orderDAO cddao;
 	private CD_OrderVO cvo;
 	private Stage primaryStage;
 
 	public void setPvo(ProductVO pvo) {
-		this.pvo = pvo;
+		String key = pvo.getP_num().substring(0, pvo.getP_num().indexOf("_"));
+		keyIdx = dicKey.get(key);
+
+		this.pvoList[keyIdx] = pvo;
 	}
-
-
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
-	
-	
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		setList();
 		editable();
 		reset();
 	}
-	
+
+	/**
+	 * setList() : Map을 생성하고 각 txtName의 필드들과 txtPrice의 필드들, spinQty의 필드들을 배열로 만든다.
+	 */
+	private void setList() {
+		// Map<key, value> 설정
+		String idKey[] = { "CP", "R", "MB", "G", "SS", "H", "PO", "CA", "CO", "SW", "K", "MO", "SP", "MN" };
+		Integer idVal[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
+
+		for (int i = 0; i < idKey.length; i++) {
+			dicKey.put(idKey[i], idVal[i]);
+		}
+
+		// 각 필드 배열 생성
+		txtNameList = new TextField[] { txtCPName, txtRName, txtMBName, txtGName, txtSSName, txtHName, txtPOName,
+				txtCAName, txtCOName, txtSWName, txtKName, txtMOName, txtSPName, txtMNName };
+		txtPriceList = new TextField[] { txtCPPrice, txtRPrice, txtMBPrice, txtGPrice, txtSSPrice, txtHPrice,
+				txtPOPrice, txtCAPrice, txtCOPrice, txtSWPrice, txtKPrice, txtMOPrice, txtSPPrice, txtMNPrice };
+		spinQtyList = new Object[] { spinCPQty, spinRQty, spinMBQty, spinGQty, spinSSQty, spinHQty, spinPOQty,
+				spinCAQty, spinCOQty, spinSWQty, spinKQty, spinMOQty, spinSPQty, spinMNQty };
+
+		// 각 제품에 해당하는 pvo 배열 생성
+		pvoList = new ProductVO[txtNameList.length];
+
+		// 가격의 기본 값으로 0을 설정
+		for (int i = 0; i < idVal.length; i++) {
+			txtPriceList[i].setText(0 + "");
+		}
+	}
+
 	/*
-	 * 		btnOrderInsert(ActionEvent event) : 주문 입력 이벤트
+	 * btnOrderInsert(ActionEvent event) : 주문 입력 이벤트
 	 */
 	public void btnOrderInsert(ActionEvent event) {
-		//TODO 작동여부 미확인상태
-		
-		if(!DataUtil.validityCheck(txtCDNum.getText(), "주문번호")) {
+		//TODO order_ChartVO로 인서트 여러번 수행하도록 구현
+
+		if (!DataUtil.validityCheck(txtCDNum.getText(), "주문번호")) {
 			return;
-		}else if(!DataUtil.validityCheck(txtCId.getText(), "ID")) {
+		} else if (!DataUtil.validityCheck(txtCId.getText(), "ID")) {
 			return;
-		}else if(!DataUtil.validityCheck(txtCName.getText(), "고객명")) {
+		} else if (!DataUtil.validityCheck(txtCName.getText(), "고객명")) {
 			return;
-		}else if(!DataUtil.validityCheck(txtCPhone.getText(), "전화번호")) {
+		} else if (!DataUtil.validityCheck(txtCPhone.getText(), "전화번호")) {
 			return;
-		}else if(!DataUtil.validityCheck(txtCAddress.getText(), "주소")) {
+		} else if (!DataUtil.validityCheck(txtCAddress.getText(), "주소")) {
 			return;
-		}else if(!DataUtil.validityCheck(txtCEmail.getText(), "이메일")) {
+		} else if (!DataUtil.validityCheck(txtCEmail.getText(), "이메일")) {
 			return;
-		}else {
+		} else {
 			cvo = new CD_OrderVO();
-			
-			
-			if(txtCPName.getText() !=null) {
-				insertCvoSetting(txtCPName.getText(),Integer.parseInt(txtCPPrice.getText()));
-			};
-			
-			if(txtRName.getText() !=null) {
-				insertCvoSetting(txtRName.getText(),Integer.parseInt(txtRPrice.getText()));
-			};
-			
-			if(txtMBName.getText() !=null) {
-				insertCvoSetting(txtMBName.getText(),Integer.parseInt(txtMBPrice.getText()));
-			};
-			
-			if(txtGName.getText() !=null) {
-				insertCvoSetting(txtGName.getText(),Integer.parseInt(txtGPrice.getText()));
-			};
-			
-			if(txtSSName.getText() !=null) {
-				insertCvoSetting(txtSSName.getText(),Integer.parseInt(txtSSPrice.getText()));
-			};
-			
-			if(txtHName.getText() !=null) {
-				insertCvoSetting(txtHName.getText(),Integer.parseInt(txtHPrice.getText()));
-			};
-			
-			if(txtPOName.getText() !=null) {
-				insertCvoSetting(txtPOName.getText(),Integer.parseInt(txtPOPrice.getText()));
-			};
-			
-			if(txtCAName.getText() !=null) {
-				insertCvoSetting(txtCAName.getText(),Integer.parseInt(txtCAPrice.getText()));
-			};
-			
-			if (txtCOName.getText() !=null) {
-				insertCvoSetting(txtCOName.getText(),Integer.parseInt(txtCOPrice.getText()));
-			};
-			
-			if(txtSWName.getText() !=null) {
-				insertCvoSetting(txtSWName.getText(),Integer.parseInt(txtSWPrice.getText()));
-			};
-			
-			if(txtKName.getText() !=null) {
-				insertCvoSetting(txtKName.getText(),Integer.parseInt(txtKPrice.getText()));
-			};
-			
-			if(txtMOName.getText() !=null) {
-				insertCvoSetting(txtMOName.getText(),Integer.parseInt(txtMOPrice.getText()));
-			};
-			
-			if(txtSPName.getText() !=null) {
-				insertCvoSetting(txtSPName.getText(),Integer.parseInt(txtSPPrice.getText()));
-			};
-			
-			if(txtMNName.getText() !=null) {
-				insertCvoSetting(txtMNName.getText(),Integer.parseInt(txtMNPrice.getText()));
-			};
-			
+
+			if (txtCPName.getText() != null) {
+				insertCvoSetting(txtCPName.getText(), Integer.parseInt(txtCPPrice.getText()));
+			}
+			;
+
+			if (txtRName.getText() != null) {
+				insertCvoSetting(txtRName.getText(), Integer.parseInt(txtRPrice.getText()));
+			}
+			;
+
+			if (txtMBName.getText() != null) {
+				insertCvoSetting(txtMBName.getText(), Integer.parseInt(txtMBPrice.getText()));
+			}
+			;
+
+			if (txtGName.getText() != null) {
+				insertCvoSetting(txtGName.getText(), Integer.parseInt(txtGPrice.getText()));
+			}
+			;
+
+			if (txtSSName.getText() != null) {
+				insertCvoSetting(txtSSName.getText(), Integer.parseInt(txtSSPrice.getText()));
+			}
+			;
+
+			if (txtHName.getText() != null) {
+				insertCvoSetting(txtHName.getText(), Integer.parseInt(txtHPrice.getText()));
+			}
+			;
+
+			if (txtPOName.getText() != null) {
+				insertCvoSetting(txtPOName.getText(), Integer.parseInt(txtPOPrice.getText()));
+			}
+			;
+
+			if (txtCAName.getText() != null) {
+				insertCvoSetting(txtCAName.getText(), Integer.parseInt(txtCAPrice.getText()));
+			}
+			;
+
+			if (txtCOName.getText() != null) {
+				insertCvoSetting(txtCOName.getText(), Integer.parseInt(txtCOPrice.getText()));
+			}
+			;
+
+			if (txtSWName.getText() != null) {
+				insertCvoSetting(txtSWName.getText(), Integer.parseInt(txtSWPrice.getText()));
+			}
+			;
+
+			if (txtKName.getText() != null) {
+				insertCvoSetting(txtKName.getText(), Integer.parseInt(txtKPrice.getText()));
+			}
+			;
+
+			if (txtMOName.getText() != null) {
+				insertCvoSetting(txtMOName.getText(), Integer.parseInt(txtMOPrice.getText()));
+			}
+			;
+
+			if (txtSPName.getText() != null) {
+				insertCvoSetting(txtSPName.getText(), Integer.parseInt(txtSPPrice.getText()));
+			}
+			;
+
+			if (txtMNName.getText() != null) {
+				insertCvoSetting(txtMNName.getText(), Integer.parseInt(txtMNPrice.getText()));
+			}
+			;
+
 		}
-		
+
 		reset();
 	}
-	
-	
+
 	/**
 	 * editable() : 필드 입력 불가 지정 메소드
 	 */
+	@SuppressWarnings("unchecked")
 	public void editable() {
-		txtCPName.setEditable(false);
-		txtRName.setEditable(false);
-		txtMBName.setEditable(false);
-		txtGName.setEditable(false);
-		txtSSName.setEditable(false);
-		txtHName.setEditable(false);
-		txtPOName.setEditable(false);
-		txtCAName.setEditable(false);
-		txtCOName.setEditable(false);
-		txtSWName.setEditable(false);
-		txtKName.setEditable(false);
-		txtMOName.setEditable(false);
-		txtSPName.setEditable(false);
-		txtMNName.setEditable(false);
-		txtCPPrice.setEditable(false);
-		txtRPrice.setEditable(false);
-		txtMBPrice.setEditable(false);
-		txtGPrice.setEditable(false);
-		txtSSPrice.setEditable(false);
-		txtHPrice.setEditable(false);
-		txtPOPrice.setEditable(false);
-		txtCAPrice.setEditable(false);
-		txtCOPrice.setEditable(false);
-		txtSWPrice.setEditable(false);
-		txtKPrice.setEditable(false);
-		txtMOPrice.setEditable(false);
-		txtSPPrice.setEditable(false);
-		txtMNPrice.setEditable(false);
-		txtTotalPrice.setEditable(false);
-		spinCAQty.setEditable(false);
-		spinCOQty.setEditable(false);
-		spinCPQty.setEditable(false);
-		spinGQty.setEditable(false);
-		spinHQty.setEditable(false);
-		spinKQty.setEditable(false);
-		spinMBQty.setEditable(false);
-		spinMNQty.setEditable(false);
-		spinMOQty.setEditable(false);
-		spinPOQty.setEditable(false);
-		spinRQty.setEditable(false);
-		spinSPQty.setEditable(false);
-		spinSWQty.setEditable(false);
+		for (int i = 0; i < txtNameList.length; i++) {
+			txtNameList[i].setEditable(false);
+		}
+
+		for (int i = 0; i < txtPriceList.length; i++) {
+			txtPriceList[i].setEditable(false);
+		}
+
+		for (int i = 0; i < spinQtyList.length; i++) {
+			((Spinner<Integer>) spinQtyList[i]).setEditable(false);
+		}
+
 		txtTotalPrice.setEditable(false);
 	}
-	
+
 	/**
 	 * reset() : 전체 데이터 리셋 메소드
 	 */
 	public void reset() {
-		txtCPName.clear();
-		txtCPPrice.setText("0");
-		txtRName.clear();
-		txtRPrice.setText("0");
-		txtMBName.clear();
-		txtMBPrice.setText("0");
-		txtGName.clear();
-		txtGPrice.setText("0");
-		txtSSName.clear();
-		txtSSPrice.setText("0");
-		txtHName.clear();
-		txtHPrice.setText("0");
-		txtPOName.clear();
-		txtPOPrice.setText("0");
-		txtCAName.clear();
-		txtCAPrice.setText("0");
-		txtCOName.clear();
-		txtCOPrice.setText("0");
-		txtSWName.clear();
-		txtSWPrice.setText("0");
-		txtKName.clear();
-		txtKPrice.setText("0");
-		txtMOName.clear();
-		txtMOPrice.setText("0");
-		txtSPName.clear();
-		txtSPPrice.setText("0");
-		txtMNName.clear();
-		txtMNPrice.setText("0");
-		txtTotalPrice.clear();
+		for (int i = 0; i < txtNameList.length; i++) {
+			txtNameList[i].clear();
+		}
+
+		for (int i = 0; i < txtPriceList.length; i++) {
+			txtPriceList[i].setText("0");
+		}
+
+		txtTotalPrice.setText("0");
 		setSpineerDefaultValue();
 	}
-	
+
 	/**
 	 * setSpineerDefaultValue() : 스피너 값 설정 메소드
 	 */
+	@SuppressWarnings("unchecked")
 	public void setSpineerDefaultValue() {
-		IntegerSpinnerValueFactory defqtyca = new IntegerSpinnerValueFactory(0, 999);
-		spinCAQty.setValueFactory(defqtyca);
-		IntegerSpinnerValueFactory defqtyco = new IntegerSpinnerValueFactory(0, 999);
-		spinCOQty.setValueFactory(defqtyco);
-		IntegerSpinnerValueFactory defqtycp = new IntegerSpinnerValueFactory(0, 999);
-		spinCPQty.setValueFactory(defqtycp);
-		IntegerSpinnerValueFactory defqtyg = new IntegerSpinnerValueFactory(0, 999);
-		spinGQty.setValueFactory(defqtyg);
-		IntegerSpinnerValueFactory defqtyh = new IntegerSpinnerValueFactory(0, 999);
-		spinHQty.setValueFactory(defqtyh);
-		IntegerSpinnerValueFactory defqtyk = new IntegerSpinnerValueFactory(0, 999);
-		spinKQty.setValueFactory(defqtyk);
-		IntegerSpinnerValueFactory defqtymb = new IntegerSpinnerValueFactory(0, 999);
-		spinMBQty.setValueFactory(defqtymb);
-		IntegerSpinnerValueFactory defqtymn = new IntegerSpinnerValueFactory(0, 999);
-		spinMNQty.setValueFactory(defqtymn);
-		IntegerSpinnerValueFactory defqtymo = new IntegerSpinnerValueFactory(0, 999);
-		spinMOQty.setValueFactory(defqtymo);
-		IntegerSpinnerValueFactory defqtypo = new IntegerSpinnerValueFactory(0, 999);
-		spinPOQty.setValueFactory(defqtypo);
-		IntegerSpinnerValueFactory defqtyro = new IntegerSpinnerValueFactory(0, 999);
-		spinRQty.setValueFactory(defqtyro);
-		IntegerSpinnerValueFactory defqtysp = new IntegerSpinnerValueFactory(0, 999);
-		spinSPQty.setValueFactory(defqtysp);
-		IntegerSpinnerValueFactory defqtyss = new IntegerSpinnerValueFactory(0, 999);
-		spinSSQty.setValueFactory(defqtyss);
-		IntegerSpinnerValueFactory defqtysw = new IntegerSpinnerValueFactory(0, 999);
-		spinSWQty.setValueFactory(defqtysw);
-		
-		
+		IntegerSpinnerValueFactory[] defQtyList = new IntegerSpinnerValueFactory[spinQtyList.length];
+		for (int i = 0; i < defQtyList.length; i++) {
+			defQtyList[i] = new IntegerSpinnerValueFactory(0, 999);
+		}
+
+		for (int i = 0; i < spinQtyList.length; i++) {
+			((Spinner<Integer>) spinQtyList[i]).setValueFactory(defQtyList[i]);
+		}
 	}
-	
+
 	/*
 	 * setTotalPrice() : 총 금액 자동입력 메소드
 	 */
 	public void setTotalPrice() {
 		int resultPrice = 0;
-		
-		resultPrice += Integer.parseInt((txtCPPrice.getText()));
-		resultPrice += Integer.parseInt((txtCAPrice.getText()));
-		resultPrice += Integer.parseInt((txtCOPrice.getText()));
-		resultPrice += Integer.parseInt((txtGPrice.getText()));
-		resultPrice += Integer.parseInt((txtHPrice.getText()));
-		resultPrice += Integer.parseInt((txtKPrice.getText()));
-		resultPrice += Integer.parseInt((txtMBPrice.getText()));
-		resultPrice += Integer.parseInt((txtMNPrice.getText()));
-		resultPrice += Integer.parseInt((txtMOPrice.getText()));
-		resultPrice += Integer.parseInt((txtPOPrice.getText()));
-		resultPrice += Integer.parseInt((txtSPPrice.getText()));
-		resultPrice += Integer.parseInt((txtRPrice.getText()));
-		resultPrice += Integer.parseInt((txtSSPrice.getText()));
-		resultPrice += Integer.parseInt((txtSWPrice.getText()));
-		
-		String resultSet = resultPrice+"";
+
+		for (int i = 0; i < txtPriceList.length; i++) {
+			resultPrice += Integer.parseInt((txtPriceList[i].getText()));
+		}
+
+		String resultSet = resultPrice + "";
 		txtTotalPrice.setText(resultSet);
-		
+
 	}
-	
-	
+
 	/*
 	 * setProductPriceAction(MouseEvent event) 제품별 가격 변동 메소드
 	 */
+	@SuppressWarnings("unchecked")
 	public void setProductPriceAction(MouseEvent event) {
-		//TODO ProductVO 연동하지않음.
-		//테스트용
-				//pvo = new ProductVO();
-				//pvo.setP_price(50000);
-				//txtCPPrice.setText(pvo.getP_price()+"");
-		//값 설정
-		if(spinCPQty.getValue()>0) {
-			txtCPPrice.setText(50000+"");
-		};
-		
-		if(spinCAQty.getValue()>0) {
-			txtCAPrice.setText(20000+"");
-		};
-		
-		if(spinCOQty.getValue()>0) {
-			txtCOPrice.setText(40000+"");
-		};
-		
-		if(spinGQty.getValue()>0) {
-			txtGPrice.setText(56000+"");
-		};
-		if(spinHQty.getValue()>0) {
-			txtHPrice.setText(42000+"");
-		};
-		if(spinKQty.getValue()>0) {
-			txtKPrice.setText(63020+"");	
-		};
-		if(spinMBQty.getValue()>0) {
-			txtMBPrice.setText(107700+"");
-		};
-		if(spinMNQty.getValue()>0) {
-			txtMNPrice.setText(60310+"");
-		};
-		if(spinPOQty.getValue()>0) {
-			txtPOPrice.setText(21340+"");
-		};
-		if(spinRQty.getValue()>0) {
-			txtRPrice.setText(78600+"");
-		};
-		if(spinSPQty.getValue()>0) {
-			txtSPPrice.setText(56800+"");
-		};
-		if(spinSSQty.getValue()>0) {
-			txtSSPrice.setText(354100+"");
-		};
-		if(spinSWQty.getValue()>0) {
-			txtSWPrice.setText(351000+"");
-		};
-		if(spinMOQty.getValue()>0) {
-			txtMOPrice.setText(217000+"");
-		};
-		
-		//입력된 값 * 스핀값
-		txtCPPrice.setText((Integer.parseInt(txtCPPrice.getText()))*(spinCPQty.getValue())+"");
-		txtRPrice.setText((Integer.parseInt(txtRPrice.getText()))*spinRQty.getValue()+"");
-		txtMBPrice.setText((Integer.parseInt(txtMBPrice.getText()))*spinMBQty.getValue()+"");
-		txtGPrice.setText((Integer.parseInt(txtGPrice.getText()))*spinGQty.getValue()+"");
-		txtSSPrice.setText((Integer.parseInt(txtSSPrice.getText()))*spinSSQty.getValue()+"");
-		txtHPrice.setText((Integer.parseInt(txtHPrice.getText()))*spinHQty.getValue()+"");
-		txtPOPrice.setText((Integer.parseInt(txtPOPrice.getText()))*spinPOQty.getValue()+"");
-		txtCAPrice.setText((Integer.parseInt(txtCAPrice.getText()))*spinCAQty.getValue()+"");
-		txtCOPrice.setText((Integer.parseInt(txtCOPrice.getText()))*spinCOQty.getValue()+"");
-		txtSWPrice.setText((Integer.parseInt(txtSWPrice.getText()))*spinSWQty.getValue()+"");
-		txtKPrice.setText((Integer.parseInt(txtKPrice.getText()))*spinKQty.getValue()+"");
-		txtMOPrice.setText((Integer.parseInt(txtMOPrice.getText()))*spinMOQty.getValue()+"");
-		txtSPPrice.setText((Integer.parseInt(txtSPPrice.getText()))*spinSPQty.getValue()+"");
-		txtMNPrice.setText((Integer.parseInt(txtMNPrice.getText()))*spinMNQty.getValue()+"");
-		
+		// pvo를 받으면 각 텍스트에 단가 설정
+		for (int i = 0; i < pvoList.length; i++) {
+			if (((Spinner<Integer>) spinQtyList[i]).getValue() > 0) {
+				txtPriceList[i].setText(pvoList[i].getP_price() + "");
+			}			
+		}
+
+		// 입력된 값 * 스핀값
+		for (int i = 0; i < txtPriceList.length; i++) {
+			txtPriceList[i].setText(
+					(Integer.parseInt(txtPriceList[i].getText())) * (((Spinner<Integer>) spinQtyList[i]).getValue())
+							+ "");
+		}
+
 		setTotalPrice();
-		
 	}
-	
-	
+
 	public void insertCvoSetting(String p_num, int cd_price) {
 		cvo.setC_num(p_num);
 		cvo.setCd_price(cd_price);
 		cddao.cd_orderInsert(cvo);
 	}
-	
+
 	public void setField() {
-		String key = pvo.getP_num().substring(0, pvo.getP_num().indexOf("_"));
-		switch (key) {
-		case "CP":
-			txtCPName.setText(pvo.getP_name());
-			txtCPPrice.setText(pvo.getP_price()+"");
-			break;
-		case "R":
-			txtRName.setText(pvo.getP_name());
-			txtRPrice.setText(pvo.getP_price()+"");
-			break;
-		case "MB":
-			txtMBName.setText(pvo.getP_name());
-			txtMBPrice.setText(pvo.getP_price()+"");
-			break;
-		case "G":
-			txtGName.setText(pvo.getP_name());
-			txtGPrice.setText(pvo.getP_price()+"");
-			break;
-		case "SS":
-			txtSSName.setText(pvo.getP_name());
-			txtSSPrice.setText(pvo.getP_price()+"");
-			break;
-		case "H":
-			txtHName.setText(pvo.getP_name());
-			txtHPrice.setText(pvo.getP_price()+"");
-			break;
-		case "PO":
-			txtPOName.setText(pvo.getP_name());
-			txtPOPrice.setText(pvo.getP_price()+"");
-			break;
-		case "CA":
-			txtCAName.setText(pvo.getP_name());
-			txtCAPrice.setText(pvo.getP_price()+"");
-			break;
-		case "CO":
-			txtCOName.setText(pvo.getP_name());
-			txtCOPrice.setText(pvo.getP_price()+"");
-			break;
-		case "SW":
-			txtSWName.setText(pvo.getP_name());
-			txtSWPrice.setText(pvo.getP_price()+"");
-			break;
-		case "K":
-			txtKName.setText(pvo.getP_name());
-			txtKPrice.setText(pvo.getP_price()+"");
-			break;
-		case "MO":
-			txtMOName.setText(pvo.getP_name());
-			txtMOPrice.setText(pvo.getP_price()+"");
-			break;
-		case "SP":
-			txtSPName.setText(pvo.getP_name());
-			txtSPPrice.setText(pvo.getP_price()+"");
-			break;
-		case "MN":
-			txtMNName.setText(pvo.getP_name());
-			txtMNPrice.setText(pvo.getP_price()+"");
-			break;
-		}
+		txtNameList[keyIdx].setText(pvoList[keyIdx].getP_name());
 	}
 }
-
-//TODO order_ChartVO로 인서트 여러번 수행하도록 구현
-//TODO 전달받은 pvo로 각 p_num과 단가를 보관해두는 방법 찾기 
-// PVO pvoList 배열, TextField txtNameList 배열, TextField txtPriceList, 
-// String keyMap(key, int), Spinner spinQtyList(배열 내 원소의 순서를 맞춰서 작성 후 반복문으로 변경)

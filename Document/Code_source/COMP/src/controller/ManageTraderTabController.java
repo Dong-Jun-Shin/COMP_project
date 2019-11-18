@@ -261,7 +261,7 @@ public class ManageTraderTabController implements Initializable {
 				traderDataList.add(svo);
 			}
 		} catch (Exception e) {
-			System.out.println("subjectTotalList() = [" + e.getMessage() + "]");
+			System.out.println("traderTotalList() = [" + e.getMessage() + "]");
 		}
 	}
 }
