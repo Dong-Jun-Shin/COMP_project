@@ -157,7 +157,7 @@ public class SalesTradeTabController implements Initializable {
 	@FXML
 	private Button btnMN;
 	@FXML
-	private Button btnAll;
+	private Button btnOrderClr;
 
 	private HashMap<String, Integer> dicKey = new HashMap<String, Integer>();
 	private HashMap<Button, Integer> btnKey = new HashMap<Button, Integer>();
@@ -255,13 +255,13 @@ public class SalesTradeTabController implements Initializable {
 		}
 	}
 
-	public void btnAllCancel(ActionEvent event) {
+	public void btnOrderClr(ActionEvent event) {
 		txtCId.clear();
 		txtCName.clear();
 		txtCPhone.clear();
 		txtCAddress.clear();
 		txtCEmail.clear();
-		
+
 		covo = new CdOrderVO();
 		reset();
 	}
@@ -290,7 +290,7 @@ public class SalesTradeTabController implements Initializable {
 	 */
 	public void btnOrderInsert(ActionEvent event) {
 		// TODO order_ChartVO로 인서트 여러번 수행하도록 구현
-			
+
 //			covo의 설정까지 완료, Id 입력 시, 주문번호 자동 생성 만들기 
 //			if (txtCPName.getText() != null) {
 //				insertCvoSetting(txtCPName.getText(), Integer.parseInt(txtCPPrice.getText()));

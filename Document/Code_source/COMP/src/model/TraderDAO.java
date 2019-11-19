@@ -165,9 +165,9 @@ public class TraderDAO {
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, "%" + searchWord + "%");
 			rs = pstmt.executeQuery();
-			tvo = new TraderVO();
 
 			while (rs.next()) {
+				tvo = new TraderVO();
 				tvo.setTr_num(rs.getString("tr_num"));
 				tvo.setTr_name(rs.getString("tr_name"));
 				tvo.setTr_phone(rs.getString("tr_phone"));

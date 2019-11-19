@@ -52,6 +52,8 @@ public class ManageStockTabController implements Initializable {
 	@FXML
 	private Button btnPDelete;
 	@FXML
+	private Button btnPClear;
+	@FXML
 	private ComboBox<String> cmbPSearchKey;
 	@FXML
 	private TextField txtPSearchValue;
@@ -156,6 +158,10 @@ public class ManageStockTabController implements Initializable {
 			pddao.productDelete(pvo);
 			
 		}
+	}
+	
+	public void btnPClear(ActionEvent event) {
+		
 	}
 	
 	public void btnPSearch(ActionEvent event) {

@@ -10,9 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SalesTradeTabController">
+<HBox prefHeight="750.0" prefWidth="1100.0"
+	xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.SalesTradeTabController">
 	<children>
-		<VBox alignment="TOP_CENTER" prefHeight="750.0" prefWidth="320.0" spacing="5.0">
+		<VBox alignment="TOP_CENTER" prefHeight="750.0" prefWidth="320.0"
+			spacing="5.0">
 			<padding>
 				<Insets left="10.0" right="10.0" top="30.0" />
 			</padding>
@@ -28,7 +32,8 @@
 						<Insets bottom="20.0" left="10.0" top="10.0" />
 					</padding>
 				</Label>
-				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="297.0" spacing="20.0">
+				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="297.0"
+					spacing="20.0">
 					<children>
 						<Label alignment="CENTER" prefWidth="60.0" text="주문번호" />
 						<TextField fx:id="txtCDNum" prefWidth="160.0" />
@@ -37,7 +42,8 @@
 						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 					</padding>
 				</HBox>
-				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0" spacing="20.0">
+				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0"
+					spacing="20.0">
 					<children>
 						<Label alignment="CENTER" prefWidth="60.0" text="고객ID" />
 						<TextField fx:id="txtCId" prefWidth="160.0" />
@@ -46,8 +52,10 @@
 						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 					</padding>
 				</HBox>
-            <Button fx:id="btnIdChk" mnemonicParsing="false" onAction="#btnIdChk" text="ID 체크" />
-				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0" spacing="20.0">
+				<Button fx:id="btnIdChk" mnemonicParsing="false"
+					onAction="#btnIdChk" text="ID 체크" />
+				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0"
+					spacing="20.0">
 					<children>
 						<Label alignment="CENTER" prefWidth="60.0" text="고객명" />
 						<TextField fx:id="txtCName" prefWidth="160.0" />
@@ -56,7 +64,8 @@
 						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 					</padding>
 				</HBox>
-				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0" spacing="20.0">
+				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0"
+					spacing="20.0">
 					<children>
 						<Label alignment="CENTER" prefWidth="60.0" text="전화번호" />
 						<TextField fx:id="txtCPhone" prefWidth="160.0" />
@@ -65,7 +74,8 @@
 						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 					</padding>
 				</HBox>
-				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0" spacing="20.0">
+				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0"
+					spacing="20.0">
 					<children>
 						<Label alignment="CENTER" prefWidth="60.0" text="주소" />
 						<TextField fx:id="txtCAddress" prefWidth="160.0" />
@@ -74,7 +84,8 @@
 						<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 					</padding>
 				</HBox>
-				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0" spacing="20.0">
+				<HBox alignment="CENTER" prefHeight="63.0" prefWidth="280.0"
+					spacing="20.0">
 					<children>
 						<Label alignment="CENTER" prefWidth="60.0" text="이메일" />
 						<TextField fx:id="txtCEmail" prefWidth="160.0" />
@@ -85,7 +96,8 @@
 				</HBox>
 				<VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
 					<children>
-						<Button fx:id="btnOrderInsert" mnemonicParsing="false" onAction="#btnOrderInsert" text="주문신청">
+						<Button fx:id="btnOrderInsert" mnemonicParsing="false"
+							onAction="#btnOrderInsert" text="주문신청">
 							<font>
 								<Font size="20.0" />
 							</font>
@@ -108,15 +120,18 @@
 								<Insets bottom="10.0" right="15.0" top="30.0" />
 							</padding>
 							<children>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="CPU" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtCPName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinCPQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtCPName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinCPQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtCPPrice" prefWidth="62.0">
@@ -126,21 +141,27 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnCP" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnCP" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="RAM" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtRName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinRQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtRName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinRQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtRPrice" prefWidth="62.0">
@@ -150,21 +171,27 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnR" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnR" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="MB" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtMBName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinMBQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtMBName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinMBQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtMBPrice" prefWidth="62.0">
@@ -174,21 +201,27 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnMB" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnMB" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="GPU" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtGName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinGQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtGName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinGQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtGPrice" prefWidth="62.0">
@@ -198,21 +231,27 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnG" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnG" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="SSD" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtSSName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinSSQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtSSName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinSSQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtSSPrice" prefWidth="62.0">
@@ -222,21 +261,27 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnSS" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnSS" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="HDD" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtHName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinHQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtHName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinHQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtHPrice" prefWidth="62.0">
@@ -246,21 +291,27 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnH" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnH" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="파워" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtPOName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinPOQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtPOName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinPOQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtPOPrice" prefWidth="62.0">
@@ -270,10 +321,13 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnPO" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnPO" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
 							</children>
@@ -283,15 +337,18 @@
 								<Insets bottom="10.0" left="5.0" right="10.0" top="30.0" />
 							</padding>
 							<children>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="케이스" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtCAName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinCAQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtCAName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinCAQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtCAPrice" prefWidth="62.0">
@@ -301,21 +358,27 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnCA" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnCA" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="쿨러" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtCOName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinCOQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtCOName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinCOQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtCOPrice" prefWidth="62.0">
@@ -325,21 +388,27 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnCO" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnCO" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="SW" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtSWName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinSWQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtSWName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinSWQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtSWPrice" prefWidth="62.0">
@@ -349,21 +418,27 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnSW" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnSW" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="키보드" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtKName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinKQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtKName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinKQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtKPrice" prefWidth="62.0">
@@ -373,21 +448,27 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnK" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnK" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="마우스" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtMOName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinMOQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtMOName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinMOQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtMOPrice" prefWidth="62.0">
@@ -397,21 +478,27 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnMO" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnMO" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="스피커" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtSPName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinSPQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtSPName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinSPQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtSPPrice" prefWidth="62.0">
@@ -421,21 +508,27 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnSP" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnSP" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
-								<HBox alignment="CENTER" prefHeight="61.0" prefWidth="339.0" spacing="20.0">
+								<HBox alignment="CENTER" prefHeight="61.0"
+									prefWidth="339.0" spacing="20.0">
 									<children>
 										<Label alignment="CENTER" prefWidth="50.0" text="모니터" />
 										<VBox prefHeight="46.0" prefWidth="236.0">
 											<children>
 												<HBox prefHeight="22.0" prefWidth="297.0">
 													<children>
-														<TextField fx:id="txtMNName" prefHeight="23.0" prefWidth="260.0" />
-														<Spinner fx:id="spinMNQty" editable="true" onMouseClicked="#setProductPriceAction" />
+														<TextField fx:id="txtMNName" prefHeight="23.0"
+															prefWidth="260.0" />
+														<Spinner fx:id="spinMNQty" editable="true"
+															onMouseClicked="#setProductPriceAction" />
 													</children>
 												</HBox>
 												<TextField fx:id="txtMNPrice" prefWidth="62.0">
@@ -445,29 +538,35 @@
 												</TextField>
 											</children>
 										</VBox>
-                              <Button fx:id="btnMN" mnemonicParsing="false" onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0" text="취소" />
+										<Button fx:id="btnMN" mnemonicParsing="false"
+											onAction="#btnCancel" prefHeight="23.0" prefWidth="60.0"
+											text="취소" />
 									</children>
 									<padding>
-										<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+										<Insets bottom="10.0" left="10.0" right="10.0"
+											top="10.0" />
 									</padding>
 								</HBox>
 							</children>
 						</VBox>
 					</children>
 				</HBox>
-				<HBox alignment="CENTER_RIGHT" prefHeight="170.0" prefWidth="760.0" spacing="20.0">
+				<HBox alignment="CENTER_RIGHT" prefHeight="170.0"
+					prefWidth="760.0" spacing="20.0">
 					<children>
-                  <Button fx:id="btnAll" mnemonicParsing="false" onAction="#btnAllCancel" prefHeight="25.0" text="주문 초기화">
-                     <HBox.margin>
-                        <Insets right="230.0" />
-                     </HBox.margin>
-                  </Button>
+						<Button fx:id="btnOrderClr" mnemonicParsing="false"
+							onAction="#btnOrderClr" prefHeight="25.0" text="주문 초기화">
+							<HBox.margin>
+								<Insets right="230.0" />
+							</HBox.margin>
+						</Button>
 						<Label text="총 주문 금액">
 							<font>
 								<Font size="20.0" />
 							</font>
 						</Label>
-						<TextField fx:id="txtTotalPrice" prefHeight="30.0" prefWidth="200.0" />
+						<TextField fx:id="txtTotalPrice" prefHeight="30.0"
+							prefWidth="200.0" />
 					</children>
 					<padding>
 						<Insets right="30.0" />

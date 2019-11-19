@@ -140,12 +140,12 @@ Button btnK
 Button btnMO
 Button btnSP
 Button btnMN
-Button btnAll
+Button btnOrderClr
 
 #btnOrderInsert(ActionEvent event)
 #btnCancel(ActionEvent event)
 #btnIdChk(ActionEvent event)
-#btnAllCancel(ActionEvent event)
+#btnOrderClr(ActionEvent event)
 
 -------------[manageSummary]
 Label lblLoginDate
@@ -197,6 +197,7 @@ Button btnImgChoice
 Button btnPInsert
 Button btnPUpdate
 Button btnPDelete
+Button btnPClear
 ComboBox cmbPSearchKey
 TextField txtPSearchValue
 Button btnPSearch
@@ -207,6 +208,7 @@ TableView productTableView
 #btnPInsert(ActionEvent event)
 #btnPUpdate(ActionEvent event)
 #btnPDelete(ActionEvent event)
+#btnPClear(ActionEvent event)
 #btnPSearch(ActionEvent event)
 #btnWHPopup(ActionEvent event)
 #productTableView(MouseEvent event)
@@ -218,10 +220,12 @@ TextField txtPNum
 TextField txtWHQty
 Button btnWHInsert
 Button btnWHDelete
+Button btnWHClear
 TableView whTableView
 
 #btnWHInsert(ActionEvent event)
 #btnWHDelete(ActionEvent event)
+#btnWHClear(ActionEvent event)
 #whTableView(MouseEvent event)
 
 
@@ -247,6 +251,7 @@ TextField txtCEmail
 Button btnCInsert
 Button btnCUpdate
 Button btnCDelete
+Button btnCClear
 ComboBox cmbCSearchKey
 TextField txtCSearchValue
 Button btnCSearch
@@ -255,6 +260,7 @@ TableView customerTableView
 #btnCInsert(ActionEvent event)
 #btnCUpdate(ActionEvent event)
 #btnCDelete(ActionEvent event)
+#btnCClear(ActionEvent event)
 #btnCSearch(ActionEvent event)
 #customerTableView(MouseEvent event)
 
@@ -295,7 +301,8 @@ TextField txtTRBName
 Button btnTRInsert
 Button btnTRUpdate
 Button btnTRDelete
-ComboBox cmbTRSearchKey
+Button btnTRClear
+ComboBox cbxTRSearchKey
 TextField txtTRSearchValue
 Button btnTRSearch
 TableView traderTableView
@@ -303,5 +310,6 @@ TableView traderTableView
 #btnTRInsert(ActionEvent event)
 #btnTRUpdate(ActionEvent event)
 #btnTRDelete(ActionEvent event)
+#btnTRClear(ActionEvent event)
 #btnTRSearch(ActionEvent event)
 #traderTableView(MouseEvent event)

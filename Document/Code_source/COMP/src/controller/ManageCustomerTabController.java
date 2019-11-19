@@ -38,6 +38,8 @@ public class ManageCustomerTabController implements Initializable {
 	@FXML
 	private Button btnCDelete;
 	@FXML
+	private Button btnCClear;
+	@FXML
 	private ComboBox cmbCSearchKey;
 	@FXML
 	private TextField txtCSearchValue;
@@ -69,6 +71,11 @@ public class ManageCustomerTabController implements Initializable {
 
 	}
 
+	public void btnCClear(ActionEvent event) {
+		
+	}
+	
+	
 	public void btnCSearch(ActionEvent event) {
 
 	}

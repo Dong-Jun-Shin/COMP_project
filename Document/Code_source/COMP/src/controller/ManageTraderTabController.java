@@ -44,6 +44,8 @@ public class ManageTraderTabController implements Initializable {
 	@FXML
 	private Button btnTRDelete;
 	@FXML
+	private Button btnTRClear;
+	@FXML
 	private ComboBox<String> cbxTRSearchKey;
 	@FXML
 	private TextField txtTRSearchValue;
@@ -209,6 +211,26 @@ public class ManageTraderTabController implements Initializable {
 		}
 	}
 
+	public void btnTRClear(ActionEvent event) {
+		//콤보박스 초기화
+		cbxTRSearchKey.getSelectionModel().clearSelection();
+		
+		//테이블 인덱스 초기화
+		traderTableView.getSelectionModel().select(null);
+		selectedTraderIndex = null;
+		
+		//필드 초기화
+		txtTRSearchValue.setText("");
+		reset();
+		
+		//버튼 제어 초기화
+		editable(true);
+		setInsertBtn(true);
+		
+		//테이블 뷰 전체 리스트 출력
+		traderTotalList();
+	}
+	
 	public void btnTRSearch(ActionEvent event) {
 		traderDataList.removeAll(traderDataList);
 		TraderVO tvo = null;

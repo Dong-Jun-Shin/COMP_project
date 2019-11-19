@@ -26,6 +26,8 @@ public class ManageStockSubController implements Initializable {
 	@FXML
 	private Button btnWHDelete;
 	@FXML
+	private Button btnWHClear;
+	@FXML
 	private TableView whTableView;
 
 	private Stage primaryStage;
@@ -48,6 +50,10 @@ public class ManageStockSubController implements Initializable {
 
 	}
 
+	public void btnWHClear(ActionEvent event) {
+		
+	}
+	
 	public void whTableView(MouseEvent event) {
 
 	}
