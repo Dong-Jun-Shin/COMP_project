@@ -43,7 +43,8 @@ public class WarehouseDAO {
 		ArrayList<WarehouseVO> list = new ArrayList<WarehouseVO>();
 		WarehouseVO wvo = new WarehouseVO();
 		StringBuffer sql = new StringBuffer();
-		sql.append("");
+		sql.append("SELECT wh_num, tr_num, p_num, tr_qty");
+		sql.append("FROM warehouse ORDER BY wh_num");
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
