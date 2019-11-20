@@ -64,20 +64,7 @@ public class ManageStockSubController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		if(!DataUtil.validityCheck(txtWHNum.getText(), "")) {return;
-		}else if(!DataUtil.validityCheck(txtPNum.getText(), "")) {return;
-		}else if(!DataUtil.validityCheck(txtWHNum.getText(), "")) {return;
-		}else if(!DataUtil.validityCheck(txtWHQty.getText(), "입고 수량")) {return;
-		}else {
-			
-		
-		
-			txtWHNum.setText("WH_");
-			txtPNum.setText(pvo.getP_num());
-			txtWHNum.setEditable(false);
-			txtPNum.setEditable(false);
-		}
-		
+				
 	}
 	
 	public void btnWHInsert(ActionEvent event) {

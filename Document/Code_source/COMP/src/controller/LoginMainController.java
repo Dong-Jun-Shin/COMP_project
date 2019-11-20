@@ -112,8 +112,8 @@ public class LoginMainController implements Initializable {
 			btnIdSearch.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
-					LoginSubController ls = new LoginSubController();
-					if (ls.btnIdSearch(parent) == true) {
+					LoginSubController lsController = new LoginSubController();
+					if (lsController.btnIdSearch(parent) == true) {
 						dialog.close();
 					}
 				}
@@ -126,6 +126,5 @@ public class LoginMainController implements Initializable {
 		} catch (Exception e) {
 			System.out.println("btnIdFindPopup() error = " + e.getMessage());
 		}
-
 	}
 }

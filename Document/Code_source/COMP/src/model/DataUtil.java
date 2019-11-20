@@ -83,9 +83,9 @@ public class DataUtil extends NumberFormatException {
 	public static boolean valLimitCheck(String value, int size) {
 		Alert alert = new Alert(AlertType.WARNING);
 		boolean result = true;
-		byte limit = 0;
+		int limit = 0;
 
-		limit = (byte) size;
+		limit = size;
 
 		// 유효하지 않으면 경고
 		if (value.getBytes().length > limit) {

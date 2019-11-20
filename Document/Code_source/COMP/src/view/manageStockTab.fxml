@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="750.0" prefWidth="1100.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="controller.ManageStockTabController">
+<HBox prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageStockTabController">
 	<children>
 		<VBox alignment="TOP_CENTER" prefHeight="750.0" prefWidth="350.0" spacing="5.0">
 			<padding>
@@ -34,7 +34,7 @@
 						<HBox alignment="CENTER" prefHeight="40.0" prefWidth="280.0" spacing="20.0">
 							<children>
 								<Label alignment="CENTER" prefWidth="60.0" text="제품번호" />
-								<TextField fx:id="txtPNum" prefWidth="160.0" />
+								<TextField fx:id="txtPNum" editable="false" prefWidth="160.0" />
 							</children>
 						</HBox>
 						<HBox alignment="CENTER" prefHeight="40.0" prefWidth="280.0" spacing="20.0">
@@ -50,7 +50,7 @@
 						<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
 							<children>
 								<Label alignment="CENTER" prefWidth="60.0" text="제품명" />
-								<TextField fx:id="txtPName" prefWidth="160.0" />
+								<TextField fx:id="txtPName" onMouseClicked="#setPNum" prefWidth="160.0" />
 							</children>
 						</HBox>
 						<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
@@ -138,18 +138,17 @@
 						</VBox>
 					</children>
 				</HBox>
-				<TableView fx:id="productTableView" onSort="#productTableView" prefHeight="600.0" prefWidth="690.0">
+				<TableView fx:id="productTableView" onMouseClicked="#productTableView" prefHeight="600.0" prefWidth="690.0">
 					<columns>
-						<TableColumn prefWidth="75.0" text="제품구분" />
 						<TableColumn prefWidth="75.0" text="제품번호" />
-						<TableColumn prefWidth="75.0" text="제품명" />
+						<TableColumn prefWidth="250.0" text="제품명" />
 						<TableColumn prefWidth="75.0" text="제품수량" />
-						<TableColumn prefWidth="63.0" text="단가" />
-						<TableColumn prefWidth="57.0" text="크기" />
-						<TableColumn prefWidth="69.0" text="보증기간" />
-						<TableColumn prefWidth="71.0" text="출시일" />
-						<TableColumn prefWidth="68.0" text="이미지" />
-						<TableColumn prefWidth="68.0" text="등록일" />
+						<TableColumn prefWidth="100.0" text="단가" />
+						<TableColumn prefWidth="200.0" text="크기" />
+						<TableColumn prefWidth="100.0" text="보증기간" />
+						<TableColumn prefWidth="150.0" text="출시일" />
+						<TableColumn prefWidth="150.0" text="이미지" />
+						<TableColumn prefWidth="120.0" text="등록일" />
 					</columns>
 				</TableView>
 			</children>
