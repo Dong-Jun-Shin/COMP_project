@@ -94,7 +94,7 @@ public class ManageStockSubController implements Initializable {
 		whTableView.setItems(whDataList);
 		
 		
-		
+	
 	}
 	
 	public void btnWHInsert(ActionEvent event) {

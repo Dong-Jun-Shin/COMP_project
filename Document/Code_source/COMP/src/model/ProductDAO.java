@@ -38,6 +38,56 @@ public class ProductDAO {
 	}
 
 	/**
+	 * getProductCount() : 다음 부여될 고유번호를 반환한다.
+	 * 
+	 * @return serialNumber 고유번호 부여를 반환
+	 */
+	public String getProductCount(String valNum) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT NVL(LPAD(MAX(TO_NUMBER(LTRIM(SUBSTR(p_num, ");
+		sql.append("4, 3), '0')))+1, 3, '0'), '001') AS productCount ");
+		sql.append("FROM product ");
+		sql.append("WHERE p_num LIKE ?");
+		sql.append("ORDER BY p_num ");
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String serialNumber = "";
+
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, "%" + valNum + "%");
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				serialNumber = rs.getString("productCount");
+			}
+		} catch (SQLException e) {
+			System.out.println("쿼리 getProductCount() error = [" + e + " ]");
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("error = [" + e + " ]");
+			e.printStackTrace();
+		} finally {
+			try {
+				// 생성의 역순으로 닫기
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				System.out.println("DB 연동 해제 error = [" + e + " ]");
+			}
+		}
+
+		return serialNumber;
+	}
+	
+	/**
 	 * getProductTotalList() : 전체 제품 리스트 조회 메소드
 	 * 
 	 * @return ArrayList<ProductVO>
@@ -47,7 +97,8 @@ public class ProductDAO {
 		StringBuffer sql = new StringBuffer();
 		ArrayList<ProductVO> list = new ArrayList<ProductVO>();
 		sql.append("SELECT p_name ,p_price ,p_size ,p_grt ,p_date ,p_img ,p_qty ,p_num ,p_reg ");
-		sql.append("FROM product");
+		sql.append("FROM product ");
+		sql.append("ORDER BY p_num");
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -66,7 +117,7 @@ public class ProductDAO {
 				pvo.setP_price(rs.getInt("p_price"));
 				pvo.setP_size(rs.getString("p_size"));
 				pvo.setP_grt(rs.getString("p_grt"));
-				pvo.setP_date(rs.getDate("p_date").toString());
+				pvo.setP_date(rs.getString("p_date"));
 				pvo.setP_img(rs.getString("p_img"));
 				pvo.setP_qty(rs.getInt("p_qty"));
 				pvo.setP_num(rs.getString("p_num"));
@@ -74,14 +125,12 @@ public class ProductDAO {
 
 				list.add(pvo);
 			}
-
 		} catch (SQLException sqle) {
 			System.out.println("[  public ArrayList<ProductVO> getProductTotalList()  ]    [ SQLException ]");
 			sqle.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("[  public ArrayList<ProductVO> getProductTotalList()  ]    [ Unknown Exception ]");
 			e.printStackTrace();
-
 		} finally {
 			try {
 				if (con != null) {
@@ -93,13 +142,11 @@ public class ProductDAO {
 				if (rs != null) {
 					rs.close();
 				}
-
 			} catch (Exception e) {
 				System.out.println(
 						"[  public ArrayList<ProductVO> getProductTotalList()  ]    [ Connect Closed Exception ]");
 				e.printStackTrace();
 			}
-
 		}
 
 		return list;
@@ -115,16 +162,19 @@ public class ProductDAO {
 	public ArrayList<ProductVO> getProductSelected(String category, String searchWord) {
 		StringBuffer sql = new StringBuffer();
 		ArrayList<ProductVO> list = new ArrayList<ProductVO>();
-		sql.append("SELECT p_name ,p_price ,p_size ,p_grt ,p_date ,p_img ,p_qty ,p_num ,p_reg ");
-		sql.append("FROM product ");
+		sql.append("SELECT p_name, p_price, p_size, p_grt, p_date, p_img, p_qty, p_num, p_reg ");
+		sql.append("FROM product ");	
+		
 		switch (category) {
-		case "p_num":
+		case "제품번호":
 			sql.append("WHERE p_num LIKE ?");
 			break;
-		case "p_name":
+		case "제품명":
 			sql.append("WHERE p_name LIKE ?");
 			break;
 		}
+		
+		sql.append("ORDER BY p_num");
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -134,12 +184,12 @@ public class ProductDAO {
 		try {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, "%"+searchWord+"%");
+			pstmt.setString(1, "%" + searchWord + "%");
 			
 			rs = pstmt.executeQuery();
-			pvo = new ProductVO();
 
 			while (rs.next()) {
+				pvo = new ProductVO();
 				pvo.setP_name(rs.getString("p_name"));
 				pvo.setP_price(rs.getInt("p_price"));
 				pvo.setP_size(rs.getString("p_size"));
@@ -152,7 +202,6 @@ public class ProductDAO {
 
 				list.add(pvo);
 			}
-
 		} catch (SQLException sqle) {
 			System.out
 					.println("[  public ArrayList<ProductVO> getProductSelected(String p_num)  ]    [ SQLException ]");
@@ -161,7 +210,6 @@ public class ProductDAO {
 			System.out.println(
 					"[  public ArrayList<ProductVO> getProductSelected(String p_num)  ]    [ Unknown Exception ]");
 			e.printStackTrace();
-
 		} finally {
 			try {
 				if (con != null) {
@@ -173,13 +221,11 @@ public class ProductDAO {
 				if (rs != null) {
 					rs.close();
 				}
-
 			} catch (Exception e) {
 				System.out.println(
 						"[  public ArrayList<ProductVO> getProductSelected(String p_num)  ]    [ Connect Closed Exception ]");
 				e.printStackTrace();
 			}
-
 		}
 
 		return list;
@@ -192,39 +238,32 @@ public class ProductDAO {
 	 * @return boolean;
 	 */
 	public boolean productInsert(ProductVO pvo) {
-		boolean result = false;
 		StringBuffer sql = new StringBuffer();
-		// 제품 구분
-		String sort = pvo.getP_num().substring(0, 2);
-		if (sort.contains("_")) {
-			sort = pvo.getP_num().substring(0, 1);
-		}
-		sql.append("INSERT INTO product");
-		sql.append("(p_name ,p_price ,p_size ,p_grt ,p_date ,p_img ,p_qty ,p_num)");
-		sql.append("VALUES");
-		// 제품명, 값, 크기, 보증기간, 출시일, 이미지명, 제품갯수
-		sql.append("(? , ? , ?, ? , ? , ? , ? ");
-		// 제품코드 앞글자, 제품코드 시퀀스 구분
-		sql.append(sort + "_ ||LPAD(TO_CHAR(p_" + sort + "_num_seq.nextval), 3 ,'0') )");
+		sql.append("INSERT INTO product ");
+		// 제품번호, 제품명, 값, 크기, 보증기간, 출시일, 이미지명, 제품갯수
+		sql.append("(p_num, p_name ,p_price ,p_size ,p_grt ,p_date ,p_img ,p_qty) ");
+		sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?) ");
+
+		boolean result = false;
 		PreparedStatement pstmt = null;
 		Connection con = null;
 
 		try {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, pvo.getP_name());
-			pstmt.setInt(2, pvo.getP_price());
-			pstmt.setString(3, pvo.getP_size());
-			pstmt.setString(4, pvo.getP_grt());
-			pstmt.setString(5, pvo.getP_date());
-			pstmt.setString(6, pvo.getP_img());
-			pstmt.setInt(7, pvo.getP_qty());
+			pstmt.setString(1, pvo.getP_num());
+			pstmt.setString(2, pvo.getP_name());
+			pstmt.setInt(3, pvo.getP_price());
+			pstmt.setString(4, pvo.getP_size());
+			pstmt.setString(5, pvo.getP_grt());
+			pstmt.setString(6, pvo.getP_date());
+			pstmt.setString(7, pvo.getP_img());
+			pstmt.setInt(8, pvo.getP_qty());
 
 			int i = pstmt.executeUpdate();
 			if (i == 1) {
 				result = true;
 			}
-
 		} catch (SQLException sqle) {
 			System.out.println("[   productInsert(ProductVO pvo)  ] [  SQLException  ]");
 			sqle.printStackTrace();
@@ -234,7 +273,6 @@ public class ProductDAO {
 			e.printStackTrace();
 			result = false;
 		} finally {
-
 			try {
 				if (pstmt != null) {
 					pstmt.close();
@@ -246,7 +284,6 @@ public class ProductDAO {
 				System.out.println("[   productInsert(ProductVO pvo)  ] [  closed Error  ]");
 				e.printStackTrace();
 			}
-
 		}
 
 		return result;
@@ -261,16 +298,16 @@ public class ProductDAO {
 	public boolean productUpdate(ProductVO pvo) {
 		boolean result = false;
 		StringBuffer sql = new StringBuffer();
-
-		sql.append("UPDATE product SET");
-		sql.append("p_name = ?,"); // 제품명
-		sql.append("p_price = ? ,"); // 가격
-		sql.append("p_size = ?,"); // 크기
-		sql.append("p_grt = ?,"); // 보증기간
-		sql.append("p_date = ?,"); // 출시일
-		sql.append("p_img = ?,"); // 이미지명
+		sql.append("UPDATE product SET ");
+		sql.append("p_name = ?, "); // 제품명
+		sql.append("p_price = ? , "); // 가격
+		sql.append("p_size = ?, "); // 크기
+		sql.append("p_grt = ?, "); // 보증기간
+		sql.append("p_date = ?, "); // 출시일
+		sql.append("p_img = ?, "); // 이미지명
 		sql.append("p_qty = ? "); // 개수
-		sql.append("where p_num = ? "); // 제품번호 구분
+		sql.append("WHERE p_num = ? "); // 제품번호 구분
+		
 		PreparedStatement pstmt = null;
 		Connection con = null;
 
@@ -285,11 +322,11 @@ public class ProductDAO {
 			pstmt.setString(6, pvo.getP_img());
 			pstmt.setInt(7, pvo.getP_qty());
 			pstmt.setString(8, pvo.getP_num());
+			
 			int i = pstmt.executeUpdate();
 			if (i == 1) {
 				result = true;
 			}
-
 		} catch (SQLException sqle) {
 			System.out.println("[  productUpdate(ProductVO pvo)  ] [  SQLException  ]");
 			sqle.printStackTrace();
@@ -299,7 +336,6 @@ public class ProductDAO {
 			e.printStackTrace();
 			result = false;
 		} finally {
-
 			try {
 				if (pstmt != null) {
 					pstmt.close();
@@ -311,7 +347,6 @@ public class ProductDAO {
 				System.out.println("[  productUpdate(ProductVO pvo)  ] [  closed Error  ]");
 				e.printStackTrace();
 			}
-
 		}
 
 		return result;
@@ -324,10 +359,10 @@ public class ProductDAO {
 	 * @return boolean
 	 */
 	public boolean productDelete(ProductVO pvo) {
-		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("DELETE FROM product WHERE p_num = ?");
 
+		boolean result = false;
 		PreparedStatement pstmt = null;
 		Connection con = null;
 
@@ -335,11 +370,11 @@ public class ProductDAO {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, pvo.getP_num());
+			
 			int i = pstmt.executeUpdate();
 			if (i == 1) {
 				result = true;
 			}
-
 		} catch (SQLException sqle) {
 			System.out.println("[  productDelete(ProductVO pvo)  ] [  SQLException  ]");
 			sqle.printStackTrace();
@@ -349,7 +384,6 @@ public class ProductDAO {
 			e.printStackTrace();
 			result = false;
 		} finally {
-
 			try {
 				if (pstmt != null) {
 					pstmt.close();
@@ -361,10 +395,8 @@ public class ProductDAO {
 				System.out.println("[  productDelete(ProductVO pvo)  ] [  closed Error  ]");
 				e.printStackTrace();
 			}
-
 		}
 
 		return result;
 	}
-
 }

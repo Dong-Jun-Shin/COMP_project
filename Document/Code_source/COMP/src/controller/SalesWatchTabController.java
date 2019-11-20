@@ -83,7 +83,7 @@ public class SalesWatchTabController implements Initializable {
 		this.sttController = sttController;
 	}
 
-	private ProductDAO pdDao = ProductDAO.getInstance();
+	private ProductDAO pddao = ProductDAO.getInstance();
 
 	// 선택된 제품 종류
 	private String key = null;
@@ -160,14 +160,13 @@ public class SalesWatchTabController implements Initializable {
 				int imgIdx = (col) + (row * 4);
 
 				// pvo 값 호출
-				ArrayList<ProductVO> list = pdDao.getProductSelected("p_num", (key + "_" + selectFileName[imgIdx]));
-//				ArrayList<ProductVO> list = pdDao.getProductSelected("p_num","SW_002");
+				ArrayList<ProductVO> list = pddao.getProductSelected("제품번호", (key + "_" + selectFileName[imgIdx]));
 				ProductVO pvo = new ProductVO();
 
 				if (list.size() > 0) {
 					pvo = list.get(0);
 				}
-//				pvo.setP_num(key + "_001");
+				
 				// 팝업의 FXML 로드
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/salesWatchSub.fxml"));
 				Parent parent = loader.load();
@@ -298,7 +297,6 @@ public class SalesWatchTabController implements Initializable {
 			// ImageView에 이미지 설정
 			for (int i = sIdx, j = 0; i <= eIdx; i++, j++) {
 				selectFileName[j] = String.format("%03d", i);
-
 				if (new File("src" + localUrl + selectFileName[j] + ".jpg").isFile()) {
 					localImage = new Image(getClass().getResourceAsStream(localUrl + selectFileName[j] + ".jpg"), 170,
 							170, false, false);

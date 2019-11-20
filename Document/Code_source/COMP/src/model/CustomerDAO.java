@@ -296,6 +296,7 @@ public class CustomerDAO {
 			pstmt.setString(6, cvo.getC_add());
 			pstmt.setDate(7, Date.valueOf(cvo.getC_birth()));
 			pstmt.setString(8, cvo.getC_email());
+			
 			int i = pstmt.executeUpdate();
 			if (i == 1) {
 				success = true;
@@ -347,6 +348,7 @@ public class CustomerDAO {
 			pstmt.setString(3, cvo.getC_add());
 			pstmt.setString(4, cvo.getC_email());
 			pstmt.setString(5, cvo.getC_num());
+			
 			int i = pstmt.executeUpdate();
 			if (i == 1) {
 				success = true;
@@ -394,6 +396,7 @@ public class CustomerDAO {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, cvo.getC_num());
+			
 			int cnt = pstmt.executeUpdate();
 			if (cnt == 1) {
 				success = true;

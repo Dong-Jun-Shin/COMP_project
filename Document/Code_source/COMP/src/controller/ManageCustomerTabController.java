@@ -71,8 +71,6 @@ public class ManageCustomerTabController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		clear();
-		setInsertBtn(true);
 
 		// 테이블뷰의 컬럼이름이 될 필드명을 가져온다.
 		List<String> title = DataUtil.fieldName(new CustomerVO());
@@ -88,11 +86,13 @@ public class ManageCustomerTabController implements Initializable {
 		// 테이블에 항목 설정
 		customerTableView.setItems(customerDataList);
 
+
 		// 콤보박스 설정
 		setCbxList();
-
 		// 거래처 전체 목록
 		customerTotalList();
+		setInsertBtn(true);
+		clear();
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class ManageCustomerTabController implements Initializable {
 				success = cdao.customerInsert(cvo);
 
 				if (success == true) {
-					DataUtil.showInfoAlert("고객 등록 결과", "[" + txtCName.getText() + "]의 수정을 성공하였습니다.");
+					DataUtil.showInfoAlert("고객 등록 결과", "[" + txtCName.getText() + "]의 등록을 성공하였습니다.");
 					reset();
 				} else {
 					DataUtil.showInfoAlert("고객 등록 결과", "고객의 정보 등록에 문제가 있어 완료하지 못하였습니다.");
