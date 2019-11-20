@@ -14,12 +14,10 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -79,6 +77,9 @@ public class ManageStockTabController implements Initializable {
 	private HashMap<String, String> dicKey = new HashMap<String, String>();
 	private HashMap<String, String> dicVal = new HashMap<String, String>();
 
+	private static ObservableList<ProductVO> productDataList = FXCollections.observableArrayList();
+	private ProductDAO pddao = ProductDAO.getInstance();
+	private ProductVO pvo = new ProductVO();
 	String selectedProductIndex;
 
 	//// 사진을 가져오고 셋하기 위한 필드
@@ -87,9 +88,6 @@ public class ManageStockTabController implements Initializable {
 	private String selectFileName = "";
 	// 이미지 저장할 폴더를 매개변수로 파일 객체 생성
 	private File dirSave;
-
-	private static ObservableList<ProductVO> productDataList = FXCollections.observableArrayList();
-	private ProductDAO pddao = ProductDAO.getInstance();
 
 	private ManageStockTabController mstController;
 
@@ -398,15 +396,20 @@ public class ManageStockTabController implements Initializable {
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(primaryStage);
 		dialog.setTitle("입고관리");
-
+		
 		try {
-			Parent parent = FXMLLoader.load(getClass().getResource("/view/manageStockSub.fxml"));
-
-			Scene scene = new Scene(parent);
-			dialog.setScene(scene);
-			dialog.setResizable(false);
-			dialog.show();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/manageStockSub.fxml"));
+			Parent parent = loader.load();
+			
+			ManageStockSubController mstController = loader.getController();
+			mstController.setPrimaryStage(primaryStage);
+			mstController.setStage(dialog);
+			mstController.setPvo(pvo);
+			mstController.setWHInfo();	
+			mstController.showWindow(parent);
+			
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("btnWHPopup() error = " + e.getMessage());
 		}
 	}
@@ -428,6 +431,7 @@ public class ManageStockTabController implements Initializable {
 				// 이미지 파일 설정
 				selectFileName = imgName.substring(imgName.indexOf("/") + 1, imgName.length());
 
+				pvo = selectProduct;
 				selectedProductIndex = selectProduct.getP_num();
 
 				txtPNum.setText(selectProduct.getP_num());

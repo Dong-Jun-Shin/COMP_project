@@ -9,14 +9,18 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.DataUtil;
 import model.ProductVO;
 import model.WarehouseDAO;
@@ -41,120 +45,109 @@ public class ManageStockSubController implements Initializable {
 	private TableView<WarehouseVO> whTableView;
 	private WarehouseDAO whdao;
 	private ProductVO pvo;
-	private Stage stage;
-	private Popup popup;
 	private ManageStockTabController mstController;
+	private Stage stage;
+
 	private Stage primaryStage;
-	private ObservableList<WarehouseVO> whDataList
-	= FXCollections.observableArrayList();
-	
-	
+	private ObservableList<WarehouseVO> whDataList = FXCollections.observableArrayList();
+
 	public void setPvo(ProductVO pvo) {
 		this.pvo = pvo;
 	}
-	
+
+	public void setMstController(ManageStockTabController mstController) {
+		this.mstController = mstController;
+	}
+
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
 
-	public void setPopup(Popup popup) {
-		this.popup = popup;
-	}
-	
-	public void setMstController(ManageStockTabController mstController) {
-		this.mstController = mstController;
-	}
-	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// TODO 테이블 조회, WH_num 자동부여, TR_num 검색으로 부여, 테이블 조회 등 나머지 구현
 		int number = 1;
 //		if(!whdao.getWarehouseTotalList().isEmpty()) {
 //		 number = whdao.getWarehouseTotalList().size()+1;
 //		}
-		String whSet = String.format("%03d",number );
-		//TODO ManageStockTabController에서 p_num값 받도록 하기
-		txtWHNum.setText("WH_"+whSet);
-//		setPvo(pvo);
-//		txtPNum.setText(pvo.getP_num());
-		
-		
+
+		String whSet = String.format("%03d", number);
+		txtWHNum.setText("WH_" + whSet);
+
 		txtWHNum.setEditable(false);
 		txtPNum.setEditable(false);
-		
+
 		List<String> title = DataUtil.fieldName(new WarehouseVO());
-		for(int i = 0; i<title.size()-1; i++) {
-			TableColumn<WarehouseVO,?> columnName = whTableView.getColumns().get(i);
+		for (int i = 0; i < title.size() - 1; i++) {
+			TableColumn<WarehouseVO, ?> columnName = whTableView.getColumns().get(i);
 			columnName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
 		}
-		
 		whTableView.setItems(whDataList);
-		
-		
-	
 	}
-	
+
 	public void btnWHInsert(ActionEvent event) {
-		if(!DataUtil.validityCheck(txtWHNum.getText(), "입고 번호")) {return;
-		}else if(!DataUtil.validityCheck(txtTRNum.getText(), "거래처 번호")) {return;
-		}else if(!DataUtil.validityCheck(txtPNum.getText(), "제품 번호")) {return;
-		}else if(!DataUtil.validityCheck(txtWHQty.getText(), "입고 수량")) {return;
-		}else {
+		if (!DataUtil.validityCheck(txtWHNum.getText(), "입고 번호")) {
+			return;
+		} else if (!DataUtil.validityCheck(txtTRNum.getText(), "거래처 번호")) {
+			return;
+		} else if (!DataUtil.validityCheck(txtPNum.getText(), "제품 번호")) {
+			return;
+		} else if (!DataUtil.validityCheck(txtWHQty.getText(), "입고 수량")) {
+			return;
+		} else {
 			WarehouseVO wvo = new WarehouseVO();
 			wvo.setWh_num(txtWHNum.getText());
 			wvo.setTr_num(txtTRNum.getText());
 			wvo.setP_num(txtPNum.getText());
 			wvo.setWh_qty(Integer.parseInt(txtWHQty.getText()));
 			whdao.warehouseInsert(wvo);
-			
-			
 		}
-		
 	}
 
 	public void btnWHDelete(ActionEvent event) {
-		if(!DataUtil.validityCheck(txtWHNum.getText(), "입고 번호")) {return;
-		}else if(!DataUtil.validityCheck(txtTRNum.getText(), "거래처 번호")) {return;
-		}else if(!DataUtil.validityCheck(txtPNum.getText(), "제품 번호")) {return;
-		}else {
-			
+		if (!DataUtil.validityCheck(txtWHNum.getText(), "입고 번호")) {
+			return;
+		} else if (!DataUtil.validityCheck(txtTRNum.getText(), "거래처 번호")) {
+			return;
+		} else if (!DataUtil.validityCheck(txtPNum.getText(), "제품 번호")) {
+			return;
+		} else {
 			WarehouseVO wvo = new WarehouseVO();
 			wvo.setWh_num(txtWHNum.getText());
-			
+
 			whdao.warehouseDelete(wvo);
-			
 		}
-		
-	
 	}
 
 	public void btnWHClear(ActionEvent event) {
 		txtTRNum.clear();
 		txtWHQty.clear();
 	}
-	
-	public void whTableView(MouseEvent event) {
 
-		if(event.getClickCount() == 2) {
+	public void whTableView(MouseEvent event) {
+		if (event.getClickCount() == 2) {
 			WarehouseVO wvo = whTableView.getSelectionModel().getSelectedItem();
-			if(wvo != null) {
+			if (wvo != null) {
 				txtWHNum.setText(wvo.getWh_num());
 				txtTRNum.setText(wvo.getTr_num());
 				txtPNum.setText(wvo.getP_num());
 				txtWHQty.setText(Integer.toString(wvo.getWh_qty()));
 			}
-			
-			
 		}
-		
-		
+	}
+
+	public void setWHInfo() {
+		txtPNum.setText(pvo.getP_num());
 	}
 	
-	
-	
-	
-	
+	public void showWindow(Parent parent) {
+		Scene scene = new Scene(parent);
+		stage.setScene(scene);
+		stage.setResizable(false);
+		stage.show();
+	}
 }
