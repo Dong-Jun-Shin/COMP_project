@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 import model.CustomerDAO;
 import model.CustomerVO;
 import model.DataUtil;
-import model.TraderVO;
 
 public class ManageCustomerTabController implements Initializable {
 	@FXML
@@ -75,14 +74,14 @@ public class ManageCustomerTabController implements Initializable {
 		clear();
 		setInsertBtn(true);
 
-		//// 테이블뷰 컬럼이름 설정
-		List<String> title = DataUtil.fieldName(new TraderVO());
+		// 테이블뷰의 컬럼이름이 될 필드명을 가져온다.
+		List<String> title = DataUtil.fieldName(new CustomerVO());
+		// pw를 건너띈다.
+		title.remove(3);
 
 		// 설정을 받을 Table의 열
 		for (int i = 0; i < title.size(); i++) {
 			TableColumn<CustomerVO, ?> columnName = customerTableView.getColumns().get(i);
-			// setCellValueFactory(obj) : objdp 있는 열로 테이블의 열을 설정해준다.
-			// new PropertyValueFactory<>() : 값을 가질 수 있는 열로 만든다.
 			columnName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
 		}
 
@@ -104,18 +103,7 @@ public class ManageCustomerTabController implements Initializable {
 	public void btnCInsert(ActionEvent event) {
 		boolean success = false;
 		StringBuffer sb = new StringBuffer();
-
-		// Date형식으로 변환
-		if (DataUtil.validityCheck(txtCBrith.getText(), "생일")) {
-			String s_birth = txtCBrith.getText().trim();
-			sb.append(s_birth.substring(0, 4));
-			sb.append("-");
-			sb.append(s_birth.substring(4, 6));
-			sb.append("-");
-			sb.append(s_birth.substring(6, 8));
-		} else {
-			DataUtil.showAlert("생일 입력 또는 선택필요.", "공백 입력 불가.");
-		}
+		sb = DataUtil.dateCheck(txtCBrith.getText());
 
 		try {
 			if (!DataUtil.validityCheck(txtCNum.getText(), "고객번호")) {
@@ -169,6 +157,7 @@ public class ManageCustomerTabController implements Initializable {
 	 */
 	public void btnCUpdate(ActionEvent event) {
 		boolean success = false;
+
 		try {
 			if (!DataUtil.validityCheck(txtCNum.getText(), "고객번호")) {
 				return;
@@ -197,10 +186,10 @@ public class ManageCustomerTabController implements Initializable {
 				cvo.setC_pw(pwCPasswd.getText().trim());
 				cvo.setC_phone(txtCPhone.getText().trim());
 				cvo.setC_add(txtCAddress.getText().trim());
-				cvo.setC_birth(txtCBrith.getText().trim());
 				cvo.setC_email(txtCEmail.getText().trim());
 
 				success = cdao.customerUpdate(cvo);
+				
 				if (success == true) {
 					DataUtil.showInfoAlert("고객 수정 결과", "[" + txtCName.getText() + "]의 수정을 성공하였습니다.");
 					reset();
@@ -263,7 +252,6 @@ public class ManageCustomerTabController implements Initializable {
 	 * @param event
 	 */
 	public void btnCSearch(ActionEvent event) {
-		customerDataList.removeAll(customerDataList);
 		CustomerVO cvo = null;
 		ArrayList<CustomerVO> list;
 
@@ -282,12 +270,16 @@ public class ManageCustomerTabController implements Initializable {
 				break;
 			}
 
+			customerDataList.removeAll(customerDataList);
+
 			for (int index = 0; index < list.size(); index++) {
 				// 결과 리스트에서 한 행을 가져다가 tvo에 대입
 				cvo = list.get(index);
 				// 한 행을 추가
 				customerDataList.add(cvo);
 			}
+		} catch (NullPointerException npe) {
+			DataUtil.showInfoAlert("검색 결과", "검색 구분을 선택해주세요.");
 		} catch (Exception e) {
 			System.out.println("customerTotalList() = [" + e.getMessage() + "]");
 		}
@@ -316,6 +308,7 @@ public class ManageCustomerTabController implements Initializable {
 				setInsertBtn(false);
 				txtCNum.setEditable(false);
 				txtCName.setEditable(false);
+				txtCBrith.setEditable(false);
 			}
 		}
 	}
@@ -339,6 +332,7 @@ public class ManageCustomerTabController implements Initializable {
 				customerDataList.add(cvo);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println("customerTotalList() = [" + e.getMessage() + "]");
 		}
 	}
@@ -368,7 +362,6 @@ public class ManageCustomerTabController implements Initializable {
 	 * @param bool true면 수정가능, false면 수정불가
 	 */
 	private void editable(boolean bool) {
-		txtCNum.setEditable(bool);
 		txtCName.setEditable(bool);
 		txtCId.setEditable(bool);
 		pwCPasswd.setEditable(bool);
@@ -408,11 +401,8 @@ public class ManageCustomerTabController implements Initializable {
 	 * 
 	 */
 	private void reset() {
-		// 테이블 뷰 전체 리스트 출력
 		customerTotalList();
-		// 각 필드 초기화
 		clear();
-		// 버튼 제어 초기화
 		editable(true);
 		setInsertBtn(true);
 	}

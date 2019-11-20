@@ -47,7 +47,7 @@ public class CustomerDAO {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT NVL(LPAD(MAX(TO_NUMBER(LTRIM(SUBSTR(c_num, ");
 		sql.append("3, 3), '0')))+1, 3, '0'), '001') AS customerCount ");
-		sql.append("FROM customer");
+		sql.append("FROM customer ORDER BY c_num");
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -97,6 +97,7 @@ public class CustomerDAO {
 		sql.append("SELECT c_num ,c_name ,c_id ,c_pw ,c_phone ,c_add ,c_birth ,c_email ,c_reg ");
 		sql.append("FROM customer ");
 		sql.append("WHERE c_id = ?");
+		sql.append("ORDER BY c_num");
 
 		boolean result = false;
 		Connection con = null;
@@ -148,8 +149,9 @@ public class CustomerDAO {
 	 */
 	public ArrayList<CustomerVO> getCustomerTotalList() {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT c_num ,c_name ,c_id, c_phone ,c_add ,c_birth ,c_email ,c_reg ");
-		sql.append("FROM customer");
+		sql.append("SELECT c_num ,c_name ,c_id, c_pw, c_phone ,c_add ,c_birth ,c_email ,c_reg ");
+		sql.append("FROM customer ");
+		sql.append("ORDER BY c_num ");
 		
 		ArrayList<CustomerVO> list = new ArrayList<CustomerVO>();
 		PreparedStatement pstmt = null;
@@ -163,13 +165,16 @@ public class CustomerDAO {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
+				String s_birth = rs.getString("c_birth").substring(0, 10);
+				
 				cvo = new CustomerVO();
 				cvo.setC_num(rs.getString("c_num"));
 				cvo.setC_name(rs.getString("c_name"));
 				cvo.setC_id(rs.getString("c_id"));
-				cvo.setC_phone(rs.getDate("c_phone").toString());
-				cvo.setC_add(rs.getString("c_address"));
-				cvo.setC_birth(rs.getString("c_birth"));
+				cvo.setC_pw(rs.getString("c_pw"));
+				cvo.setC_phone(rs.getString("c_phone"));
+				cvo.setC_add(rs.getString("c_add"));
+				cvo.setC_birth(s_birth);
 				cvo.setC_email(rs.getString("c_email"));
 				cvo.setC_reg(rs.getString("c_reg"));
 				list.add(cvo);
@@ -209,8 +214,9 @@ public class CustomerDAO {
 	 */
 	public ArrayList<CustomerVO> getCustomerSelected(String category, String searchWord) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT c_num, c_name, c_id, c_phone, c_add, c_birth, c_email, c_reg ");
-		sql.append("FROM customer WHERE " + category + " LIKE ?");
+		sql.append("SELECT c_num, c_name, c_id, c_pw, c_phone, c_add, c_birth, c_email, c_reg ");
+		sql.append("FROM customer WHERE " + category + " LIKE ? ");
+		sql.append("ORDER BY c_num");
 
 		ArrayList<CustomerVO> list = new ArrayList<CustomerVO>();
 		PreparedStatement pstmt = null;
@@ -229,6 +235,7 @@ public class CustomerDAO {
 				cvo.setC_num(rs.getString("c_num"));
 				cvo.setC_name(rs.getString("c_name"));
 				cvo.setC_id(rs.getString("c_id"));
+				cvo.setC_pw(rs.getString("c_pw"));
 				cvo.setC_phone(rs.getString("c_phone"));
 				cvo.setC_add(rs.getString("c_add"));
 				cvo.setC_birth(rs.getDate("c_birth").toString());
@@ -270,8 +277,8 @@ public class CustomerDAO {
 	 */
 	public boolean customerInsert(CustomerVO cvo) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("INSERT INTO customer (c_num, c_name, c_id, c_pw, c_phone, c_add, c_birth, c_email ");
-		// 번호, 이름, ID, PW, 전화번호, 주소, 생년월일, 이메일,
+		sql.append("INSERT INTO customer (c_num, c_name, c_id, c_pw, c_phone, c_add, c_birth, c_email) ");
+		// 번호, 이름, ID, PW, 전화번호, 주소, 생년월일, 이메일
 		sql.append(" VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
 		boolean success = false;

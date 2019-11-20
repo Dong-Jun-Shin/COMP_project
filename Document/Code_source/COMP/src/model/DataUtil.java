@@ -7,7 +7,8 @@ import java.util.List;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-public class DataUtil {
+public class DataUtil extends NumberFormatException {
+	private static final long serialVersionUID = -598464327373022988L;
 
 	/**
 	 * fieldName(Object obj) : 파일 유효성 검사 메소드
@@ -95,6 +96,48 @@ public class DataUtil {
 		}
 
 		return result;
+	}
+
+	/**
+	 * dateCheck() : Date형식 체크 및 변환
+	 * 
+	 * @param date 체크할 날짜를 받는다.
+	 * @return sb "YYYY-MM-DD"로 변환된 StringBuffer를 반환
+	 * @throws NumberFormatException 받은 문자열이 공백을 포함하거나, 형식에 맞지 않으면 발생
+	 */
+	public static StringBuffer dateCheck(String date) {
+		StringBuffer sb = new StringBuffer();
+		
+		try {
+			if (DataUtil.validityCheck(date, "생일")) {
+				String s_birth = date.trim();
+				String s_year = s_birth.substring(0, 4);
+				String s_month = s_birth.substring(5, 7);
+				String s_day = s_birth.substring(8, 10);
+
+				// 유효한 날짜인지 범위 체크
+				if (!(Integer.parseInt(s_year) < 10000 && Integer.parseInt(s_year) > 0)) {
+					throw new NumberFormatException();
+				} else if (!(Integer.parseInt(s_month) < 13 && Integer.parseInt(s_month) > 0)) {
+					throw new NumberFormatException();
+				} else if (!(Integer.parseInt(s_day) < 32 && Integer.parseInt(s_day) > 0)) {
+					throw new NumberFormatException();
+				}
+
+				sb.append(s_year);
+				sb.append("-");
+				sb.append(s_month);
+				sb.append("-");
+				sb.append(s_day);
+			} else {
+				throw new NumberFormatException();
+			}
+		} catch (NumberFormatException nfe) {
+			DataUtil.showAlert("날짜 입력 오류", "날짜를 'YYYY-MM-DD'의 형식으로 쓰고, 년월일의 범위 안으로 입력해주세요.\n월(1~12), 일(1~31)");
+			return null;
+		}
+		
+		return sb;
 	}
 
 	public static String[] getKey(String sel) {
