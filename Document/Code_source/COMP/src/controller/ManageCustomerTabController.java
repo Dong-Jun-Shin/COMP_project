@@ -1,6 +1,7 @@
 package controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -49,7 +50,7 @@ public class ManageCustomerTabController implements Initializable {
 	@FXML
 	private Button btnCClear;
 	@FXML
-	private ComboBox<String> cmbCSearchKey;
+	private ComboBox<String> cbxCSearchKey;
 	@FXML
 	private TextField txtCSearchValue;
 	@FXML
@@ -57,9 +58,9 @@ public class ManageCustomerTabController implements Initializable {
 	@FXML
 	private TableView<CustomerVO> customerTableView;
 
-	String selectedTraderIndex;
+	String selectedCustomerIndex;
 
-	private static ObservableList<CustomerVO> traderDataList = FXCollections.observableArrayList();
+	private static ObservableList<CustomerVO> customerDataList = FXCollections.observableArrayList();
 
 	private CustomerDAO cdao = CustomerDAO.getInstance();
 
@@ -69,16 +70,9 @@ public class ManageCustomerTabController implements Initializable {
 		this.primaryStage = primaryStage;
 	}
 
-	public void setCNum(MouseEvent event) {
-		StringBuffer sb = new StringBuffer();
-		sb.append("C_");
-		sb.append(cdao.getCustomerCount());
-		txtCNum.setText(sb.toString());
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		reset();
+		clear();
 		setInsertBtn(true);
 
 		//// 테이블뷰 컬럼이름 설정
@@ -93,7 +87,7 @@ public class ManageCustomerTabController implements Initializable {
 		}
 
 		// 테이블에 항목 설정
-		customerTableView.setItems(traderDataList);
+		customerTableView.setItems(customerDataList);
 
 		// 콤보박스 설정
 		setCbxList();
@@ -102,6 +96,11 @@ public class ManageCustomerTabController implements Initializable {
 		customerTotalList();
 	}
 
+	/**
+	 * btnCInsert() : 새로운 고객을 입력한다.
+	 * 
+	 * @param event
+	 */
 	public void btnCInsert(ActionEvent event) {
 		boolean success = false;
 		StringBuffer sb = new StringBuffer();
@@ -114,7 +113,7 @@ public class ManageCustomerTabController implements Initializable {
 			sb.append(s_birth.substring(4, 6));
 			sb.append("-");
 			sb.append(s_birth.substring(6, 8));
-		}else {
+		} else {
 			DataUtil.showAlert("생일 입력 또는 선택필요.", "공백 입력 불가.");
 		}
 
@@ -152,13 +151,10 @@ public class ManageCustomerTabController implements Initializable {
 				success = cdao.customerInsert(cvo);
 
 				if (success == true) {
-					DataUtil.showInfoAlert("거래처 등록 결과", "[" + txtCName.getText() + "]의 수정을 성공하였습니다.");
-					customerTotalList();
+					DataUtil.showInfoAlert("고객 등록 결과", "[" + txtCName.getText() + "]의 수정을 성공하였습니다.");
 					reset();
-					editable(true);
-					setInsertBtn(true);
 				} else {
-					DataUtil.showInfoAlert("거래처 등록 결과", "거래처의 정보 등록에 문제가 있어 완료하지 못하였습니다.");
+					DataUtil.showInfoAlert("고객 등록 결과", "고객의 정보 등록에 문제가 있어 완료하지 못하였습니다.");
 				}
 			}
 		} catch (Exception e) {
@@ -166,6 +162,11 @@ public class ManageCustomerTabController implements Initializable {
 		}
 	}
 
+	/**
+	 * btnCUpdate() : 선택된 고객를 수정한다.
+	 * 
+	 * @param event
+	 */
 	public void btnCUpdate(ActionEvent event) {
 		boolean success = false;
 		try {
@@ -189,25 +190,22 @@ public class ManageCustomerTabController implements Initializable {
 					|| !DataUtil.valLimitCheck(txtCEmail.getText(), 30)) {
 				return;
 			} else {
-				TraderVO tvo = new TraderVO();
-				tvo.setTr_num(txtTRNum.getText());
-				tvo.setTr_name(txtTRName.getText());
-				tvo.setTr_phone(txtTRPhone.getText());
-				tvo.setTr_add(txtTRAddress.getText());
-				tvo.setTr_bowner(txtTRBOwner.getText());
-				tvo.setTr_bnum(txtTRBNum.getText());
-				tvo.setTr_bname(txtTRBName.getText());
+				CustomerVO cvo = new CustomerVO();
+				cvo.setC_num(txtCNum.getText().trim());
+				cvo.setC_name(txtCName.getText().trim());
+				cvo.setC_id(txtCId.getText().trim());
+				cvo.setC_pw(pwCPasswd.getText().trim());
+				cvo.setC_phone(txtCPhone.getText().trim());
+				cvo.setC_add(txtCAddress.getText().trim());
+				cvo.setC_birth(txtCBrith.getText().trim());
+				cvo.setC_email(txtCEmail.getText().trim());
 
-				success = trdao.traderUpdate(tvo);
-
+				success = cdao.customerUpdate(cvo);
 				if (success == true) {
-					DataUtil.showInfoAlert("거래처 수정 결과", "[" + txtTRName.getText() + "]의 수정을 성공하였습니다.");
-					traderTotalList();
+					DataUtil.showInfoAlert("고객 수정 결과", "[" + txtCName.getText() + "]의 수정을 성공하였습니다.");
 					reset();
-					editable(true);
-					setInsertBtn(true);
 				} else {
-					DataUtil.showInfoAlert("거래처 수정 결과", "거래처의 정보 등록에 문제가 있어 수정을 완료하지 못하였습니다.");
+					DataUtil.showInfoAlert("고객 수정 결과", "고객의 정보 등록에 문제가 있어 수정을 완료하지 못하였습니다.");
 				}
 			}
 		} catch (Exception e) {
@@ -215,19 +213,207 @@ public class ManageCustomerTabController implements Initializable {
 		}
 	}
 
+	/**
+	 * btnCDelete() : 선택된 고객을 삭제한다.
+	 * 
+	 * @param event
+	 */
 	public void btnCDelete(ActionEvent event) {
-		
+		boolean success = false;
+		try {
+			CustomerVO cvo = new CustomerVO();
+			cvo.setC_num(selectedCustomerIndex);
+			success = cdao.customerDelete(cvo);
+		} catch (Exception e) {
+			System.out.println("btnCDelete() = [ " + e + " ]");
+			e.printStackTrace();
+		}
+
+		if (success == true) {
+			DataUtil.showInfoAlert("고객 삭제 결과", "[" + txtCName.getText() + "]의 삭제를 성공하였습니다.");
+			reset();
+		} else {
+			DataUtil.showInfoAlert("고객 삭제 결과", "문제가 있어 삭제를 완료하지 못하였습니다.");
+		}
 	}
 
+	/**
+	 * btnCClear() : 탭의 모든 데이터와 필드를 초기화한다.
+	 * 
+	 * @param event
+	 */
 	public void btnCClear(ActionEvent event) {
-		
+		// 콤보박스 초기화
+		cbxCSearchKey.getSelectionModel().clearSelection();
+
+		// 테이블 인덱스 초기화
+		customerTableView.getSelectionModel().select(null);
+		selectedCustomerIndex = null;
+
+		// 필드 초기화
+		txtCSearchValue.setText("");
+
+		reset();
+
 	}
 
+	/**
+	 * btnCSearch() : 검색기준에 맞춰서 결과를 테이블 뷰에 보여준다.
+	 * 
+	 * @param event
+	 */
 	public void btnCSearch(ActionEvent event) {
+		customerDataList.removeAll(customerDataList);
+		CustomerVO cvo = null;
+		ArrayList<CustomerVO> list;
 
+		try {
+			switch (cbxCSearchKey.getValue().toString()) {
+			case "고객번호":
+				list = cdao.getCustomerSelected("c_num", txtCSearchValue.getText());
+				break;
+
+			case "고객명":
+				list = cdao.getCustomerSelected("c_name", txtCSearchValue.getText());
+				break;
+
+			default:
+				list = cdao.getCustomerTotalList();
+				break;
+			}
+
+			for (int index = 0; index < list.size(); index++) {
+				// 결과 리스트에서 한 행을 가져다가 tvo에 대입
+				cvo = list.get(index);
+				// 한 행을 추가
+				customerDataList.add(cvo);
+			}
+		} catch (Exception e) {
+			System.out.println("customerTotalList() = [" + e.getMessage() + "]");
+		}
 	}
 
+	/**
+	 * customerTableView() : 테이블 뷰에서 행을 더블클릭 시, 해당 행의 값을 가져와서 보여준다.
+	 * 
+	 * @param event
+	 */
 	public void customerTableView(MouseEvent event) {
+		if (event.getClickCount() == 2) {
+			CustomerVO selectCustomer = customerTableView.getSelectionModel().getSelectedItem();
+			if (selectCustomer != null) {
+				selectedCustomerIndex = selectCustomer.getC_num();
 
+				txtCNum.setText(selectCustomer.getC_num());
+				txtCName.setText(selectCustomer.getC_name());
+				txtCId.setText(selectCustomer.getC_id());
+				pwCPasswd.setText(selectCustomer.getC_pw());
+				txtCPhone.setText(selectCustomer.getC_phone());
+				txtCAddress.setText(selectCustomer.getC_add());
+				txtCBrith.setText(selectCustomer.getC_birth());
+				txtCEmail.setText(selectCustomer.getC_email());
+
+				setInsertBtn(false);
+				txtCNum.setEditable(false);
+				txtCName.setEditable(false);
+			}
+		}
+	}
+
+	/**
+	 * customerTotalList() : 테이블뷰 레코드 출력(거래처 전체 리스트)
+	 * 
+	 */
+	private void customerTotalList() {
+		customerDataList.removeAll(customerDataList);
+		CustomerVO cvo = null;
+		ArrayList<CustomerVO> list;
+
+		try {
+			list = cdao.getCustomerTotalList();
+
+			for (int index = 0; index < list.size(); index++) {
+				// 결과 리스트에서 한 행을 가져다가 svo에 대입
+				cvo = list.get(index);
+				// 한 행을 추가
+				customerDataList.add(cvo);
+			}
+		} catch (Exception e) {
+			System.out.println("customerTotalList() = [" + e.getMessage() + "]");
+		}
+	}
+
+	/**
+	 * setCbxList() : 콤보박스에 목록을 설정
+	 */
+	public void setCbxList() {
+		cbxCSearchKey.setItems(FXCollections.observableArrayList("고객번호", "고객명"));
+	}
+
+	/**
+	 * setCNum() : 새로운 고객에게 부여될 다음 번호를 가져온다.
+	 * 
+	 * @param event
+	 */
+	public void setCNum(MouseEvent event) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("C_");
+		sb.append(cdao.getCustomerCount());
+		txtCNum.setText(sb.toString());
+	}
+
+	/**
+	 * editable() : 각 필드의 수정 여부를 설정
+	 * 
+	 * @param bool true면 수정가능, false면 수정불가
+	 */
+	private void editable(boolean bool) {
+		txtCNum.setEditable(bool);
+		txtCName.setEditable(bool);
+		txtCId.setEditable(bool);
+		pwCPasswd.setEditable(bool);
+		txtCPhone.setEditable(bool);
+		txtCAddress.setEditable(bool);
+		txtCBrith.setEditable(bool);
+		txtCEmail.setEditable(bool);
+	}
+
+	/**
+	 * clear() : 각 필드값 지우기
+	 */
+	private void clear() {
+		txtCNum.clear();
+		txtCName.clear();
+		txtCId.clear();
+		pwCPasswd.clear();
+		txtCPhone.clear();
+		txtCAddress.clear();
+		txtCBrith.clear();
+		txtCEmail.clear();
+	}
+
+	/**
+	 * setInsertBtn() : 버튼의 활성화를 제어
+	 * 
+	 * @param bool true면 등록 활성화, false면 수정과 삭제 활성화
+	 */
+	private void setInsertBtn(boolean bool) {
+		btnCInsert.setDisable(!bool);
+		btnCUpdate.setDisable(bool);
+		btnCDelete.setDisable(bool);
+	}
+
+	/**
+	 * reset() : 각 필드를 초기화, 버튼 제어 초기화, 테이블 뷰에 전체 리스트를 출력
+	 * 
+	 */
+	private void reset() {
+		// 테이블 뷰 전체 리스트 출력
+		customerTotalList();
+		// 각 필드 초기화
+		clear();
+		// 버튼 제어 초기화
+		editable(true);
+		setInsertBtn(true);
 	}
 }
