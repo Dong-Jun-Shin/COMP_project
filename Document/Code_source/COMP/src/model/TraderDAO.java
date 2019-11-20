@@ -37,6 +37,11 @@ public class TraderDAO {
 		return instance;
 	}
 
+	/**
+	 * getTraderCount() : 다음 부여될 고유번호를 반환한다.
+	 * 
+	 * @return serialNumber 고유번호 부여를 반환
+	 */
 	public String getTraderCount() {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT NVL(LPAD(MAX(TO_NUMBER(LTRIM(SUBSTR(tr_num, ");
@@ -58,7 +63,7 @@ public class TraderDAO {
 				serialNumber = rs.getString("traderCount");
 			}
 		} catch (SQLException e) {
-			System.out.println("쿼리 getStudentCount() error = [" + e + " ]");
+			System.out.println("쿼리 getTraderCount() error = [" + e + " ]");
 			e.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("error = [" + e + " ]");
@@ -109,7 +114,6 @@ public class TraderDAO {
 				tvo.setTr_reg(rs.getDate("tr_reg").toString());
 				tvo.setTr_bowner(rs.getString("tr_bowner"));
 				tvo.setTr_bnum(rs.getString("tr_bnum"));
-				;
 				tvo.setTr_bname(rs.getString("tr_bname"));
 				list.add(tvo);
 			}
@@ -175,7 +179,6 @@ public class TraderDAO {
 				tvo.setTr_reg(rs.getDate("tr_reg").toString());
 				tvo.setTr_bowner(rs.getString("tr_bowner"));
 				tvo.setTr_bnum(rs.getString("tr_bnum"));
-				;
 				tvo.setTr_bname(rs.getString("tr_bname"));
 				list.add(tvo);
 			}
@@ -277,8 +280,8 @@ public class TraderDAO {
 	public boolean traderUpdate(TraderVO tvo) {
 		boolean result = false;
 		StringBuffer sql = new StringBuffer();
-		sql.append("UPDATE trader SET tr_name = ?, tr_phone = ?, tr_add = ?, ");
-		sql.append("tr_bowner = ? ,tr_bnum = ?, tr_bname = ?");
+		sql.append("UPDATE trader SET tr_phone = ?, tr_add = ?, ");
+		sql.append("tr_bowner = ? ,tr_bnum = ?, tr_bname = ? ");
 		sql.append("WHERE tr_num = ?");
 		PreparedStatement pstmt = null;
 		Connection con = null;
@@ -286,13 +289,12 @@ public class TraderDAO {
 		try {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, tvo.getTr_name());
-			pstmt.setString(2, tvo.getTr_phone());
-			pstmt.setString(3, tvo.getTr_add());
-			pstmt.setString(4, tvo.getTr_bowner());
-			pstmt.setString(5, tvo.getTr_bnum());
-			pstmt.setString(6, tvo.getTr_bname());
-			pstmt.setString(7, tvo.getTr_num());
+			pstmt.setString(1, tvo.getTr_phone());
+			pstmt.setString(2, tvo.getTr_add());
+			pstmt.setString(3, tvo.getTr_bowner());
+			pstmt.setString(4, tvo.getTr_bnum());
+			pstmt.setString(5, tvo.getTr_bname());
+			pstmt.setString(6, tvo.getTr_num());
 			int i = pstmt.executeUpdate();
 			if (i == 1) {
 				result = true;
@@ -340,7 +342,6 @@ public class TraderDAO {
 			StringBuffer sql = new StringBuffer();
 			sql.append("DELETE FROM trader WHERE tr_num = ? ");
 
-
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, tvo.getTr_num());
@@ -348,7 +349,6 @@ public class TraderDAO {
 			if (cnt == 1) {
 				success = true;
 			}
-
 		} catch (SQLException sqle) {
 			System.out.println("[   traderDelete(TraderVO cvo)  ] [  SQLException  ]");
 			sqle.printStackTrace();
@@ -367,7 +367,6 @@ public class TraderDAO {
 				System.out.println("[   traderDelete(TraderVO cvo)  ] [  closed Error  ]");
 				e.printStackTrace();
 			}
-
 		}
 		return success;
 	}

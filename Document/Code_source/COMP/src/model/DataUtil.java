@@ -71,27 +71,41 @@ public class DataUtil {
 		return true;
 	}
 
-	public static boolean bankNumCheck(String value, String data) {
-		boolean result = true;
+	/**
+	 * valLimitCheck() : 각 자리의 데이터 범위 유효여부를 체크 (name, id, pw, phone, address, email,
+	 * bNum)
+	 * 
+	 * @param value     확인할 데이터 문자열
+	 * @param fieldName 데이터 범위의 기준 (이름, id, 전화번호...)
+	 * @return result 이상 없으면 true
+	 */
+	public static boolean valLimitCheck(String value, int size) {
 		Alert alert = new Alert(AlertType.WARNING);
-		// 계좌번호가 16자리이고 규격에 맞는지 체크
-		if (!(value.length() == 16 && value.indexOf("-") == 6 && value.lastIndexOf("-") == 9)) {
-			alert.setHeaderText(data + "의 입력 오류");
-			alert.setContentText("\'000000-00-000000\'으로 입력해주세요.");
-			alert.showAndWait();
+		boolean result = true;
+		byte limit = 0;
+
+		limit = (byte) size;
+
+		// 유효하지 않으면 경고
+		if (value.getBytes().length > limit) {
 			result = false;
+			alert.setHeaderText("입력 오류");
+			alert.setContentText("입력된 내용의 글자 수가 너무 큽니다.\n좀 더 짧게 해주세요.");
+			alert.showAndWait();
 		}
+
 		return result;
 	}
 
 	public static String[] getKey(String sel) {
-		String key[]; 
+		String key[];
 		switch (sel) {
 		case "id":
-			key = new String[]{ "CP", "R", "MB", "G", "SS", "H", "PO", "CA", "CO", "SW", "K", "MO", "SP", "MN" };			
+			key = new String[] { "CP", "R", "MB", "G", "SS", "H", "PO", "CA", "CO", "SW", "K", "MO", "SP", "MN" };
 			break;
 		case "pSort":
-			key = new String[]{"CPU", "RAM", "MB", "GPU", "SSD", "HDD", "파워", "케이스", "쿨러", "SW", "키보드", "마우스", "스피커", "모니터"};			
+			key = new String[] { "CPU", "RAM", "MB", "GPU", "SSD", "HDD", "파워", "케이스", "쿨러", "SW", "키보드", "마우스", "스피커",
+					"모니터" };
 			break;
 		default:
 			key = null;
@@ -100,14 +114,13 @@ public class DataUtil {
 
 		return key;
 	}
-	
+
 	public static Integer[] getIdxVal() {
 		Integer idxVal[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
-		
+
 		return idxVal;
 	}
-	
-	
+
 	/**
 	 * showAlert() : 경고창을 보여준다.
 	 * 

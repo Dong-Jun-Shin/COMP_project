@@ -65,7 +65,7 @@ public class ManageTraderTabController implements Initializable {
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
-
+	
 	public void setTRNum(MouseEvent event) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("TR_");
@@ -95,7 +95,7 @@ public class ManageTraderTabController implements Initializable {
 		// 콤보박스 설정
 		setCbxList();
 
-		// 학과 전체 목록
+		// 거래처 전체 목록
 		traderTotalList();
 	}
 
@@ -105,17 +105,22 @@ public class ManageTraderTabController implements Initializable {
 		try {
 			if (!DataUtil.validityCheck(txtTRNum.getText(), "거래처번호")) {
 				return;
-			} else if (!DataUtil.validityCheck(txtTRName.getText(), "거래처명")) {
+			} else if (!DataUtil.validityCheck(txtTRName.getText(), "거래처명")
+					|| !DataUtil.valLimitCheck(txtTRName.getText(), 30)) {
 				return;
-			} else if (!DataUtil.validityCheck(txtTRPhone.getText(), "전화번호")) {
+			} else if (!DataUtil.validityCheck(txtTRPhone.getText(), "전화번호")
+					|| !DataUtil.valLimitCheck(txtTRPhone.getText(), 13)) {
 				return;
-			} else if (txtTRAddress.getText().equals("")) {
+			} else if (txtTRAddress.getText().equals("") && !DataUtil.valLimitCheck(txtTRAddress.getText(), 60)) {
 				DataUtil.validityCheck("", "주소를");
-			} else if (!DataUtil.validityCheck(txtTRBOwner.getText(), "계좌주")) {
+			} else if (!DataUtil.validityCheck(txtTRBOwner.getText(), "계좌주")
+					|| !DataUtil.valLimitCheck(txtTRBOwner.getText(), 12)) {
 				return;
-			} else if (!DataUtil.bankNumCheck(txtTRBNum.getText(), "계좌번호")) {
+			} else if (!DataUtil.validityCheck(txtTRBNum.getText(), "계좌번호")
+					|| !DataUtil.valLimitCheck(txtTRBNum.getText(), 16)) {
 				return;
-			} else if (!DataUtil.validityCheck(txtTRBName.getText(), "계좌은행")) {
+			} else if (!DataUtil.validityCheck(txtTRBName.getText(), "계좌주")
+					|| !DataUtil.valLimitCheck(txtTRBName.getText(), 30)) {
 				return;
 			} else {
 				TraderVO tvo = new TraderVO();
@@ -149,20 +154,24 @@ public class ManageTraderTabController implements Initializable {
 		try {
 			if (!DataUtil.validityCheck(txtTRNum.getText(), "거래처번호")) {
 				return;
-			} else if (!DataUtil.validityCheck(txtTRName.getText(), "거래처명")) {
+			} else if (!DataUtil.validityCheck(txtTRName.getText(), "거래처명")
+					|| !DataUtil.valLimitCheck(txtTRName.getText(), 30)) {
 				return;
-			} else if (!DataUtil.validityCheck(txtTRPhone.getText(), "전화번호")) {
+			} else if (!DataUtil.validityCheck(txtTRPhone.getText(), "전화번호")
+					|| !DataUtil.valLimitCheck(txtTRPhone.getText(), 13)) {
 				return;
-			} else if (txtTRAddress.getText().equals("")) {
+			} else if (txtTRAddress.getText().equals("") && !DataUtil.valLimitCheck(txtTRAddress.getText(), 60)) {
 				DataUtil.validityCheck("", "주소를");
-			} else if (!DataUtil.validityCheck(txtTRBOwner.getText(), "계좌주")) {
+			} else if (!DataUtil.validityCheck(txtTRBOwner.getText(), "계좌주")
+					|| !DataUtil.valLimitCheck(txtTRBOwner.getText(), 12)) {
 				return;
-			} else if (!DataUtil.bankNumCheck(txtTRBNum.getText(), "계좌번호")) {
+			} else if (!DataUtil.validityCheck(txtTRBNum.getText(), "계좌번호")
+					|| !DataUtil.valLimitCheck(txtTRBNum.getText(), 16)) {
 				return;
-			} else if (!DataUtil.validityCheck(txtTRBName.getText(), "계좌은행")) {
+			} else if (!DataUtil.validityCheck(txtTRBName.getText(), "계좌주")
+					|| !DataUtil.valLimitCheck(txtTRBName.getText(), 30)) {
 				return;
 			} else {
-
 				TraderVO tvo = new TraderVO();
 				tvo.setTr_num(txtTRNum.getText());
 				tvo.setTr_name(txtTRName.getText());
@@ -212,25 +221,25 @@ public class ManageTraderTabController implements Initializable {
 	}
 
 	public void btnTRClear(ActionEvent event) {
-		//콤보박스 초기화
+		// 콤보박스 초기화
 		cbxTRSearchKey.getSelectionModel().clearSelection();
-		
-		//테이블 인덱스 초기화
+
+		// 테이블 인덱스 초기화
 		traderTableView.getSelectionModel().select(null);
 		selectedTraderIndex = null;
-		
-		//필드 초기화
+
+		// 필드 초기화
 		txtTRSearchValue.setText("");
 		reset();
-		
-		//버튼 제어 초기화
+
+		// 버튼 제어 초기화
 		editable(true);
 		setInsertBtn(true);
-		
-		//테이블 뷰 전체 리스트 출력
+
+		// 테이블 뷰 전체 리스트 출력
 		traderTotalList();
 	}
-	
+
 	public void btnTRSearch(ActionEvent event) {
 		traderDataList.removeAll(traderDataList);
 		TraderVO tvo = null;

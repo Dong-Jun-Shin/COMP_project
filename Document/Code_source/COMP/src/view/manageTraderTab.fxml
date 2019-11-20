@@ -29,7 +29,7 @@
 						<Insets bottom="20.0" left="10.0" top="10.0" />
 					</padding>
 				</Label>
-				<VBox alignment="CENTER" prefHeight="157.0" prefWidth="330.0" spacing="10.0">
+				<VBox alignment="CENTER" prefHeight="117.0" prefWidth="330.0" spacing="10.0">
 					<children>
 						<HBox alignment="CENTER" prefHeight="40.0" prefWidth="280.0" spacing="20.0">
 							<children>
@@ -90,7 +90,7 @@
 						<Button fx:id="btnTRDelete" mnemonicParsing="false" onAction="#btnTRDelete" prefHeight="30.0" text="거래처 삭제" />
 					</children>
                <VBox.margin>
-                  <Insets bottom="10.0" top="50.0" />
+                  <Insets bottom="10.0" top="80.0" />
                </VBox.margin>
 				</HBox>
             <Button fx:id="btnTRClear" mnemonicParsing="false" onAction="#btnTRClear" prefWidth="280.0" text="초기화" />
@@ -112,10 +112,10 @@
 					<columns>
 						<TableColumn prefWidth="75.0" text="거래처번호" />
 						<TableColumn prefWidth="75.0" text="거래처명" />
-						<TableColumn prefWidth="-1.0" text="전화번호" />
-						<TableColumn prefWidth="-1.0" text="주소" />
+						<TableColumn text="전화번호" />
+						<TableColumn text="주소" />
 						<TableColumn prefWidth="119.0" text="계좌주" />
-						<TableColumn prefWidth="-1.0" text="계좌번호" />
+						<TableColumn text="계좌번호" />
 						<TableColumn prefWidth="131.0" text="계좌은행" />
 						<TableColumn prefWidth="131.0" text="등록일" />
 					</columns>

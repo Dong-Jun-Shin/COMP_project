@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="750.0" prefWidth="1100.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="controller.ManageCustomerTabController">
+<HBox prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageCustomerTabController">
 	<children>
 		<VBox alignment="TOP_CENTER" prefHeight="750.0" prefWidth="350.0" spacing="5.0">
 			<padding>
@@ -85,7 +85,7 @@
 						<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
 							<children>
 								<Label alignment="CENTER" prefWidth="60.0" text="생년월일" />
-								<TextField fx:id="txtCBrith" prefWidth="160.0" />
+								<TextField fx:id="txtCBrith" prefWidth="160.0" promptText="2000-01-01" />
 							</children>
 						</HBox>
 					</children>

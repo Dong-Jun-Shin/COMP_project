@@ -82,19 +82,22 @@ public class ManageMyInfoTabController implements Initializable {
 	 */
 	public void btnDUpdate(ActionEvent event) {
 		// 각 필드의 유효성 체크
-		if (!DataUtil.validityCheck(txtDName.getText(), "업체명")) {
+		if (!DataUtil.validityCheck(txtDName.getText(), "업체명")
+				|| !DataUtil.valLimitCheck(txtDName.getText(), 30)) {
 			return;
-		} else if (!DataUtil.validityCheck(txtDPhone.getText(), "전화번호")) {
+		} else if (!DataUtil.validityCheck(txtDPhone.getText(), "전화번호")
+				|| !DataUtil.valLimitCheck(txtDPhone.getText(), 13)) {
 			return;
-		} else if (txtDAddress.getText().equals("")) {
+		} else if (txtDAddress.getText().equals("") && !DataUtil.valLimitCheck(txtDAddress.getText(), 60)) {
 			DataUtil.validityCheck("", "주소를");
-		} else if (!DataUtil.validityCheck(txtDBOwner.getText(), "계좌주")) {
+		} else if (!DataUtil.validityCheck(txtDBOwner.getText(), "계좌주")
+				|| !DataUtil.valLimitCheck(txtDBOwner.getText(), 12)) {
 			return;
-		} else if (!DataUtil.validityCheck(txtDBNum.getText(), "계좌번호")) {
+		} else if (!DataUtil.validityCheck(txtDBNum.getText(), "계좌번호")
+				|| !DataUtil.valLimitCheck(txtDBNum.getText(), 16)) {
 			return;
-		} else if (!DataUtil.bankNumCheck(txtDBNum.getText(), "계좌번호")) {
-			return;
-		} else if (!DataUtil.validityCheck(txtDBName.getText(), "계좌은행")) {
+		} else if (!DataUtil.validityCheck(txtDBName.getText(), "계좌주")
+				|| !DataUtil.valLimitCheck(txtDBName.getText(), 30)) {
 			return;
 		} else if (pwDPasswd.getText().equals(dvo.getDPasswd())) {
 			// 각 필드의 내용을 dvo에 설정
