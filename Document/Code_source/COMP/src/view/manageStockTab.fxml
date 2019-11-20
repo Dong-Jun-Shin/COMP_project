@@ -40,7 +40,7 @@
 						<HBox alignment="CENTER" prefHeight="40.0" prefWidth="280.0" spacing="20.0">
 							<children>
 								<Label alignment="CENTER" prefWidth="60.0" text="제품구분" />
-								<ComboBox fx:id="cmbPSort" prefWidth="160.0" />
+								<ComboBox fx:id="cbxPSort" prefWidth="160.0" />
 							</children>
 						</HBox>
 					</children>
@@ -128,7 +128,7 @@
 						<Insets bottom="10.0" />
 					</padding>
 					<children>
-						<ComboBox fx:id="cmbPSearchKey" prefWidth="130.0" promptText="검색 구분" />
+						<ComboBox fx:id="cbxPSearchKey" prefWidth="130.0" promptText="검색 구분" />
 						<TextField fx:id="txtPSearchValue" prefWidth="310.0" />
 						<Button fx:id="btnPSearch" mnemonicParsing="false" onAction="#btnPSearch" prefWidth="50.0" text="검색" />
 						<VBox alignment="BOTTOM_RIGHT" prefHeight="65.0" prefWidth="200.0">
