@@ -45,7 +45,7 @@ public class WarehouseDAO {
 	public String getWareHouseCount() {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT NVL(LPAD(MAX(TO_NUMBER(LTRIM(SUBSTR(wh_num, ");
-		sql.append("4, 3), '0')))+1, 4, '0'), '0001') AS warehouseCount ");
+		sql.append("4, 4), '0')))+1, 4, '0'), '0001') AS warehouseCount ");
 		sql.append("FROM warehouse ");
 
 		Connection con = null;
