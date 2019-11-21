@@ -33,19 +33,19 @@
 						<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
 							<children>
 								<Label alignment="CENTER" prefWidth="60.0" text="입고번호" />
-								<TextField fx:id="txtWHNum" prefWidth="130.0" />
+								<TextField fx:id="txtWHNum" editable="false" prefWidth="130.0" />
 							</children>
 						</HBox>
 						<HBox alignment="CENTER" prefHeight="40.0" prefWidth="280.0" spacing="20.0">
 							<children>
 								<Label alignment="CENTER" prefWidth="60.0" text="거래처번호" />
-								<TextField fx:id="txtTRNum" prefWidth="130.0" />
+								<TextField fx:id="txtTRNum" editable="false" onMouseClicked="#txtTRPopup" prefWidth="130.0" />
 							</children>
 						</HBox>
 						<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
 							<children>
 								<Label alignment="CENTER" prefWidth="60.0" text="제품번호" />
-								<TextField fx:id="txtPNum" prefWidth="130.0" />
+								<TextField fx:id="txtPNum" editable="false" prefWidth="130.0" />
 							</children>
 						</HBox>
 						<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
@@ -72,10 +72,10 @@
 			<children>
 				<TableView fx:id="whTableView" onMouseClicked="#whTableView" prefHeight="262.0" prefWidth="320.0">
 					<columns>
-						<TableColumn text="입고번호" />
-						<TableColumn text="거래처번호" />
-						<TableColumn text="제품번호" />
-						<TableColumn text="입고수량" />
+						<TableColumn editable="false" text="입고번호" />
+						<TableColumn editable="false" text="거래처번호" />
+						<TableColumn editable="false" text="제품번호" />
+						<TableColumn editable="false" text="입고수량" />
 					</columns>
                <VBox.margin>
                   <Insets top="20.0" />

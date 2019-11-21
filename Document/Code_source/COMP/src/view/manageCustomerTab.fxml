@@ -128,14 +128,14 @@
 				</HBox>
 				<TableView fx:id="customerTableView" onMouseClicked="#customerTableView" prefHeight="600.0" prefWidth="690.0">
 					<columns>
-						<TableColumn prefWidth="75.0" text="고객번호" />
-						<TableColumn prefWidth="75.0" text="고객명" />
-						<TableColumn prefWidth="75.0" text="고객ID" />
-						<TableColumn prefWidth="75.0" text="전화번호" />
-						<TableColumn prefWidth="146.0" text="주소" />
-						<TableColumn prefWidth="68.0" text="생년월일" />
-						<TableColumn prefWidth="90.0" text="이메일" />
-						<TableColumn prefWidth="85.0" text="등록일" />
+						<TableColumn editable="false" prefWidth="75.0" text="고객번호" />
+						<TableColumn editable="false" prefWidth="75.0" text="고객명" />
+						<TableColumn editable="false" prefWidth="75.0" text="고객ID" />
+						<TableColumn editable="false" prefWidth="75.0" text="전화번호" />
+						<TableColumn editable="false" prefWidth="146.0" text="주소" />
+						<TableColumn editable="false" prefWidth="68.0" text="생년월일" />
+						<TableColumn editable="false" prefWidth="90.0" text="이메일" />
+						<TableColumn editable="false" prefWidth="85.0" text="등록일" />
 					</columns>
 				</TableView>
 			</children>

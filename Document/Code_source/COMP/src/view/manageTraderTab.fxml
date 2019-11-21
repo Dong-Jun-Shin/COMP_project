@@ -110,14 +110,14 @@
 				</HBox>
 				<TableView fx:id="traderTableView" onMouseClicked="#traderTableView" prefHeight="600.0" prefWidth="690.0">
 					<columns>
-						<TableColumn prefWidth="75.0" text="거래처번호" />
-						<TableColumn prefWidth="75.0" text="거래처명" />
-						<TableColumn text="전화번호" />
-						<TableColumn text="주소" />
-						<TableColumn prefWidth="119.0" text="계좌주" />
-						<TableColumn text="계좌번호" />
-						<TableColumn prefWidth="131.0" text="계좌은행" />
-						<TableColumn prefWidth="131.0" text="등록일" />
+						<TableColumn editable="false" prefWidth="75.0" text="거래처번호" />
+						<TableColumn editable="false" prefWidth="75.0" text="거래처명" />
+						<TableColumn editable="false" text="전화번호" />
+						<TableColumn editable="false" text="주소" />
+						<TableColumn editable="false" prefWidth="119.0" text="계좌주" />
+						<TableColumn editable="false" text="계좌번호" />
+						<TableColumn editable="false" prefWidth="131.0" text="계좌은행" />
+						<TableColumn editable="false" prefWidth="131.0" text="등록일" />
 					</columns>
 				</TableView>
 			</children>

@@ -140,15 +140,15 @@
 				</HBox>
 				<TableView fx:id="productTableView" onMouseClicked="#productTableView" prefHeight="600.0" prefWidth="690.0">
 					<columns>
-						<TableColumn prefWidth="75.0" text="제품번호" />
-						<TableColumn prefWidth="250.0" text="제품명" />
-						<TableColumn prefWidth="75.0" text="제품수량" />
-						<TableColumn prefWidth="100.0" text="단가" />
-						<TableColumn prefWidth="200.0" text="크기" />
-						<TableColumn prefWidth="100.0" text="보증기간" />
-						<TableColumn prefWidth="150.0" text="출시일" />
-						<TableColumn prefWidth="150.0" text="이미지" />
-						<TableColumn prefWidth="120.0" text="등록일" />
+						<TableColumn editable="false" prefWidth="75.0" text="제품번호" />
+						<TableColumn editable="false" prefWidth="250.0" text="제품명" />
+						<TableColumn editable="false" prefWidth="75.0" text="제품수량" />
+						<TableColumn editable="false" prefWidth="100.0" text="단가" />
+						<TableColumn editable="false" prefWidth="200.0" text="크기" />
+						<TableColumn editable="false" prefWidth="100.0" text="보증기간" />
+						<TableColumn editable="false" prefWidth="150.0" text="출시일" />
+						<TableColumn editable="false" prefWidth="150.0" text="이미지" />
+						<TableColumn editable="false" prefWidth="120.0" text="등록일" />
 					</columns>
 				</TableView>
 			</children>

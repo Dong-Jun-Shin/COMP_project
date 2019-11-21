@@ -223,11 +223,17 @@ Button btnWHDelete
 Button btnWHClear
 TableView whTableView
 
+
+#txtTRPopup(MouseEvent event)
 #btnWHInsert(ActionEvent event)
 #btnWHDelete(ActionEvent event)
 #btnWHClear(ActionEvent event)
 #whTableView(MouseEvent event)
 
+-------------[manageWareHouserTab]
+TableView traderTableList
+
+#traderTableList(MouseEvent event)
 
 -------------[manageResultTab]
 BarChart mOrderBarChart

@@ -43,7 +43,7 @@ public class ManageStockSubController implements Initializable {
 	private Button btnWHClear;
 	@FXML
 	private TableView<WarehouseVO> whTableView;
-	private WarehouseDAO whdao;
+	private WarehouseDAO whdao = WarehouseDAO.getInstance();
 	private ProductVO pvo;
 	private ManageStockTabController mstController;
 	private Stage stage;
@@ -69,26 +69,21 @@ public class ManageStockSubController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO 테이블 조회, WH_num 자동부여, TR_num 검색으로 부여, 테이블 조회 등 나머지 구현
-		int number = 1;
-//		if(!whdao.getWarehouseTotalList().isEmpty()) {
-//		 number = whdao.getWarehouseTotalList().size()+1;
-//		}
-
-		String whSet = String.format("%03d", number);
-		txtWHNum.setText("WH_" + whSet);
-
-		txtWHNum.setEditable(false);
-		txtPNum.setEditable(false);
-
+		// TODO 테이블 조회, TR_num 검색으로 부여, 테이블 조회 등 나머지 구현
 		List<String> title = DataUtil.fieldName(new WarehouseVO());
 		for (int i = 0; i < title.size() - 1; i++) {
 			TableColumn<WarehouseVO, ?> columnName = whTableView.getColumns().get(i);
 			columnName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
 		}
 		whTableView.setItems(whDataList);
+		
+		setWHNum();
 	}
-
+	
+	public void txtTRPopup(MouseEvent event) {
+		System.out.println("1");
+	}
+	
 	public void btnWHInsert(ActionEvent event) {
 		if (!DataUtil.validityCheck(txtWHNum.getText(), "입고 번호")) {
 			return;
@@ -123,9 +118,23 @@ public class ManageStockSubController implements Initializable {
 		}
 	}
 
+	/**
+	 * setWHNum() : 새로운 거래처에게 부여될 다음 번호를 가져온다.
+	 * 
+	 */
+	public void setWHNum() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("WH_");
+		sb.append(whdao.getWareHouseCount());
+		txtWHNum.setText(sb.toString());
+	}
+	
 	public void btnWHClear(ActionEvent event) {
+		setWHNum();
 		txtTRNum.clear();
+		txtPNum.setText(pvo.getP_num());
 		txtWHQty.clear();
+		
 	}
 
 	public void whTableView(MouseEvent event) {
