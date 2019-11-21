@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -211,31 +212,33 @@ public class CdOrderDAO {
 	
 	/**
 	 * cd_orderInsert(CD_OrderVO cvo) : 주문 등록 메소드
-	 * @param cvo		(CD_OrderVO) : 등록할 주문
+	 * @param covo		(CD_OrderVO) : 등록할 주문
 	 * @return boolean
 	 */
-	public boolean cd_orderInsert(CdOrderVO cvo) {
-		//TODO 주문하기 클릭 시, ch_num_seq 초기화시키기
+	public boolean cd_orderInsert(CdOrderVO covo) {
 		boolean result = false;
+		String proc = "{call reset_seq('ch_num_seq')}";
 		StringBuffer sql = new StringBuffer();
-		sql.append("INSERT INTO cd_order (cd_num, cd_price, c_num)");
-		sql.append("VALUES (TO_CHAR(SYSDATE, 'yymmdd')||LPAD(TO_CHAR(cd_num_seq.NEXTVAL),4,'0')");
-		sql.append(", ?, ?) ");
+		sql.append("INSERT INTO cd_order (cd_num, cd_price, c_num) ");
+		sql.append("VALUES (?, ?, ?) ");
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+		CallableStatement cstmt = null;
 		try {
 			con = getConnection();
+			cstmt = con.prepareCall(proc);
 			pstmt = con.prepareStatement(sql.toString());
 			
-			pstmt.setInt(1, cvo.getCd_price());
-			pstmt.setString(2, cvo.getC_num());
+			pstmt.setString(1, covo.getCd_num());
+			pstmt.setInt(2, covo.getCd_price());
+			pstmt.setString(3, covo.getC_num());
 			
-			int i = pstmt.executeUpdate();
-			if(i ==1) {
+			int i = cstmt.executeUpdate();
+			int j = pstmt.executeUpdate();
+			
+			if(i == 1 && j == 1) {
 				result = true;
 			}
-			
 		}catch(SQLException sqle) {
 			System.out.println("[  cd_orderInsert(CD_OrderVO cvo)  ] [  SQLException  ]");
 			sqle.printStackTrace();
@@ -245,8 +248,10 @@ public class CdOrderDAO {
 			e.printStackTrace();
 			result = false;
 		}finally {
-			
-			try {
+			try {				
+				if(cstmt != null) {
+					cstmt.close();
+				}
 				if(pstmt != null) {
 					pstmt.close();
 				}
@@ -257,12 +262,9 @@ public class CdOrderDAO {
 				System.out.println("[  cd_orderInsert(CD_OrderVO cvo)  ] [  closed Error  ]");
 				e.printStackTrace();
 			}
-			
 		}
 		
 		return result;
-		
-		
 	}
 	
 	/**
@@ -273,7 +275,7 @@ public class CdOrderDAO {
 	public String getOrderCount(String date) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT NVL(LPAD(MAX(TO_NUMBER(LTRIM( ");
-		sql.append("SUBSTR(cd_num, 3, 3), '0')))+1, 4, '0'), '0001')  ");
+		sql.append("SUBSTR(cd_num, 7, 4), '0')))+1, 4, '0'), '0001')  ");
 		sql.append("AS cdOrderCount FROM cd_order ");
 		sql.append("WHERE cd_num like ? ORDER BY cd_num ");
 		

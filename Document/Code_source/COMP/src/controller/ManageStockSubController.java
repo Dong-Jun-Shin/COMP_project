@@ -86,6 +86,7 @@ public class ManageStockSubController implements Initializable {
 		whTableView.setItems(whDataList);
 		
 		setWHNum();
+		setInsertBtn(true);
 		wareTotalList();
 	}
 	
@@ -162,6 +163,7 @@ public class ManageStockSubController implements Initializable {
 		txtTRNum.clear();
 		txtPNum.setText(pvo.getP_num());
 		txtWHQty.clear();
+		setInsertBtn(true);
 		
 	}
 
@@ -173,6 +175,7 @@ public class ManageStockSubController implements Initializable {
 				txtTRNum.setText(wvo.getTr_num());
 				txtPNum.setText(wvo.getP_num());
 				txtWHQty.setText(Integer.toString(wvo.getWh_qty()));
+				setInsertBtn(false);
 			}
 		}
 	}
@@ -199,6 +202,16 @@ public class ManageStockSubController implements Initializable {
 			e.printStackTrace();
 			System.out.println("wareTotalList() = [" + e.getMessage() + "]");
 		}
+	}
+	
+	/**
+	 * setInsertBtn() : 버튼의 활성화를 제어
+	 * 
+	 * @param bool true면 등록 활성화, false면 수정과 삭제 활성화
+	 */
+	private void setInsertBtn(boolean bool) {
+		btnWHInsert.setDisable(!bool);
+		btnWHDelete.setDisable(bool);
 	}
 	
 	public void setWHInfo() {

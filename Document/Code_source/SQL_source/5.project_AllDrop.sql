@@ -1,4 +1,4 @@
-
+--테이블
 DROP TABLE order_chart;
 DROP TABLE warehouse;
 
@@ -9,7 +9,7 @@ DROP TABLE product;
 DROP TABLE trader;
 
 
-
+--시퀀스
 DROP SEQUENCE c_num_seq;
 DROP SEQUENCE cd_num_seq;
 DROP SEQUENCE ch_num_seq; 
@@ -29,3 +29,12 @@ DROP SEQUENCE p_ss_num_seq;
 DROP SEQUENCE p_sw_num_seq;
 DROP SEQUENCE tr_num_seq;
 DROP SEQUENCE wh_num_seq;
+
+--트리거
+DROP TRIGGER w_plus_trg;
+DROP TRIGGER w_minus_trg;
+DROP TRIGGER oc_minus_trg;
+DROP TRIGGER oc_plus_trg;
+
+--프로시저
+DROP PROCEDURE reset_seq;

@@ -93,10 +93,10 @@ public class OrderChartDAO {
 	
 	/**
 	 * order_ChartInsert(Order_ChartVO ovo) : 주문 내역 등록 메소드
-	 * @param ovo			(Order_ChartVO) : 등록할 주문 내역
+	 * @param ocvo			(Order_ChartVO) : 등록할 주문 내역
 	 * @return boolean
 	 */
-	public boolean order_ChartInsert(OrderChartVO ovo) {
+	public boolean order_ChartInsert(OrderChartVO ocvo) {
 		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO order_chart(ch_num, cd_num, ch_qty, p_num)");
@@ -108,9 +108,9 @@ public class OrderChartDAO {
 		try {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
-			pstmt.setString(1, ovo.getCd_num());
-			pstmt.setInt(2, ovo.getCh_qty());
-			pstmt.setString(3, ovo.getP_num());
+			pstmt.setString(1, ocvo.getCd_num());
+			pstmt.setInt(2, ocvo.getCh_qty());
+			pstmt.setString(3, ocvo.getP_num());
 			int i = pstmt.executeUpdate();
 			if(i ==1) {
 				result = true;

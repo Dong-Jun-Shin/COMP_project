@@ -1,4 +1,6 @@
-CREATE SEQUENCE tr_num_seq --거래처 번호
+--샘플 데이터 삽입을 위한 시퀀스(주문 내역 번호 제외)
+
+CREATE SEQUENCE tr_num_seq --거래처 번호(미사용)
 START WITH 0
 INCREMENT BY 1
 MAXVALUE 999
@@ -8,7 +10,7 @@ CACHE 3;
 
 
 
-CREATE SEQUENCE cd_num_seq --주문 번호
+CREATE SEQUENCE cd_num_seq --주문 번호(미사용)
 START WITH 0
 INCREMENT BY 1
 MAXVALUE 9999
@@ -18,7 +20,7 @@ CACHE 3;
 
 
 
-CREATE SEQUENCE c_num_seq -- 고객번호
+CREATE SEQUENCE c_num_seq -- 고객번호(미사용)
 START WITH 0
 INCREMENT BY 1
 MAXVALUE 999
@@ -28,7 +30,7 @@ CACHE 3;
 
 
 
-CREATE SEQUENCE ch_num_seq -- 내역 번호
+CREATE SEQUENCE ch_num_seq -- 내역 번호(사용)
 START WITH 0
 INCREMENT BY 1
 MAXVALUE 9999
@@ -37,7 +39,7 @@ CYCLE
 CACHE 3;
 
 
-CREATE SEQUENCE wh_num_seq -- 입고 번호
+CREATE SEQUENCE wh_num_seq -- 입고 번호(미사용)
 START WITH 0
 INCREMENT BY 1
 MAXVALUE 9999
@@ -58,7 +60,7 @@ CACHE 3;
 
 
 
-CREATE SEQUENCE p_cp_num_seq -- CPU 번호
+CREATE SEQUENCE p_cp_num_seq -- CPU 번호(미사용)
 START WITH 1
 INCREMENT BY 1
 MAXVALUE 999
@@ -66,32 +68,7 @@ MINVALUE 0
 CYCLE
 CACHE 3;
 
-CREATE SEQUENCE p_r_num_seq -- RAM 번호
-START WITH 1
-INCREMENT BY 1
-MAXVALUE 999
-MINVALUE 0
-CYCLE
-CACHE 3;
-
-
-CREATE SEQUENCE p_mb_num_seq -- 메인보드 번호
-START WITH 1
-INCREMENT BY 1
-MAXVALUE 999
-MINVALUE 0
-CYCLE
-CACHE 3;
-
-CREATE SEQUENCE p_g_num_seq -- GPU 번호
-START WITH 1
-INCREMENT BY 1
-MAXVALUE 999
-MINVALUE 0
-CYCLE
-CACHE 3;
-
-CREATE SEQUENCE p_ss_num_seq -- SSD 번호
+CREATE SEQUENCE p_r_num_seq -- RAM 번호(미사용)
 START WITH 1
 INCREMENT BY 1
 MAXVALUE 999
@@ -100,7 +77,23 @@ CYCLE
 CACHE 3;
 
 
-CREATE SEQUENCE p_h_num_seq -- HDD 번호
+CREATE SEQUENCE p_mb_num_seq -- 메인보드 번호(미사용)
+START WITH 1
+INCREMENT BY 1
+MAXVALUE 999
+MINVALUE 0
+CYCLE
+CACHE 3;
+
+CREATE SEQUENCE p_g_num_seq -- GPU 번호(미사용)
+START WITH 1
+INCREMENT BY 1
+MAXVALUE 999
+MINVALUE 0
+CYCLE
+CACHE 3;
+
+CREATE SEQUENCE p_ss_num_seq -- SSD 번호(미사용)
 START WITH 1
 INCREMENT BY 1
 MAXVALUE 999
@@ -109,7 +102,7 @@ CYCLE
 CACHE 3;
 
 
-CREATE SEQUENCE p_po_num_seq -- 파워 번호
+CREATE SEQUENCE p_h_num_seq -- HDD 번호(미사용)
 START WITH 1
 INCREMENT BY 1
 MAXVALUE 999
@@ -118,7 +111,7 @@ CYCLE
 CACHE 3;
 
 
-CREATE SEQUENCE p_ca_num_seq -- 케이스 번호
+CREATE SEQUENCE p_po_num_seq -- 파워 번호(미사용)
 START WITH 1
 INCREMENT BY 1
 MAXVALUE 999
@@ -127,7 +120,7 @@ CYCLE
 CACHE 3;
 
 
-CREATE SEQUENCE p_co_num_seq -- 쿨러 번호
+CREATE SEQUENCE p_ca_num_seq -- 케이스 번호(미사용)
 START WITH 1
 INCREMENT BY 1
 MAXVALUE 999
@@ -136,7 +129,7 @@ CYCLE
 CACHE 3;
 
 
-CREATE SEQUENCE p_sw_num_seq -- 소프트웨어 번호
+CREATE SEQUENCE p_co_num_seq -- 쿨러 번호(미사용)
 START WITH 1
 INCREMENT BY 1
 MAXVALUE 999
@@ -145,7 +138,7 @@ CYCLE
 CACHE 3;
 
 
-CREATE SEQUENCE p_k_num_seq -- 키보드 번호
+CREATE SEQUENCE p_sw_num_seq -- 소프트웨어 번호(미사용)
 START WITH 1
 INCREMENT BY 1
 MAXVALUE 999
@@ -154,7 +147,7 @@ CYCLE
 CACHE 3;
 
 
-CREATE SEQUENCE p_mo_num_seq -- 마우스 번호
+CREATE SEQUENCE p_k_num_seq -- 키보드 번호(미사용)
 START WITH 1
 INCREMENT BY 1
 MAXVALUE 999
@@ -163,7 +156,7 @@ CYCLE
 CACHE 3;
 
 
-CREATE SEQUENCE p_sp_num_seq -- 스피커 번호
+CREATE SEQUENCE p_mo_num_seq -- 마우스 번호(미사용)
 START WITH 1
 INCREMENT BY 1
 MAXVALUE 999
@@ -172,7 +165,16 @@ CYCLE
 CACHE 3;
 
 
-CREATE SEQUENCE p_mn_num_seq -- 모니터 번호
+CREATE SEQUENCE p_sp_num_seq -- 스피커 번호(미사용)
+START WITH 1
+INCREMENT BY 1
+MAXVALUE 999
+MINVALUE 0
+CYCLE
+CACHE 3;
+
+
+CREATE SEQUENCE p_mn_num_seq -- 모니터 번호(미사용)
 START WITH 1
 INCREMENT BY 1
 MAXVALUE 999

@@ -35,7 +35,14 @@ public class ManageOrderTabController implements Initializable {
 	}
 
 	public void btnOrderCancel(ActionEvent event) {
-
+		//TODO 이메일 전송 구현하기 
+		/* 이메일 전송 (판매자 이메일 -> 고객 이메일)
+		 * 제목 : '구매자명'님, 주문이 취소되었습니다.
+		 * 본문 : 고객 - 성함, 연락처, 주소
+		 * 		제품 - 제품명, 개수, 금액
+		 * 		------------------- 
+		 * 			환불 금액
+		 */
 	}
 
 	public void orderProgressView(MouseEvent event) {

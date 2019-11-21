@@ -1,6 +1,7 @@
 package controller;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -173,7 +174,6 @@ public class SalesTradeTabController implements Initializable {
 	private CdOrderDAO codao = CdOrderDAO.getInstance();
 	private OrderChartDAO ocdao = OrderChartDAO.getInstance();
 	private CdOrderVO covo = new CdOrderVO();
-	private OrderChartVO[] ocvo;
 	private Stage primaryStage;
 
 	public void setPvo(ProductVO pvo) {
@@ -227,7 +227,7 @@ public class SalesTradeTabController implements Initializable {
 		for (int i = 0; i < txtPriceList.length; i++) {
 			txtPriceList[i].setText(0 + "");
 		}
-		
+
 	}
 
 	/**
@@ -244,8 +244,8 @@ public class SalesTradeTabController implements Initializable {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
 			String cdnumYear = sdf.format(new Date());
 			String serialNo = codao.getOrderCount(cdnumYear);
-			
-			txtCDNum.setText(cdnumYear+serialNo);
+
+			txtCDNum.setText(cdnumYear + serialNo);
 			txtCName.setText(cvo.getC_name());
 			txtCPhone.setText(cvo.getC_phone());
 			txtCAddress.setText(cvo.getC_add());
@@ -263,12 +263,6 @@ public class SalesTradeTabController implements Initializable {
 	}
 
 	public void btnOrderClr(ActionEvent event) {
-		txtCId.clear();
-		txtCName.clear();
-		txtCPhone.clear();
-		txtCAddress.clear();
-		txtCEmail.clear();
-
 		covo = new CdOrderVO();
 		reset();
 	}
@@ -292,35 +286,47 @@ public class SalesTradeTabController implements Initializable {
 		setTotalPrice();
 	}
 
-	/*
+	/**
 	 * btnOrderInsert(ActionEvent event) : 주문 입력 이벤트
 	 */
 	@SuppressWarnings("unchecked")
 	public void btnOrderInsert(ActionEvent event) {
-		// TODO order_ChartVO로 인서트 여러번 수행하도록 구현
+		boolean success = false;
+
+		// 주문 테이블에 주문행 생성
+		success = codao.cd_orderInsert(covo);
 		
-		
-		covo.setC_num(txtCPName.getText());
-		covo.setCd_price(Integer.parseInt(txtCPPrice.getText()));
-		covo.setCd_num(txtCDNum.getText());
-		codao.cd_orderInsert(covo);
-		OrderChartVO ovo = new OrderChartVO();
-//			covo의 설정까지 완료, Id 입력 시, 주문번호 자동 생성 만들기 
-		
-		for (int j = 0; j < pvoList.length; j++) {
-			//order_chart insert
-			if(pvoList[j].getP_price() != 0){
-				ovo.setP_num(pvoList[j].getP_num());
-				ovo.setCh_qty(((Spinner<Integer>)spinQtyList[j]).getValue());
-				ovo.setCd_num(covo.getCd_num());
-				ocdao.order_ChartInsert(ovo);
-				
+		// 주문 내역 테이블에 각 제품의 주문 행 생성 
+		if (success == true) {
+			OrderChartVO ocvo = new OrderChartVO();
+			for (int i = 0; i < pvoList.length; i++) {
+				if (pvoList[i].getP_price() != 0) {
+					ocvo.setP_num(pvoList[i].getP_num());
+					ocvo.setCh_qty(((Spinner<Integer>) spinQtyList[i]).getValue());
+					ocvo.setCd_num(covo.getCd_num());
+					ocdao.order_ChartInsert(ocvo);
+				} else {
+				}
 			}
-			
-			codao.cd_orderInsert(covo);
 		}
+
+		if (success == true) {
+			DataUtil.showInfoAlert("주문신청 결과", "[" + txtCName.getText() + "님]의 주문이 등록되었습니다.");
+			//TODO 이메일 전송 구현하기 
+			/* 이메일 전송 (판매자 이메일 -> 고객 이메일)
+			 * 제목 : '구매자명'님, 주문하신 내역입니다.
+			 * 본문 : 고객 - 성함, 연락처, 주소
+			 * 		제품 - 제품명, 개수, 금액
+			 * 		------------------- 
+			 * 				총금액
+			 * 		판매자 - 계좌주, 계좌번호, 계좌 번호
+			 */
+		} else {
+			DataUtil.showInfoAlert("주문신청 결과", "주문신청에 문제가 있어 완료하지 못하였습니다.");
+		}
+
 		reset();
-		
+
 	}
 
 	/**
@@ -359,6 +365,13 @@ public class SalesTradeTabController implements Initializable {
 		for (int i = 0; i < txtPriceList.length; i++) {
 			txtPriceList[i].setText("0");
 		}
+
+		txtCDNum.clear();
+		txtCId.clear();
+		txtCName.clear();
+		txtCPhone.clear();
+		txtCAddress.clear();
+		txtCEmail.clear();
 
 		btnIdChk.setDisable(false);
 		btnOrderInsert.setDisable(true);
