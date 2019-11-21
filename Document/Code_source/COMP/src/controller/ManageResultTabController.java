@@ -32,11 +32,23 @@ public class ManageResultTabController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	public void mComponentRank(MouseEvent event){
 		
 	}
+	
+	public void setMSalesPieChart() {
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 }

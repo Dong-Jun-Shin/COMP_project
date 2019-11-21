@@ -104,12 +104,11 @@ public class WarehouseDAO {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
-			wvo = new WarehouseVO();
 
 			while (rs.next()) {
+				wvo = new WarehouseVO();
 				wvo.setWh_num(rs.getString("wh_num"));
 				wvo.setWh_qty(rs.getInt("wh_qty"));
-				wvo.setWh_reg(rs.getString("wh_reg"));
 				wvo.setTr_num(rs.getString("tr_num"));
 				wvo.setP_num(rs.getString("p_num"));
 				list.add(wvo);
