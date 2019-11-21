@@ -99,7 +99,7 @@ public class CdOrderDAO {
 	
 	/**
 	 *  getCompletedOrderList() : 완료된 주문 리스트 조회 메소드
-	 * @return
+	 * @return ArrayList<Order_ChartVO>
 	 */
 	public ArrayList<CdOrderVO> getCompletedOrderList(){
 		ArrayList<CdOrderVO> list = new ArrayList<CdOrderVO>();
@@ -261,6 +261,58 @@ public class CdOrderDAO {
 		}
 		
 		return result;
+		
+		
+	}
+	
+	/**
+	 * getOrderCount(String date) : 입력된 일자를 선별하여 조회된 카운트 리턴 메소드
+	 * @param date 
+	 * @return String
+	 */
+	public String getOrderCount(String date) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT NVL(LPAD(MAX(TO_NUMBER(LTRIM( ");
+		sql.append("SUBSTR(cd_num, 3, 3), '0')))+1, 4, '0'), '0001')  ");
+		sql.append("AS cdOrderCount FROM cd_order ");
+		sql.append("WHERE cd_num like ? ORDER BY cd_num ");
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String serialNumber = "";
+		
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, date+"%");
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				serialNumber = rs.getString("cdOrderCount");
+			}
+		} catch (SQLException e) {
+			System.out.println("[   getOrderCount(String date)  ]  [  SQLException  ]");
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("[   getOrderCount(String date)  ]  [  Exception  ]");
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (Exception e) {
+				System.out.println("[   getOrderCount(String date)  ]  [  DB연동 해제 에러  ]");
+			}
+		}
+
+		return serialNumber;
+		
+		
 		
 		
 	}

@@ -1,6 +1,8 @@
 package controller;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -225,6 +227,7 @@ public class SalesTradeTabController implements Initializable {
 		for (int i = 0; i < txtPriceList.length; i++) {
 			txtPriceList[i].setText(0 + "");
 		}
+		
 	}
 
 	/**
@@ -236,8 +239,13 @@ public class SalesTradeTabController implements Initializable {
 		if (!DataUtil.validityCheck(txtCId.getText(), "ID")) {
 			return;
 		} else if (cdao.customerLoginOverlap(txtCId.getText())) {
+			//
 			CustomerVO cvo = cdao.getCustomerSelected("c_id", txtCId.getText()).get(0);
-
+			SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
+			String cdnumYear = sdf.format(new Date());
+			String serialNo = codao.getOrderCount(cdnumYear);
+			
+			txtCDNum.setText(cdnumYear+serialNo);
 			txtCName.setText(cvo.getC_name());
 			txtCPhone.setText(cvo.getC_phone());
 			txtCAddress.setText(cvo.getC_add());
@@ -294,12 +302,13 @@ public class SalesTradeTabController implements Initializable {
 		
 		covo.setC_num(txtCPName.getText());
 		covo.setCd_price(Integer.parseInt(txtCPPrice.getText()));
+		covo.setCd_num(txtCDNum.getText());
 		codao.cd_orderInsert(covo);
 		OrderChartVO ovo = new OrderChartVO();
 //			covo의 설정까지 완료, Id 입력 시, 주문번호 자동 생성 만들기 
 		
 		for (int j = 0; j < pvoList.length; j++) {
-			//order_char insert
+			//order_chart insert
 			if(pvoList[j].getP_price() != 0){
 				ovo.setP_num(pvoList[j].getP_num());
 				ovo.setCh_qty(((Spinner<Integer>)spinQtyList[j]).getValue());
@@ -307,76 +316,11 @@ public class SalesTradeTabController implements Initializable {
 				ocdao.order_ChartInsert(ovo);
 				
 			}
+			
+			codao.cd_orderInsert(covo);
 		}
+		reset();
 		
-//			;
-//
-//			if (txtRName.getText() != null) {
-//				insertCvoSetting(txtRName.getText(), Integer.parseInt(txtRPrice.getText()));
-//			}
-//			;
-
-//			if (txtMBName.getText() != null) {
-//				insertCvoSetting(txtMBName.getText(), Integer.parseInt(txtMBPrice.getText()));
-//			}
-//			;
-//
-//			if (txtGName.getText() != null) {
-//				insertCvoSetting(txtGName.getText(), Integer.parseInt(txtGPrice.getText()));
-//			}
-//			;
-//
-//			if (txtSSName.getText() != null) {
-//				insertCvoSetting(txtSSName.getText(), Integer.parseInt(txtSSPrice.getText()));
-//			}
-//			;
-//
-//			if (txtHName.getText() != null) {
-//				insertCvoSetting(txtHName.getText(), Integer.parseInt(txtHPrice.getText()));
-//			}
-//			;
-//
-//			if (txtPOName.getText() != null) {
-//				insertCvoSetting(txtPOName.getText(), Integer.parseInt(txtPOPrice.getText()));
-//			}
-//			;
-//
-//			if (txtCAName.getText() != null) {
-//				insertCvoSetting(txtCAName.getText(), Integer.parseInt(txtCAPrice.getText()));
-//			}
-//			;
-//
-//			if (txtCOName.getText() != null) {
-//				insertCvoSetting(txtCOName.getText(), Integer.parseInt(txtCOPrice.getText()));
-//			}
-//			;
-//
-//			if (txtSWName.getText() != null) {
-//				insertCvoSetting(txtSWName.getText(), Integer.parseInt(txtSWPrice.getText()));
-//			}
-//			;
-//
-//			if (txtKName.getText() != null) {
-//				insertCvoSetting(txtKName.getText(), Integer.parseInt(txtKPrice.getText()));
-//			}
-//			;
-//
-//			if (txtMOName.getText() != null) {
-//				insertCvoSetting(txtMOName.getText(), Integer.parseInt(txtMOPrice.getText()));
-//			}
-//			;
-//
-//			if (txtSPName.getText() != null) {
-//				insertCvoSetting(txtSPName.getText(), Integer.parseInt(txtSPPrice.getText()));
-//			}
-//			;
-//
-//			if (txtMNName.getText() != null) {
-//				insertCvoSetting(txtMNName.getText(), Integer.parseInt(txtMNPrice.getText()));
-//			}
-//			;
-
-//		reset();
 	}
 
 	/**
