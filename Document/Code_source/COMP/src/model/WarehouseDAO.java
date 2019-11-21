@@ -45,7 +45,7 @@ public class WarehouseDAO {
 	public String getWareHouseCount() {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT NVL(LPAD(MAX(TO_NUMBER(LTRIM(SUBSTR(wh_num, ");
-		sql.append("4, 3), '0')))+1, 3, '0'), '001') AS warehouseCount ");
+		sql.append("4, 3), '0')))+1, 4, '0'), '0001') AS warehouseCount ");
 		sql.append("FROM warehouse ");
 
 		Connection con = null;
@@ -93,8 +93,8 @@ public class WarehouseDAO {
 		ArrayList<WarehouseVO> list = new ArrayList<WarehouseVO>();
 		WarehouseVO wvo = new WarehouseVO();
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT wh_num, tr_num, p_num, tr_qty");
-		sql.append("FROM warehouse ORDER BY wh_num");
+		sql.append("SELECT wh_num, tr_num, p_num, wh_qty ");
+		sql.append("FROM warehouse ORDER BY wh_num ");
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -116,10 +116,10 @@ public class WarehouseDAO {
 			}
 
 		} catch (SQLException sqle) {
-			System.out.println("[  getCustomerTotalList()  ]    [ SQLException ]");
+			System.out.println("[  getWarehouseTotalList()  ]    [ SQLException ]");
 			sqle.printStackTrace();
 		} catch (Exception e) {
-			System.out.println("[  getCustomerTotalList()  ]    [ Unknown Exception ]");
+			System.out.println("[  getWarehouseTotalList()  ]    [ Unknown Exception ]");
 			e.printStackTrace();
 
 		} finally {
@@ -135,7 +135,7 @@ public class WarehouseDAO {
 				}
 
 			} catch (Exception e) {
-				System.out.println("[  getCustomerTotalList()  ]    [ Closed Error ]");
+				System.out.println("[  getWarehouseTotalList()  ]    [ Closed Error ]");
 				e.printStackTrace();
 			}
 
@@ -154,7 +154,7 @@ public class WarehouseDAO {
 		Boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO warehouse (wh_num, wh_qty,tr_num, p_num) ");
-		sql.append("VALUES (?, ? , ? , ?) ");
+		sql.append("VALUES (?, ?, ? , ?) ");
 		PreparedStatement pstmt = null;
 		Connection con = null;
 
@@ -204,7 +204,7 @@ public class WarehouseDAO {
 	public boolean warehouseDelete(WarehouseVO wvo) {
 		Boolean result = false;
 		StringBuffer sql = new StringBuffer();
-		sql.append("DELETE FROM warehouse WHERE wh_num = ?;");
+		sql.append("DELETE FROM warehouse WHERE wh_num = ? ");
 		PreparedStatement pstmt = null;
 		Connection con = null;
 

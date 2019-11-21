@@ -231,9 +231,9 @@ TableView whTableView
 #whTableView(MouseEvent event)
 
 -------------[manageWareHouserTab]
-TableView traderTableList
+TableView wareTableList
 
-#traderTableList(MouseEvent event)
+#wareTableList(MouseEvent event)
 
 -------------[manageResultTab]
 BarChart mOrderBarChart

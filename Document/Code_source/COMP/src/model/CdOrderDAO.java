@@ -215,6 +215,7 @@ public class CdOrderDAO {
 	 * @return boolean
 	 */
 	public boolean cd_orderInsert(CdOrderVO cvo) {
+		//TODO 주문하기 클릭 시, ch_num_seq 초기화시키기
 		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO cd_order (cd_num, cd_price, c_num)");

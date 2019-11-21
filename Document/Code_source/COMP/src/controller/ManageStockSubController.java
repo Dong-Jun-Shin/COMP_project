@@ -1,13 +1,16 @@
 package controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,7 +21,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.DataUtil;
@@ -43,20 +45,27 @@ public class ManageStockSubController implements Initializable {
 	private Button btnWHClear;
 	@FXML
 	private TableView<WarehouseVO> whTableView;
+	
+	private ManageStockSubController mssController;
+
 	private WarehouseDAO whdao = WarehouseDAO.getInstance();
 	private ProductVO pvo;
-	private ManageStockTabController mstController;
-	private Stage stage;
 
+	private Stage stage;
 	private Stage primaryStage;
+	
 	private ObservableList<WarehouseVO> whDataList = FXCollections.observableArrayList();
+
+	public TextField getTxtTRNum() {
+		return txtTRNum;
+	}
+
+	public void setMssController(ManageStockSubController mssController) {
+		this.mssController = mssController;
+	}
 
 	public void setPvo(ProductVO pvo) {
 		this.pvo = pvo;
-	}
-
-	public void setMstController(ManageStockTabController mstController) {
-		this.mstController = mstController;
 	}
 
 	public void setStage(Stage stage) {
@@ -69,7 +78,6 @@ public class ManageStockSubController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO 테이블 조회, TR_num 검색으로 부여, 테이블 조회 등 나머지 구현
 		List<String> title = DataUtil.fieldName(new WarehouseVO());
 		for (int i = 0; i < title.size() - 1; i++) {
 			TableColumn<WarehouseVO, ?> columnName = whTableView.getColumns().get(i);
@@ -78,10 +86,30 @@ public class ManageStockSubController implements Initializable {
 		whTableView.setItems(whDataList);
 		
 		setWHNum();
+		wareTotalList();
 	}
 	
 	public void txtTRPopup(MouseEvent event) {
-		System.out.println("1");
+		Stage dialog = new Stage(StageStyle.UTILITY);
+		dialog.initModality(Modality.WINDOW_MODAL);
+		dialog.initOwner(primaryStage);
+		dialog.setTitle("거래처 목록");
+		
+		try {
+			// 팝업의 FXML 로드
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/manageWareHouseSub.fxml"));
+			Parent parent = loader.load();
+			
+			ManageWHSubController mwsController = loader.getController();
+			mwsController.setPrimaryStage(primaryStage);
+			mwsController.setMssController(mssController);
+			mwsController.setStage(dialog);
+			mwsController.showWindow(parent);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void btnWHInsert(ActionEvent event) {
@@ -149,6 +177,30 @@ public class ManageStockSubController implements Initializable {
 		}
 	}
 
+	/**
+	 * wareTotalList() : 테이블뷰 레코드 출력(전체 리스트)
+	 * 
+	 */
+	private void wareTotalList() {
+		whDataList.removeAll(whDataList);
+		WarehouseVO wvo = null;
+		ArrayList<WarehouseVO> list;
+
+		try {
+			list = whdao.getWarehouseTotalList();
+
+			for (int index = 0; index < list.size(); index++) {
+				// 결과 리스트에서 한 행을 가져다가 wvo에 대입
+				wvo = list.get(index);
+				// 한 행을 추가
+				whDataList.add(wvo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("wareTotalList() = [" + e.getMessage() + "]");
+		}
+	}
+	
 	public void setWHInfo() {
 		txtPNum.setText(pvo.getP_num());
 	}

@@ -89,8 +89,6 @@ public class ManageStockTabController implements Initializable {
 	// 이미지 저장할 폴더를 매개변수로 파일 객체 생성
 	private File dirSave;
 
-	private ManageStockTabController mstController;
-
 	private Stage primaryStage;
 
 	public void setPrimaryStage(Stage primaryStage) {
@@ -401,12 +399,13 @@ public class ManageStockTabController implements Initializable {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/manageStockSub.fxml"));
 			Parent parent = loader.load();
 			
-			ManageStockSubController mstController = loader.getController();
-			mstController.setPrimaryStage(primaryStage);
-			mstController.setStage(dialog);
-			mstController.setPvo(pvo);
-			mstController.setWHInfo();	
-			mstController.showWindow(parent);
+			ManageStockSubController mssController = loader.getController();
+			mssController.setPrimaryStage(primaryStage);
+			mssController.setStage(dialog);
+			mssController.setMssController(mssController);
+			mssController.setPvo(pvo);
+			mssController.setWHInfo();	
+			mssController.showWindow(parent);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -435,7 +434,6 @@ public class ManageStockTabController implements Initializable {
 				selectedProductIndex = selectProduct.getP_num();
 
 				txtPNum.setText(selectProduct.getP_num());
-				System.out.println(pSort);
 				cbxPSort.setValue(dicVal.get(pSort));
 				txtPName.setText(selectProduct.getP_name());
 				txtPQty.setText(Integer.toString(selectProduct.getP_qty()));
@@ -453,7 +451,7 @@ public class ManageStockTabController implements Initializable {
 	}
 
 	/**
-	 * productTotalList() : 테이블뷰 레코드 출력(거래처 전체 리스트)
+	 * productTotalList() : 테이블뷰 레코드 출력(전체 리스트)
 	 * 
 	 */
 	private void productTotalList() {
