@@ -75,7 +75,7 @@ public class SalesWatchSubController implements Initializable {
 				}
 			}
 		});
-
+		
 		popup.getContent().add(parent);
 		// 다른 윈도우로 포커스를 이동하면 Popup은 자동으로 닫히도록 한다.
 		popup.setAutoHide(true);
