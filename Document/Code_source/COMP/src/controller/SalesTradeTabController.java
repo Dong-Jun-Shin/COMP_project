@@ -172,7 +172,6 @@ public class SalesTradeTabController implements Initializable {
 	private OrderChartDAO ocdao = OrderChartDAO.getInstance();
 	private CdOrderVO covo = new CdOrderVO();
 	private OrderChartVO[] ocvo;
-
 	private Stage primaryStage;
 
 	public void setPvo(ProductVO pvo) {
@@ -288,13 +287,28 @@ public class SalesTradeTabController implements Initializable {
 	/*
 	 * btnOrderInsert(ActionEvent event) : 주문 입력 이벤트
 	 */
+	@SuppressWarnings("unchecked")
 	public void btnOrderInsert(ActionEvent event) {
 		// TODO order_ChartVO로 인서트 여러번 수행하도록 구현
-
+		
+		
+		covo.setC_num(txtCPName.getText());
+		covo.setCd_price(Integer.parseInt(txtCPPrice.getText()));
+		codao.cd_orderInsert(covo);
+		OrderChartVO ovo = new OrderChartVO();
 //			covo의 설정까지 완료, Id 입력 시, 주문번호 자동 생성 만들기 
-//			if (txtCPName.getText() != null) {
-//				insertCvoSetting(txtCPName.getText(), Integer.parseInt(txtCPPrice.getText()));
-//			}
+		
+		for (int j = 0; j < pvoList.length; j++) {
+			//order_char insert
+			if(pvoList[j].getP_price() != 0){
+				ovo.setP_num(pvoList[j].getP_num());
+				ovo.setCh_qty(((Spinner<Integer>)spinQtyList[j]).getValue());
+				ovo.setCd_num(covo.getCd_num());
+				ocdao.order_ChartInsert(ovo);
+				
+			}
+		}
+		
 //			;
 //
 //			if (txtRName.getText() != null) {
