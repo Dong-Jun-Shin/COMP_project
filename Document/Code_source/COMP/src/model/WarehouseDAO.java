@@ -104,9 +104,9 @@ public class WarehouseDAO {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
-			wvo = new WarehouseVO();
 
 			while (rs.next()) {
+				wvo = new WarehouseVO();
 				wvo.setWh_num(rs.getString("wh_num"));
 				wvo.setWh_qty(rs.getInt("wh_qty"));
 				wvo.setTr_num(rs.getString("tr_num"));

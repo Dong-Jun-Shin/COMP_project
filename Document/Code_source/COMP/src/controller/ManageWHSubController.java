@@ -49,11 +49,10 @@ public class ManageWHSubController implements Initializable {
 		columnName.setCellValueFactory(new PropertyValueFactory<>("tr_name"));
 		
 		wareTableList.setItems(wareDataList);
-
 		tableViewData();
 	}
 
-	public void wareTabelList(MouseEvent event) {
+	public void wareTableList(MouseEvent event) {
 		if (event.getClickCount() == 2) {
 			TraderVO selectTrader = wareTableList.getSelectionModel().getSelectedItem();
 			if (selectTrader != null) {

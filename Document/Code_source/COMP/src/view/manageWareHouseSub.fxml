@@ -12,7 +12,7 @@
 	fx:controller="controller.ManageWHSubController">
 	<center>
 		<TableView fx:id="wareTableList"
-			onMouseClicked="#wareTabelList" prefHeight="200.0" prefWidth="200.0"
+			onMouseClicked="#wareTableList" prefHeight="200.0" prefWidth="200.0"
 			BorderPane.alignment="CENTER">
 			<columns>
 				<TableColumn editable="false" prefWidth="200.0"

@@ -3,9 +3,9 @@ package model;
 public class WarehouseVO {
 
 	private String wh_num;
-	private int wh_qty;
 	private String tr_num;
-	private String p_num;
+	private String p_num;	
+	private int wh_qty;
 	private String wh_reg;
 
 	public String getWh_num() {

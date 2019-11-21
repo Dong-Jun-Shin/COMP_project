@@ -301,7 +301,7 @@ public class SalesTradeTabController implements Initializable {
 //				insertCvoSetting(txtRName.getText(), Integer.parseInt(txtRPrice.getText()));
 //			}
 //			;
-//
+
 //			if (txtMBName.getText() != null) {
 //				insertCvoSetting(txtMBName.getText(), Integer.parseInt(txtMBPrice.getText()));
 //			}
