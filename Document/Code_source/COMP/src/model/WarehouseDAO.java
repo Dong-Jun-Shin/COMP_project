@@ -109,7 +109,6 @@ public class WarehouseDAO {
 			while (rs.next()) {
 				wvo.setWh_num(rs.getString("wh_num"));
 				wvo.setWh_qty(rs.getInt("wh_qty"));
-				wvo.setWh_reg(rs.getString("wh_reg"));
 				wvo.setTr_num(rs.getString("tr_num"));
 				wvo.setP_num(rs.getString("p_num"));
 				list.add(wvo);

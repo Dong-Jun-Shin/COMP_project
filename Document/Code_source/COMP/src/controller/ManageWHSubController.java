@@ -58,9 +58,9 @@ public class ManageWHSubController implements Initializable {
 			TraderVO selectTrader = wareTableList.getSelectionModel().getSelectedItem();
 			if (selectTrader != null) {
 				mssController.getTxtTRNum().setText(selectTrader.getTr_num());
+				stage.close();
 			}
 		}
-		stage.close();
 	}
 	
 	/**

@@ -39,3 +39,43 @@ DROP TRIGGER w_plus_trg;
 DROP TRIGGER w_minus_trg;
 DROP TRIGGER oc_minus_trg;
 DROP TRIGGER oc_plus_trg;
+
+
+-----------------------------------------------------------------------------------------------------------------
+--시퀀스 초기화 프로시저
+CREATE OR REPLACE PROCEDURE reset_seq(
+                p_seq_name IN VARCHAR2 )
+IS
+        l_val NUMBER;
+BEGIN
+        EXECUTE immediate 'select ' || p_seq_name || '.nextval from dual' INTO l_val;
+        EXECUTE immediate 'alter sequence ' || p_seq_name || ' increment by -' || l_val || ' minvalue 0';
+        EXECUTE immediate 'select ' || p_seq_name || '.nextval from dual' INTO l_val;
+        EXECUTE immediate 'alter sequence ' || p_seq_name || ' increment by 1 minvalue 0';
+END;
+/
+
+--CD_ORDER 날짜 '일'(주문 등록일 기준) 기준으로 날(SYSDATE)이 변경되면 주문시퀀스 초기화
+CREATE OR REPLACE TRIGGER  cd_num_trg
+    BEFORE INSERT ON CD_ORDER    
+DECLARE 
+    sys_day VARCHAR2(6);
+    tbl_day VARCHAR2(6);
+BEGIN  
+    SELECT TO_CHAR(SYSDATE, 'YYMMDD') INTO sys_day FROM DUAL;
+    SELECT TO_CHAR(cd_reg, 'YYMMDD') INTO tbl_day FROM cd_order WHERE rownum = 1 ORDER BY cd_reg;
+    
+    IF sys_day <> tbl_day THEN
+        reset_seq('cd_num_seq');
+    END IF;
+END;
+/
+
+--CD_ORDER 행 생성 시, ORDER_CHART 내역시퀀스 초기화 (트리거)
+CREATE OR REPLACE TRIGGER  oc_num_trg
+    AFTER INSERT ON CD_ORDER 
+BEGIN  
+    reset_seq('ch_num_seq');
+END;
+/
+---------------------------------------------------------------------------------------------------------------
