@@ -26,14 +26,19 @@ END;
 /
 
 --주문내역테이블 삭제 시, 제품 수량 증가
-CREATE OR REPLACE TRIGGER  oc_plus_trg
-    AFTER DELETE ON order_chart
+create or replace TRIGGER  oc_plus_trg
+    AFTER UPDATE ON cd_order
     FOR EACH ROW
+DECLARE
+    CURSOR c1 IS (SELECT p_num, ch_qty FROM order_chart WHERE cd_num = :NEW.cd_num);
 BEGIN
-    UPDATE product SET p_qty = (p_qty + :OLD.ch_qty) WHERE p_num =:old.p_num;
+    IF (:NEW.cd_sort LIKE '거래취소') THEN
+        FOR v_order IN c1 LOOP
+            UPDATE product SET p_qty = (p_qty + v_order.ch_qty) WHERE p_num = v_order.p_num;
+        END LOOP;
+    END IF;
 END;
 /
-
 -----------------------------------------------------------------------------------------------------------------
 --시퀀스 초기화 프로시저
 CREATE OR REPLACE PROCEDURE reset_seq(

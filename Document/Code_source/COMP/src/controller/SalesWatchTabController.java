@@ -66,6 +66,7 @@ public class SalesWatchTabController implements Initializable {
 	@FXML
 	private Button btnNext;
 
+	@SuppressWarnings("unused")
 	private Stage primaryStage;
 
 	private SalesTradeTabController sttController;

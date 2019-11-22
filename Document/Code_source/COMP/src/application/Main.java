@@ -42,6 +42,7 @@ public class Main extends Application {
 	}
 }
 
-
+//TODO 화면 전환 시, 페이드 인아웃 처리, Jmetro 적용
 //TODO 다 끝나면 printStack 찾아서 getMessage로 바꾸기
-//TODO 다 끝나면 주석 확인하기
+//TODO 다 끝나면 세부 주석 달기
+//TODO 다 끝나면 주석, 필드 위치 확인하기

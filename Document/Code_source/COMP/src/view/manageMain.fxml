@@ -15,13 +15,16 @@
 			<menus>
 				<Menu mnemonicParsing="false" text="메뉴">
 					<items>
-						<MenuItem mnemonicParsing="false" text="종료" onAction="#menuClose"/>
+						<MenuItem mnemonicParsing="false" text="종료"
+							onAction="#menuClose" />
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="정보">
 					<items>
-						<MenuItem mnemonicParsing="false" text="문의하기" onAction="#menuConnectInfo"/>
-						<MenuItem mnemonicParsing="false" text="프로그램 정보" onAction="#menuProgramInfo"/>
+						<MenuItem mnemonicParsing="false" text="문의하기"
+							onAction="#menuConnectInfo" />
+						<MenuItem mnemonicParsing="false" text="프로그램 정보"
+							onAction="#menuProgramInfo" />
 					</items>
 				</Menu>
 			</menus>
@@ -29,7 +32,8 @@
 	</top>
 	<center>
 		<TabPane prefHeight="200.0" prefWidth="200.0"
-			tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+			fx:id="manageMainPane" tabClosingPolicy="UNAVAILABLE"
+			BorderPane.alignment="CENTER">
 			<tabs>
 				<Tab text="재고관리" fx:id="stock">
 					<content>

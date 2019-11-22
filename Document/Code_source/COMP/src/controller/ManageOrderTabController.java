@@ -21,10 +21,7 @@ import model.CdChartDAO;
 import model.CdChartVO;
 import model.CdOrderDAO;
 import model.CdOrderVO;
-import model.CustomerDAO;
-import model.CustomerVO;
 import model.DataUtil;
-import model.ProductDAO;
 
 public class ManageOrderTabController implements Initializable {
 	@FXML
@@ -38,14 +35,15 @@ public class ManageOrderTabController implements Initializable {
 	@FXML
 	private TableView<CdChartVO> orderHistoryView;
 
-	String selectedCdOrderIndex;
+	String selectedCdChartIndex;
 
 	private static ObservableList<CdChartVO> progressDataList = FXCollections.observableArrayList();
 	private static ObservableList<CdChartVO> historyDataList = FXCollections.observableArrayList();
 
-	private CdOrderDAO cddao = CdOrderDAO.getInstance();
-	private CdChartDAO ccdao = CdChartDAO.getInstance(); 
-	
+	private CdOrderDAO codao = CdOrderDAO.getInstance();
+	private CdChartDAO ccdao = CdChartDAO.getInstance();
+
+	@SuppressWarnings("unused")
 	private Stage primaryStage;
 
 	public void setPrimaryStage(Stage primaryStage) {
@@ -61,7 +59,7 @@ public class ManageOrderTabController implements Initializable {
 		for (int i = 0; i < title.size(); i++) {
 			TableColumn<CdChartVO, ?> columnPName = orderProgressView.getColumns().get(i);
 			columnPName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
-			
+
 			TableColumn<CdChartVO, ?> columnHName = orderHistoryView.getColumns().get(i);
 			columnHName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
 		}
@@ -69,15 +67,60 @@ public class ManageOrderTabController implements Initializable {
 		// 테이블에 항목 설정
 		orderProgressView.setItems(progressDataList);
 		orderHistoryView.setItems(historyDataList);
-		
+
+		setBtn(false);
 		progressTotalList();
+		historyTotalList();
 	}
 
 	public void btnOrderComplete(ActionEvent event) {
+		boolean success = false;
+		try {
+			if (!DataUtil.valLimitCheck(lblCDNum.getText(), 10) || lblCDNum.getText().equals("(주문번호)")) {
+				DataUtil.showAlert("주문 선택", "수정할 주문건을 더블클릭해주세요.");
+				return;
+			} else {
+				CdOrderVO covo = new CdOrderVO();
+				covo.setCd_num(lblCDNum.getText().trim());
+				covo.setCd_sort("거래완료");
 
+				success = codao.cd_orderUpdate(covo);
+
+				if (success == true) {
+					DataUtil.showInfoAlert("주문 처리 결과", "[" + lblCDNum.getText() + "]의 처리를 완료하였습니다.");
+					reset();
+				} else {
+					DataUtil.showInfoAlert("주문 처리 결과", "주문의 처리에 문제가 있어 완료하지 못하였습니다.");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void btnOrderCancel(ActionEvent event) {
+		boolean success = false;
+		try {
+			if (!DataUtil.valLimitCheck(lblCDNum.getText(), 10) || lblCDNum.getText().equals("(주문번호)")) {
+				DataUtil.showAlert("주문 선택", "수정할 주문건을 더블클릭해주세요.");
+				return;
+			} else {
+				CdOrderVO covo = new CdOrderVO();
+				covo.setCd_num(lblCDNum.getText().trim());
+				covo.setCd_sort("거래취소");
+
+				success = codao.cd_orderUpdate(covo);
+
+				if (success == true) {
+					DataUtil.showInfoAlert("주문 처리 결과", "[" + lblCDNum.getText() + "]의 처리를 완료하였습니다.");
+					reset();
+				} else {
+					DataUtil.showInfoAlert("주문 처리 결과", "주문의 처리에 문제가 있어 완료하지 못하였습니다.");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		// TODO 이메일 전송 구현하기
 		/*
 		 * 이메일 전송 (판매자 이메일 -> 고객 이메일) 제목 : '구매자명'님, 주문이 취소되었습니다. 본문 : 고객 - 성함, 연락처, 주소
@@ -86,14 +129,19 @@ public class ManageOrderTabController implements Initializable {
 	}
 
 	public void orderProgressView(MouseEvent event) {
-		
+		if (event.getClickCount() == 2) {
+			CdChartVO selectCdChart = orderProgressView.getSelectionModel().getSelectedItem();
+			if (selectCdChart != null) {
+				selectedCdChartIndex = selectCdChart.getCd_num();
+
+				lblCDNum.setText(selectCdChart.getCd_num());
+
+				setBtn(true);
+			}
+		}
 	}
 
-	public void orderHistoryView(MouseEvent event) {
-
-	}
-	
-	private void progressTotalList() {
+	public void progressTotalList() {
 		progressDataList.removeAll(progressDataList);
 		CdChartVO ccvo = null;
 		ArrayList<CdChartVO> list;
@@ -113,7 +161,36 @@ public class ManageOrderTabController implements Initializable {
 		}
 	}
 
-	private void historyTotalList() {
-		
+	public void historyTotalList() {
+		historyDataList.removeAll(historyDataList);
+		CdChartVO ccvo = null;
+		ArrayList<CdChartVO> list;
+
+		try {
+			list = ccdao.getHistoryOrderList();
+
+			for (int index = 0; index < list.size(); index++) {
+				// 결과 리스트에서 한 행을 가져다가 svo에 대입
+				ccvo = list.get(index);
+				// 한 행을 추가
+				historyDataList.add(ccvo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("historyTotalList() = [" + e.getMessage() + "]");
+		}
+	}
+
+	private void setBtn(boolean bool) {
+		btnOrderComplete.setDisable(!bool);
+		btnOrderCancel.setDisable(!bool);
+	}
+
+	private void reset() {
+		lblCDNum.setText("(주문번호)");
+		selectedCdChartIndex = null;
+		setBtn(false);
+		progressTotalList();
+		historyTotalList();
 	}
 }

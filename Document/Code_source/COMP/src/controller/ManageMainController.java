@@ -54,63 +54,41 @@ public class ManageMainController implements Initializable {
 		manageMyInfoTabController.setPrimaryStage(primaryStage);
 		manageTraderTabController.setPrimaryStage(primaryStage);
 
-//		manageMainPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-//			// Tab이 바뀔 때를 인지하는 것이기 떄문에 타입은 Tab
-//			// 기존 값과 바뀐 값을 매개변수로 받아준다.
-//			@Override
-//			public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
-//				if (newValue == stock) {
-//					// 해당 탭의 내용을 새로고침
-//					try {
-//
-//					} catch (Exception e) {
-//						System.out.println("changed() error = " + e.getMessage());
-//					}
-//
-//				} else if (newValue == result) {
-//					// 해당 탭의 내용을 새로고침
-//					try {
-//
-//					} catch (Exception e) {
-//						System.out.println("changed() error = " + e.getMessage());
-//					}
-//
-//				} else if (newValue == customer) {
-//					// 해당 탭의 내용을 새로고침
-//					try {
-//
-//					} catch (Exception e) {
-//						System.out.println("changed() error = " + e.getMessage());
-//					}
-//
-//				} else if (newValue == order) {
-//					// 해당 탭의 내용을 새로고침
-//					try {
-//
-//					} catch (Exception e) {
-//						System.out.println("changed() error = " + e.getMessage());
-//					}
-//
-//				} else if (newValue == myInfo) {
-//					// 해당 탭의 내용을 새로고침
-//					try {
-//
-//					} catch (Exception e) {
-//						System.out.println("changed() error = " + e.getMessage());
-//					}
-//
-//				} else if (newValue == trader) {
-//					// 해당 탭의 내용을 새로고침
-//					try {
-//
-//					} catch (Exception e) {
-//						System.out.println("changed() error = " + e.getMessage());
-//					}
-//
-//				}
-//			}
-//
-//		});
+		manageMainPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue == stock) {
+				try {
+					manageStockTabController.productTotalList();
+				} catch (Exception e) {
+					System.out.println("changed() error = " + e.getMessage());
+				}
+			} else if (newValue == customer) {
+				try {
+					manageCustomerTabController.customerTotalList();
+					;
+				} catch (Exception e) {
+					System.out.println("changed() error = " + e.getMessage());
+				}
+			} else if (newValue == order) {
+				try {
+					manageOrderTabController.progressTotalList();
+					manageOrderTabController.historyTotalList();
+				} catch (Exception e) {
+					System.out.println("changed() error = " + e.getMessage());
+				}
+			} else if (newValue == myInfo) {
+				try {
+					manageMyInfoTabController.initialize(location, resources);
+				} catch (Exception e) {
+					System.out.println("changed() error = " + e.getMessage());
+				}
+			} else if (newValue == trader) {
+				try {
+					manageTraderTabController.traderTotalList();
+				} catch (Exception e) {
+					System.out.println("changed() error = " + e.getMessage());
+				}
+			}
+		});
 	}
 
 	public void menuClose(ActionEvent event) {
@@ -126,3 +104,5 @@ public class ManageMainController implements Initializable {
 	}
 
 }
+
+	//TODO 로그아웃 만들기

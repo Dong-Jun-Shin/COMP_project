@@ -88,7 +88,7 @@
 					<Font size="30.0" />
 				</font>
 			</Label>
-			<TableView fx:id="orderHistoryView" onMouseClicked="#orderHistoryView" prefHeight="600.0" prefWidth="690.0">
+			<TableView fx:id="orderHistoryView" prefHeight="600.0" prefWidth="690.0">
 				<columns>
 					<TableColumn text="거래구분" />
 					<TableColumn prefWidth="90.0" text="주문번호" />

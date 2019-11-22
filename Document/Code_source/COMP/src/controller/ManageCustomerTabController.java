@@ -63,6 +63,7 @@ public class ManageCustomerTabController implements Initializable {
 
 	private CustomerDAO cdao = CustomerDAO.getInstance();
 
+	@SuppressWarnings("unused")
 	private Stage primaryStage;
 
 	public void setPrimaryStage(Stage primaryStage) {
@@ -317,7 +318,7 @@ public class ManageCustomerTabController implements Initializable {
 	 * customerTotalList() : 테이블뷰 레코드 출력(거래처 전체 리스트)
 	 * 
 	 */
-	private void customerTotalList() {
+	public void customerTotalList() {
 		customerDataList.removeAll(customerDataList);
 		CustomerVO cvo = null;
 		ArrayList<CustomerVO> list;

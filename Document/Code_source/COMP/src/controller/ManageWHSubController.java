@@ -12,10 +12,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import model.TraderDAO;
 import model.TraderVO;
@@ -24,13 +22,16 @@ public class ManageWHSubController implements Initializable {
 	@FXML
 	private TableView<TraderVO> wareTableList;
 
+	private ObservableList<TraderVO> wareDataList = FXCollections.observableArrayList();
+	
 	private TraderDAO tdao = TraderDAO.getInstance();
-
+	
 	private ManageStockSubController mssController; 
 	
 	private Stage stage;
+	
+	@SuppressWarnings("unused")
 	private Stage primaryStage;
-	private ObservableList<TraderVO> wareDataList = FXCollections.observableArrayList();
 
 	public void setMssController(ManageStockSubController mssController) {
 		this.mssController = mssController;
