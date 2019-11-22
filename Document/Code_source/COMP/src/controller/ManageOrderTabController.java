@@ -61,12 +61,12 @@ public class ManageOrderTabController implements Initializable {
 
 		// 설정을 받을 Table의 열
 		for (int i = 0; i < title.size(); i++) {
-			TableColumn<CustomerVO, ?> columnName = customerTableView.getColumns().get(i);
-			columnName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
+//			TableColumn<CustomerVO, ?> columnName = customerTableView.getColumns().get(i);
+//			columnName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
 		}
 
 		// 테이블에 항목 설정
-		customerTableView.setItems(customerDataList);
+//		customerTableView.setItems(customerDataList);
 	}
 
 	public void btnOrderComplete(ActionEvent event) {

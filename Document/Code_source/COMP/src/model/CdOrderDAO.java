@@ -4,8 +4,11 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CdOrderDAO {
 
@@ -54,16 +57,19 @@ public class CdOrderDAO {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
-			cvo = new CdOrderVO();
 			
 			
 			while(rs.next()) {
+				
+				cvo = new CdOrderVO();
+				
 				cvo.setCd_num(rs.getString("cd_num"));
 				cvo.setCd_sort(rs.getString("cd_sort"));
 				cvo.setCd_reg(rs.getString("cd_reg"));
 				cvo.setCd_price(rs.getInt("cd_price"));
 				cvo.setC_num(rs.getString("cd_num"));
 				list.add(cvo);
+				
 			}
 			
 			
@@ -126,6 +132,9 @@ public class CdOrderDAO {
 				cvo.setC_num(rs.getString("cd_num"));
 				list.add(cvo);
 			}
+			
+			
+			
 		}catch(SQLException sqle) {
 			System.out.println("[  getCompletedOrderList()  ]    [ SQLException ]");
 			sqle.printStackTrace();
@@ -310,5 +319,265 @@ public class CdOrderDAO {
 		}
 
 		return serialNumber;
+		
 	}
+	
+	/**
+	 * getChartMonthPrice() : 주차별 월간 총 주문 금액 합산 값 리턴 메소드 -테스트 필요-
+	 * @param month
+	 * @return Map<String, Integer>
+	 */
+	public Map<String, Integer> getChartMonthPrice() {
+		Map<String,Integer> resultMap = new HashMap<>();
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("SELECT (SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '1') AS w1, ");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '2') AS w2, ");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '3') AS w3, ");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '4') AS w4, ");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '5') AS w5 ");
+		sql.append("FROM cd_order GROUP BY TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W')");
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ResultSetMetaData rsmd = null;
+		
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			rsmd = rs.getMetaData();
+			
+			if(rs.next()) {
+				for(int i = 1; i<=rsmd.getColumnCount();i++) {
+					resultMap.put(rsmd.getColumnName(i),rs.getInt(i));
+				}
+			}
+			
+		}catch(SQLException sqle) {
+			System.out.println("[  getChartMonthPrice()  ]    [ SQLException ]");
+			sqle.printStackTrace();
+		}catch(Exception e) {
+			System.out.println("[  getChartMonthPrice()  ]    [ Unknown Exception ]");
+			e.printStackTrace();
+			
+		}finally {
+			try {
+				if(con != null) {
+					con.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(rs != null) {
+					rs.close();
+				}
+				
+			}catch(Exception e) {
+				System.out.println("[  getChartMonthPrice()  ]    [ Closed Error ]");
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return resultMap;
+	}
+	
+	
+	/**
+	 * getChartMonthOrder() : 주차별 월간 총 판매량 합산 값 리턴 메소드 -테스트 필요-
+	 * @return Map<String, Integer>
+	 */
+	public Map<String, Integer> getChartMonthOrder() {
+		Map<String,Integer> resultMap = new HashMap<>();
+		StringBuffer sql = new StringBuffer();
+		
+		sql.append("SELECT (SELECT NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
+		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '1') AS w1,");
+		sql.append("(SELECT  NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
+		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '2' ) AS w2,");
+		sql.append("(SELECT  NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
+		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '3' ) AS w3,");
+		sql.append("(SELECT  NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
+		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '4' ) AS w4,");
+		sql.append("(SELECT  NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
+		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '5' ) AS w5");
+		sql.append("FROM order_chart oc, cd_order co WHERE co.cd_num = oc.cd_num ");
+		sql.append("GROUP BY TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W')");
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ResultSetMetaData rsmd = null;
+		
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			rsmd = rs.getMetaData();
+			
+			if(rs.next()) {
+				for(int i = 1; i<=rsmd.getColumnCount();i++) {
+					resultMap.put(rsmd.getColumnName(i),rs.getInt(i));
+				}
+			}
+			
+		}catch(SQLException sqle) {
+			System.out.println("[  getChartMonthOrder()  ]    [ SQLException ]");
+			sqle.printStackTrace();
+		}catch(Exception e) {
+			System.out.println("[  getChartMonthOrder()  ]    [ Unknown Exception ]");
+			e.printStackTrace();
+			
+		}finally {
+			try {
+				if(con != null) {
+					con.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(rs != null) {
+					rs.close();
+				}
+				
+			}catch(Exception e) {
+				System.out.println("[  getChartMonthOrder()  ]    [ Closed Error ]");
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return resultMap;
+		
+		
+		
+	}
+	
+	/**
+	 * getChartYearPrice() : 월별 연간 총 주문 금액 합산 값 리턴 메소드 -테스트 필요-
+	 * @return Map<String, Integer>
+	 */
+	public Map<String, Integer> getChartYearPrice(){
+		Map<String,Integer> resultMap = new HashMap<>();
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT (SELECT  NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '1') AS m1 , ");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '2') AS m2 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '3') AS m3 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '4') AS m4 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '5') AS m5 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '6') AS m6 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '7') AS m7 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '8') AS m8 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '9') AS m9 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '10') AS m10 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '11') AS m11 , ");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '12') AS m12 ");
+		sql.append("FROM cd_order GROUP BY SUBSTR(cd_num,3,2) ");
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ResultSetMetaData rsmd = null;
+		
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			rsmd = rs.getMetaData();
+			
+			if(rs.next()) {
+				for(int i = 1; i<=rsmd.getColumnCount();i++) {
+					resultMap.put(rsmd.getColumnName(i),rs.getInt(i));
+				}
+			}
+			
+		}catch(SQLException sqle) {
+			System.out.println("[  getChartYearPrice()  ]    [ SQLException ]");
+			sqle.printStackTrace();
+		}catch(Exception e) {
+			System.out.println("[  getChartYearPrice()  ]    [ Unknown Exception ]");
+			e.printStackTrace();
+			
+		}finally {
+			try {
+				if(con != null) {
+					con.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(rs != null) {
+					rs.close();
+				}
+				
+			}catch(Exception e) {
+				System.out.println("[  getChartYearPrice()  ]    [ Closed Error ]");
+				e.printStackTrace();
+			}
+			
+		}
+		return resultMap;
+	}
+	
+	/**
+	 * getCountRank() : 제품 종류별 랭크 조회 메소드 -테스트 필요-
+	 * @return
+	 */
+	public ArrayList<RankVO> getCountRank() {
+		ArrayList<RankVO> list = new ArrayList<RankVO>();
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT SUBSTR(p_num,1,2) productSort, COUNT(ch_qty) AS count ");
+		sql.append(",RANK() OVER (ORDER BY COUNT(ch_qty)) as rank FROM order_chart ");
+		sql.append("GROUP BY SUBSTR(p_num,1,2) ORDER BY COUNT(ch_qty) ");
+		RankVO rvo = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				rvo = new RankVO();
+				rvo.setProductSort(rs.getString("productSort"));
+				rvo.setCount(rs.getInt("count"));
+				rvo.setRank(rs.getInt("rank"));
+				list.add(rvo);
+			}
+			
+		}catch(SQLException sqle) {
+			System.out.println("[  getCountRank()  ]    [ SQLException ]");
+			sqle.printStackTrace();
+		}catch(Exception e) {
+			System.out.println("[  getCountRank()  ]    [ Unknown Exception ]");
+			e.printStackTrace();
+			
+		}finally {
+			try {
+				if(con != null) {
+					con.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(rs != null) {
+					rs.close();
+				}
+				
+			}catch(Exception e) {
+				System.out.println("[  getCountRank()  ]    [ Closed Error ]");
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return list;
+	}
+	
+	
+	
+	
 }
