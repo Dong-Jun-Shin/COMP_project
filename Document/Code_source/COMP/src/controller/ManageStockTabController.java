@@ -89,7 +89,13 @@ public class ManageStockTabController implements Initializable {
 	// 이미지 저장할 폴더를 매개변수로 파일 객체 생성
 	private File dirSave;
 
+	private ManageStockTabController mstController;
+	
 	private Stage primaryStage;
+
+	public void setMstController(ManageStockTabController mstController) {
+		this.mstController = mstController;
+	}
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -258,7 +264,6 @@ public class ManageStockTabController implements Initializable {
 	 * @param event
 	 */
 	public void btnImgChoice(ActionEvent event) {
-		// TODO 각 이미지를 image폴더 내에 있는 제품별 이미지 폴더에 맞게 등록되도록 할것
 		try {
 			FileChooser fc = new FileChooser();
 			fc.setTitle("이미지 선택");
@@ -402,9 +407,10 @@ public class ManageStockTabController implements Initializable {
 			ManageStockSubController mssController = loader.getController();
 			mssController.setPrimaryStage(primaryStage);
 			mssController.setStage(dialog);
+			mssController.setMstController(mstController);
 			mssController.setMssController(mssController);
 			mssController.setPvo(pvo);
-			mssController.setWHInfo();	
+			mssController.setWHInfo();	 
 			mssController.showWindow(parent);
 			
 		} catch (Exception e) {
@@ -454,7 +460,7 @@ public class ManageStockTabController implements Initializable {
 	 * productTotalList() : 테이블뷰 레코드 출력(전체 리스트)
 	 * 
 	 */
-	private void productTotalList() {
+	public void productTotalList() {
 		productDataList.removeAll(productDataList);
 		ProductVO pvo = null;
 		ArrayList<ProductVO> list;

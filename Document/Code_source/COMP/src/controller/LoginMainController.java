@@ -70,7 +70,7 @@ public class LoginMainController implements Initializable {
 			return;
 		else if (!DataUtil.validityCheck(pwLoginPasswd.getText(), "PW를 "))
 			return;
-		
+
 		// 로그인
 		if (txtLoginId.getText().equals(dVO.getDId()) && pwLoginPasswd.getText().equals(dVO.getDPasswd())) {
 			try {
@@ -109,13 +109,10 @@ public class LoginMainController implements Initializable {
 		try {
 			Parent parent = FXMLLoader.load(getClass().getResource("/view/loginSub.fxml"));
 			Button btnIdSearch = (Button) parent.lookup("#btnIdSearch");
-			btnIdSearch.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event) {
-					LoginSubController lsController = new LoginSubController();
-					if (lsController.btnIdSearch(parent) == true) {
-						dialog.close();
-					}
+			btnIdSearch.setOnAction((e) -> {
+				LoginSubController lsController = new LoginSubController();
+				if (lsController.btnIdSearch(parent) == true) {
+					dialog.close();
 				}
 			});
 

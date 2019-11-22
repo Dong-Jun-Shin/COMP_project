@@ -3,8 +3,6 @@ package controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,12 +46,13 @@ public class ManageMainController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-//		manageStockTabController.setPrimaryStage(primaryStage);
-//		manageResultTabController.setPrimaryStage(primaryStage);
-//		manageCustomerTabController.setPrimaryStage(primaryStage);
-//		manageOrderTabController.setPrimaryStage(primaryStage);
-//		manageMyInfoTabController.setPrimaryStage(primaryStage);
-//		manageTraderTabController.setPrimaryStage(primaryStage);
+		manageStockTabController.setMstController(manageStockTabController);
+		manageStockTabController.setPrimaryStage(primaryStage);
+		manageResultTabController.setPrimaryStage(primaryStage);
+		manageCustomerTabController.setPrimaryStage(primaryStage);
+		manageOrderTabController.setPrimaryStage(primaryStage);
+		manageMyInfoTabController.setPrimaryStage(primaryStage);
+		manageTraderTabController.setPrimaryStage(primaryStage);
 
 //		manageMainPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
 //			// Tab이 바뀔 때를 인지하는 것이기 떄문에 타입은 Tab

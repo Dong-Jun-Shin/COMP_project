@@ -18,8 +18,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -45,7 +47,9 @@ public class ManageStockSubController implements Initializable {
 	private Button btnWHClear;
 	@FXML
 	private TableView<WarehouseVO> whTableView;
-	
+
+	private ManageStockTabController mstController;
+
 	private ManageStockSubController mssController;
 
 	private WarehouseDAO whdao = WarehouseDAO.getInstance();
@@ -53,11 +57,15 @@ public class ManageStockSubController implements Initializable {
 
 	private Stage stage;
 	private Stage primaryStage;
-	
+
 	private ObservableList<WarehouseVO> whDataList = FXCollections.observableArrayList();
 
 	public TextField getTxtTRNum() {
 		return txtTRNum;
+	}
+
+	public void setMstController(ManageStockTabController mstController) {
+		this.mstController = mstController;
 	}
 
 	public void setMssController(ManageStockSubController mssController) {
@@ -84,35 +92,42 @@ public class ManageStockSubController implements Initializable {
 			columnName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
 		}
 		whTableView.setItems(whDataList);
-		
+
+		// 제품번호에 대한 안내 메시지
+		Tooltip tooltip = new Tooltip("재고관리에서 제품을 선택하고 클릭하면 자동으로 번호를 부여받을 수 있습니다.");
+		tooltip.setFont(new Font(12));
+		tooltip.setAutoFix(true);
+		tooltip.setAutoHide(false);
+		txtPNum.setTooltip(tooltip);
+
 		setWHNum();
 		setInsertBtn(true);
 		wareTotalList();
 	}
-	
+
 	public void txtTRPopup(MouseEvent event) {
 		Stage dialog = new Stage(StageStyle.UTILITY);
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(primaryStage);
 		dialog.setTitle("거래처 목록");
-		
+
 		try {
 			// 팝업의 FXML 로드
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/manageWareHouseSub.fxml"));
 			Parent parent = loader.load();
-			
+
 			ManageWHSubController mwsController = loader.getController();
 			mwsController.setPrimaryStage(primaryStage);
 			mwsController.setMssController(mssController);
 			mwsController.setStage(dialog);
 			mwsController.showWindow(parent);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void btnWHInsert(ActionEvent event) {
 		if (!DataUtil.validityCheck(txtWHNum.getText(), "입고 번호")) {
 			return;
@@ -129,6 +144,9 @@ public class ManageStockSubController implements Initializable {
 			wvo.setP_num(txtPNum.getText());
 			wvo.setWh_qty(Integer.parseInt(txtWHQty.getText()));
 			whdao.warehouseInsert(wvo);
+			mstController.productTotalList();
+			
+			stage.close();
 		}
 	}
 
@@ -144,6 +162,9 @@ public class ManageStockSubController implements Initializable {
 			wvo.setWh_num(txtWHNum.getText());
 
 			whdao.warehouseDelete(wvo);
+			mstController.productTotalList();
+			
+			reset();
 		}
 	}
 
@@ -157,14 +178,9 @@ public class ManageStockSubController implements Initializable {
 		sb.append(whdao.getWareHouseCount());
 		txtWHNum.setText(sb.toString());
 	}
-	
+
 	public void btnWHClear(ActionEvent event) {
-		setWHNum();
-		txtTRNum.clear();
-		txtPNum.setText(pvo.getP_num());
-		txtWHQty.clear();
-		setInsertBtn(true);
-		
+		reset();
 	}
 
 	public void whTableView(MouseEvent event) {
@@ -203,7 +219,7 @@ public class ManageStockSubController implements Initializable {
 			System.out.println("wareTotalList() = [" + e.getMessage() + "]");
 		}
 	}
-	
+
 	/**
 	 * setInsertBtn() : 버튼의 활성화를 제어
 	 * 
@@ -213,15 +229,23 @@ public class ManageStockSubController implements Initializable {
 		btnWHInsert.setDisable(!bool);
 		btnWHDelete.setDisable(bool);
 	}
-	
+
 	public void setWHInfo() {
 		txtPNum.setText(pvo.getP_num());
 	}
-	
+
 	public void showWindow(Parent parent) {
 		Scene scene = new Scene(parent);
 		stage.setScene(scene);
 		stage.setResizable(false);
 		stage.show();
+	}
+
+	private void reset() {
+		setWHNum();
+		txtTRNum.clear();
+		txtPNum.setText(pvo.getP_num());
+		txtWHQty.clear();
+		setInsertBtn(true);
 	}
 }

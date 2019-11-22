@@ -152,7 +152,7 @@ public class WarehouseDAO {
 	public boolean warehouseInsert(WarehouseVO wvo) {
 		Boolean result = false;
 		StringBuffer sql = new StringBuffer();
-		sql.append("INSERT INTO warehouse (wh_num, wh_qty,tr_num, p_num) ");
+		sql.append("INSERT INTO warehouse (wh_num, wh_qty, tr_num, p_num) ");
 		sql.append("VALUES (?, ?, ? , ?) ");
 		PreparedStatement pstmt = null;
 		Connection con = null;

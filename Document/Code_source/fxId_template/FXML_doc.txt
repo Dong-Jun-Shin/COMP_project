@@ -273,10 +273,12 @@ TableView customerTableView
 
 -------------[manageOrderTab]
 Label lblCDNum
+Button btnOrderComplete
 Button btnOrderCancel
 TableView orderProgressView
 TableView orderHistoryView
 
+#btnOrderComplete(ActionEvent event)
 #btnOrderCancel(ActionEvent event)
 #orderProgressView(MouseEvent event)
 #orderHistoryView(MouseEvent event)

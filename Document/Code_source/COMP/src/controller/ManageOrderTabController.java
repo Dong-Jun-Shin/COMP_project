@@ -16,6 +16,8 @@ public class ManageOrderTabController implements Initializable {
 	@FXML
 	private Label lblCDNum;
 	@FXML
+	private Button btnOrderComplete;
+	@FXML
 	private Button btnOrderCancel;
 	@FXML
 	private TableView orderProgressView;
@@ -34,6 +36,10 @@ public class ManageOrderTabController implements Initializable {
 
 	}
 
+	public void btnOrderComplete(ActionEvent event) {
+
+	}
+	
 	public void btnOrderCancel(ActionEvent event) {
 		//TODO 이메일 전송 구현하기 
 		/* 이메일 전송 (판매자 이메일 -> 고객 이메일)

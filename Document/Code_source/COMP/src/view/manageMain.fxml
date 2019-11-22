@@ -10,49 +10,6 @@
 	xmlns="http://javafx.com/javafx/8.0.171"
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="controller.ManageMainController">
-	<center>
-		<TabPane prefHeight="200.0" prefWidth="200.0"
-			tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-			<tabs>
-				<Tab text="재고관리" fx:id="stock">
-					<content>
-						<fx:include fx:id="stockTab"
-							source="/view/manageStockTab.fxml" />
-					</content>
-				</Tab>
-				<Tab text="매출관리" fx:id="result">
-					<content>
-						<fx:include fx:id="resultTab"
-							source="/view/manageResultTab.fxml" />
-					</content>
-				</Tab>
-				<Tab text="고객관리" fx:id="customer">
-					<content>
-						<fx:include fx:id="customerTab"
-							source="/view/manageCustomerTab.fxml" />
-					</content>
-				</Tab>
-				<Tab text="주문관리" fx:id="order">
-					<content>
-						<fx:include fx:id="orderTab"
-							source="/view/manageOrderTab.fxml" />
-					</content>
-				</Tab>
-				<Tab text="정보관리" fx:id="myInfo">
-					<content>
-						<fx:include fx:id="myInfoTab"
-							source="/view/manageMyInfoTab.fxml" />
-					</content>
-				</Tab>
-				<Tab text="거래처관리" fx:id="trader">
-					<content>
-						<fx:include fx:id="traderTab"
-							source="/view/manageTraderTab.fxml" />
-					</content>
-				</Tab>
-			</tabs>
-		</TabPane>
-	</center>
 	<top>
 		<MenuBar BorderPane.alignment="CENTER">
 			<menus>
@@ -70,4 +27,47 @@
 			</menus>
 		</MenuBar>
 	</top>
+	<center>
+		<TabPane prefHeight="200.0" prefWidth="200.0"
+			tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+			<tabs>
+				<Tab text="재고관리" fx:id="stock">
+					<content>
+						<fx:include fx:id="manageStockTab"
+							source="/view/manageStockTab.fxml" />
+					</content>
+				</Tab>
+				<Tab text="매출관리" fx:id="result">
+					<content>
+						<fx:include fx:id="manageResultTab"
+							source="/view/manageResultTab.fxml" />
+					</content>
+				</Tab>
+				<Tab text="고객관리" fx:id="customer">
+					<content>
+						<fx:include fx:id="manageCustomerTab"
+							source="/view/manageCustomerTab.fxml" />
+					</content>
+				</Tab>
+				<Tab text="주문관리" fx:id="order">
+					<content>
+						<fx:include fx:id="manageOrderTab"
+							source="/view/manageOrderTab.fxml" />
+					</content>
+				</Tab>
+				<Tab text="정보관리" fx:id="myInfo">
+					<content>
+						<fx:include fx:id="manageMyInfoTab"
+							source="/view/manageMyInfoTab.fxml" />
+					</content>
+				</Tab>
+				<Tab text="거래처관리" fx:id="trader">
+					<content>
+						<fx:include fx:id="manageTraderTab"
+							source="/view/manageTraderTab.fxml" />
+					</content>
+				</Tab>
+			</tabs>
+		</TabPane>
+	</center>
 </BorderPane>

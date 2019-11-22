@@ -37,7 +37,7 @@ public class SalesWatchSubController implements Initializable {
 	private Popup popup;
 
 	private SalesTradeTabController sttController;
-	
+
 	public void setPvo(ProductVO pvo) {
 		this.pvo = pvo;
 	}
@@ -49,7 +49,7 @@ public class SalesWatchSubController implements Initializable {
 	public void setPopup(Popup popup) {
 		this.popup = popup;
 	}
-	
+
 	public void setSttController(SalesTradeTabController sttController) {
 		this.sttController = sttController;
 	}
@@ -58,7 +58,7 @@ public class SalesWatchSubController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 	}
-	
+
 	/**
 	 * handlePopup() : 팝업 출력
 	 * 
@@ -66,21 +66,18 @@ public class SalesWatchSubController implements Initializable {
 	 */
 	public void handlePopup(Parent parent) {
 		Button btnSelProduct = (Button) parent.lookup("#btnSelProduct");
-		btnSelProduct.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				if (btnSelProduct()) {
-					popup.hide();
-				}
-			}
+
+		btnSelProduct.setOnAction((e) -> {
+			if (btnSelProduct())
+				popup.hide();
 		});
-		
+
 		popup.getContent().add(parent);
 		// 다른 윈도우로 포커스를 이동하면 Popup은 자동으로 닫히도록 한다.
 		popup.setAutoHide(true);
 		popup.show(stage);
 	}
-	
+
 	/**
 	 * btnSelProduct() : 주문하기 탭으로 제품명과, 단가를 전달
 	 * 
@@ -95,7 +92,7 @@ public class SalesWatchSubController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return success;
 	}
 
@@ -110,7 +107,5 @@ public class SalesWatchSubController implements Initializable {
 		txtPGrt.setText(pvo.getP_grt());
 		txtPDate.setText(pvo.getP_date());
 	}
-
-	
 
 }
