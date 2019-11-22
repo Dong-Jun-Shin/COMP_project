@@ -219,9 +219,9 @@ public class SalesTradeTabController implements Initializable {
 
 		// 각 제품에 해당하는 pvo 배열 생성
 		pvoList = new ProductVO[txtNameList.length];
-		for (int i = 0; i < pvoList.length; i++) {
-			pvoList[i] = new ProductVO();
-		}
+//		for (int i = 0; i < pvoList.length; i++) {
+//			pvoList[i] = new ProductVO();
+//		}
 
 		// 가격의 기본 값으로 0을 설정
 		for (int i = 0; i < txtPriceList.length; i++) {
@@ -292,34 +292,41 @@ public class SalesTradeTabController implements Initializable {
 	@SuppressWarnings("unchecked")
 	public void btnOrderInsert(ActionEvent event) {
 		boolean success = false;
-
+		int[] chQtyArr = new int[pvoList.length]; 
+		
+		for (int i = 0, j = 0; i < pvoList.length; i++) {
+			chQtyArr[i] = ((Spinner<Integer>) spinQtyList[i]).getValue();
+			if(chQtyArr[i] == 0 && ++j == 14) {
+					DataUtil.showAlert("수량 선택", "주문할 제품의 수량을 정해주세요.");
+					return;
+			}
+		}
+		
 		// 주문 테이블에 주문행 생성
 		success = codao.cd_orderInsert(covo);
-		
-		// 주문 내역 테이블에 각 제품의 주문 행 생성 
+
+		// 주문 내역 테이블에 각 제품의 주문 행 생성
 		if (success == true) {
-			OrderChartVO ocvo = new OrderChartVO();
-			for (int i = 0; i < pvoList.length; i++) {
-				if (pvoList[i].getP_price() != 0) {
-					ocvo.setP_num(pvoList[i].getP_num());
-					ocvo.setCh_qty(((Spinner<Integer>) spinQtyList[i]).getValue());
-					ocvo.setCd_num(covo.getCd_num());
-					ocdao.order_ChartInsert(ocvo);
-				} else {
+			OrderChartVO ocvo;
+			for (int i = 0, j = 0; i < pvoList.length; i++) {
+				if (pvoList[i] != null) {
+					if (chQtyArr[i] != 0) {
+						ocvo = new OrderChartVO();
+						ocvo.setP_num(pvoList[i].getP_num());
+						ocvo.setCh_qty(chQtyArr[i]);
+						ocvo.setCd_num(covo.getCd_num());
+						ocdao.order_ChartInsert(ocvo);
+					}
 				}
 			}
 		}
 
 		if (success == true) {
 			DataUtil.showInfoAlert("주문신청 결과", "[" + txtCName.getText() + "님]의 주문이 등록되었습니다.");
-			//TODO 이메일 전송 구현하기 
-			/* 이메일 전송 (판매자 이메일 -> 고객 이메일)
-			 * 제목 : '구매자명'님, 주문하신 내역입니다.
-			 * 본문 : 고객 - 성함, 연락처, 주소
-			 * 		제품 - 제품명, 개수, 금액
-			 * 		------------------- 
-			 * 				총금액
-			 * 		판매자 - 계좌주, 계좌번호, 계좌 번호
+			// TODO 이메일 전송 구현하기
+			/*
+			 * 이메일 전송 (판매자 이메일 -> 고객 이메일) 제목 : '구매자명'님, 주문하신 내역입니다. 본문 : 고객 - 성함, 연락처, 주소 제품
+			 * - 제품명, 개수, 금액 ------------------- 총금액 판매자 - 계좌주, 계좌번호, 계좌 번호
 			 */
 		} else {
 			DataUtil.showInfoAlert("주문신청 결과", "주문신청에 문제가 있어 완료하지 못하였습니다.");
@@ -427,7 +434,7 @@ public class SalesTradeTabController implements Initializable {
 			int spinVal = ((Spinner<Integer>) spinQtyList[i]).getValue();
 
 			// 해당 위치의 제품이 비어있으면 경고창 출력, 아니면 가격 계산
-			if (spinVal == 1 && pvoList[keyIdx].getP_price() == 0) {
+			if (spinVal == 1 && pvoList[keyIdx] == null) {
 				((Spinner<Integer>) spinQtyList[keyIdx]).setValueFactory(new IntegerSpinnerValueFactory(0, 999));
 				DataUtil.showAlert("제품 선택", "제품을 선택해주세요.");
 			} else if (spinVal > 0) {

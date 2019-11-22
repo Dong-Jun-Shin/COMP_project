@@ -126,9 +126,6 @@ public class CdOrderDAO {
 				cvo.setC_num(rs.getString("cd_num"));
 				list.add(cvo);
 			}
-			
-			
-			
 		}catch(SQLException sqle) {
 			System.out.println("[  getCompletedOrderList()  ]    [ SQLException ]");
 			sqle.printStackTrace();
@@ -313,10 +310,5 @@ public class CdOrderDAO {
 		}
 
 		return serialNumber;
-		
-		
-		
-		
 	}
-	
 }
