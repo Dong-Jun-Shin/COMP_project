@@ -107,7 +107,7 @@ public class DataUtil extends NumberFormatException {
 	 */
 	public static StringBuffer dateCheck(String date) {
 		StringBuffer sb = new StringBuffer();
-		
+
 		try {
 			if (DataUtil.validityCheck(date, "생일")) {
 				String s_birth = date.trim();
@@ -136,13 +136,16 @@ public class DataUtil extends NumberFormatException {
 			DataUtil.showAlert("날짜 입력 오류", "날짜를 'YYYY-MM-DD'의 형식으로 쓰고, 년월일의 범위 안으로 입력해주세요.\n월(1~12), 일(1~31)");
 			return null;
 		}
-		
+
 		return sb;
 	}
 
 	public static String[] getKey(String sel) {
 		String key[];
 		switch (sel) {
+		case "method":
+			key = new String[] { "Cp", "R", "Mb", "G", "Ss", "H", "Po", "Ca", "Co", "Sw", "K", "Mo", "Sp", "Mn" };
+			break;
 		case "id":
 			key = new String[] { "CP", "R", "MB", "G", "SS", "H", "PO", "CA", "CO", "SW", "K", "MO", "SP", "MN" };
 			break;

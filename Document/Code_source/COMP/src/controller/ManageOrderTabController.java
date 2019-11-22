@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,8 +17,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import model.CdChartDAO;
+import model.CdChartVO;
+import model.CdOrderDAO;
+import model.CdOrderVO;
+import model.CustomerDAO;
 import model.CustomerVO;
 import model.DataUtil;
+import model.ProductDAO;
 
 public class ManageOrderTabController implements Initializable {
 	@FXML
@@ -26,10 +34,18 @@ public class ManageOrderTabController implements Initializable {
 	@FXML
 	private Button btnOrderCancel;
 	@FXML
-	private TableView orderProgressView;
+	private TableView<CdChartVO> orderProgressView;
 	@FXML
-	private TableView orderHistoryView;
+	private TableView<CdChartVO> orderHistoryView;
 
+	String selectedCdOrderIndex;
+
+	private static ObservableList<CdChartVO> progressDataList = FXCollections.observableArrayList();
+	private static ObservableList<CdChartVO> historyDataList = FXCollections.observableArrayList();
+
+	private CdOrderDAO cddao = CdOrderDAO.getInstance();
+	private CdChartDAO ccdao = CdChartDAO.getInstance(); 
+	
 	private Stage primaryStage;
 
 	public void setPrimaryStage(Stage primaryStage) {
@@ -39,34 +55,22 @@ public class ManageOrderTabController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// 테이블뷰의 컬럼이름이 될 필드명을 가져온다.
-		ArrayList<String> colList = new ArrayList<String>();
-		colList.add("cd_sort");
-		colList.add("cd_num");
-		colList.add("c_id");
-		colList.add("c_name");
-		colList.add("c_phone");
-		colList.add("c_add");
-		colList.add("c_email");
-		colList.add("cd_num");
-		colList.add("cd_num");
-		colList.add("cd_num");
-		colList.add("cd_num");
-		colList.add("cd_num");
-		colList.add("cd_num");
-		colList.add("cd_num");
-		colList.add("cd_num");
-		colList.add("cd_num");
-		
-		List<String> title = DataUtil.fieldName(new CustomerVO());
+		List<String> title = DataUtil.fieldName(new CdChartVO());
 
 		// 설정을 받을 Table의 열
 		for (int i = 0; i < title.size(); i++) {
-			TableColumn<CustomerVO, ?> columnName = customerTableView.getColumns().get(i);
-			columnName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
+			TableColumn<CdChartVO, ?> columnPName = orderProgressView.getColumns().get(i);
+			columnPName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
+			
+			TableColumn<CdChartVO, ?> columnHName = orderHistoryView.getColumns().get(i);
+			columnHName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
 		}
 
 		// 테이블에 항목 설정
-		customerTableView.setItems(customerDataList);
+		orderProgressView.setItems(progressDataList);
+		orderHistoryView.setItems(historyDataList);
+		
+		progressTotalList();
 	}
 
 	public void btnOrderComplete(ActionEvent event) {
@@ -82,10 +86,34 @@ public class ManageOrderTabController implements Initializable {
 	}
 
 	public void orderProgressView(MouseEvent event) {
-
+		
 	}
 
 	public void orderHistoryView(MouseEvent event) {
 
+	}
+	
+	private void progressTotalList() {
+		progressDataList.removeAll(progressDataList);
+		CdChartVO ccvo = null;
+		ArrayList<CdChartVO> list;
+
+		try {
+			list = ccdao.getProgressOrderList();
+
+			for (int index = 0; index < list.size(); index++) {
+				// 결과 리스트에서 한 행을 가져다가 svo에 대입
+				ccvo = list.get(index);
+				// 한 행을 추가
+				progressDataList.add(ccvo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("progressTotalList() = [" + e.getMessage() + "]");
+		}
+	}
+
+	private void historyTotalList() {
+		
 	}
 }
