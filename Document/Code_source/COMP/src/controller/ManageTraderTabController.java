@@ -60,6 +60,7 @@ public class ManageTraderTabController implements Initializable {
 
 	private TraderDAO trdao = TraderDAO.getInstance();
 
+	@SuppressWarnings("unused")
 	private Stage primaryStage;
 
 	public void setPrimaryStage(Stage primaryStage) {
@@ -308,7 +309,7 @@ public class ManageTraderTabController implements Initializable {
 	 * traderTotalList() : 테이블뷰 레코드 출력(거래처 전체 리스트)
 	 * 
 	 */
-	private void traderTotalList() {
+	public void traderTotalList() {
 		traderDataList.removeAll(traderDataList);
 		TraderVO tvo = null;
 		ArrayList<TraderVO> list;

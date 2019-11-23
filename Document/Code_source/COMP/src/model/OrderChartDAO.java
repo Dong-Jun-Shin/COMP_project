@@ -9,37 +9,40 @@ import java.util.ArrayList;
 public class OrderChartDAO {
 
 	private static OrderChartDAO instance = null;
-	
+
 	private OrderChartDAO() {
-		
+
 	}
-	
+
 	/**
 	 * getConnection() : DB 연동 메소드
+	 * 
 	 * @return Connection
 	 * @throws Exception
 	 */
-	private Connection getConnection() throws Exception{
+	private Connection getConnection() throws Exception {
 		Connection con = DBUtill.getConnection();
 		return con;
 	}
-	
+
 	/**
 	 * getInstance() : 인스턴스 생성 메소드
+	 * 
 	 * @return Order_chartDAO
 	 */
 	public static OrderChartDAO getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new OrderChartDAO();
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * getOrder_ChartList() : 주문 내역 조회 메소드
+	 * 
 	 * @return ArrayList<Order_ChartVO>
 	 */
-	public ArrayList<OrderChartVO> getOrder_ChartList(){
+	public ArrayList<OrderChartVO> getOrder_ChartList() {
 		ArrayList<OrderChartVO> list = new ArrayList<OrderChartVO>();
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ch_num, cd_num, ch_qty, p_num FROM order_chart");
@@ -47,53 +50,54 @@ public class OrderChartDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			ovo = new OrderChartVO();
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			rs = pstmt.executeQuery();
-		
-			while(rs.next()) {
+
+			while (rs.next()) {
 				ovo.setCd_num(rs.getString("cd_num"));
 				ovo.setCh_num(rs.getString("ch_num"));
 				ovo.setCh_qty(rs.getInt("ch_qty"));
 				ovo.setP_num(rs.getString("p_num"));
-				list.add(ovo);	
+				list.add(ovo);
 			}
-			
-		}catch(SQLException sqle) {
+
+		} catch (SQLException sqle) {
 			System.out.println("[  getOrder_ChartList()  ]    [ SQLException ]");
 			sqle.printStackTrace();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("[  getOrder_ChartList()  ]    [ Unknown Exception ]");
 			e.printStackTrace();
-			
-		}finally {
+
+		} finally {
 			try {
-				if(con != null) {
+				if (con != null) {
 					con.close();
 				}
-				if(pstmt != null) {
+				if (pstmt != null) {
 					pstmt.close();
 				}
-				if(rs != null) {
+				if (rs != null) {
 					rs.close();
 				}
-				
-			}catch(Exception e) {
+
+			} catch (Exception e) {
 				System.out.println("[  getOrder_ChartList()  ]    [ Closed Error ]");
 				e.printStackTrace();
 			}
-			
+
 		}
-		
+
 		return list;
 	}
-	
+
 	/**
 	 * order_ChartInsert(Order_ChartVO ovo) : 주문 내역 등록 메소드
-	 * @param ocvo			(Order_ChartVO) : 등록할 주문 내역
+	 * 
+	 * @param ocvo (Order_ChartVO) : 등록할 주문 내역
 	 * @return boolean
 	 */
 	public boolean order_ChartInsert(OrderChartVO ocvo) {
@@ -104,7 +108,7 @@ public class OrderChartDAO {
 		sql.append(", ?, ?, ?)");
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
@@ -112,36 +116,35 @@ public class OrderChartDAO {
 			pstmt.setInt(2, ocvo.getCh_qty());
 			pstmt.setString(3, ocvo.getP_num());
 			int i = pstmt.executeUpdate();
-			if(i ==1) {
+			if (i == 1) {
 				result = true;
 			}
-			
-		}catch(SQLException sqle) {
+
+		} catch (SQLException sqle) {
 			System.out.println("[  order_ChartInsert(Order_ChartVO ovo)  ] [  SQLException  ]");
 			sqle.printStackTrace();
 			result = false;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("[ order_ChartInsert(Order_ChartVO ovo)  ] [  Exception  ]");
 			e.printStackTrace();
 			result = false;
-		}finally {
-			
+		} finally {
+
 			try {
-				if(pstmt != null) {
+				if (pstmt != null) {
 					pstmt.close();
 				}
-				if(con != null) {
+				if (con != null) {
 					con.close();
 				}
-			}catch(Exception e) {
+			} catch (Exception e) {
 				System.out.println("[  order_ChartInsert(Order_ChartVO ovo)  ] [  closed Error  ]");
 				e.printStackTrace();
 			}
-			
+
 		}
-		
+
 		return result;
-		
 	}
-	
+
 }

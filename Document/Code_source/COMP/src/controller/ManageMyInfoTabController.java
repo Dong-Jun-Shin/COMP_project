@@ -15,7 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.CustomerDAO;
 import model.DataUtil;
 import model.DealerVO;
 
@@ -41,6 +40,7 @@ public class ManageMyInfoTabController implements Initializable {
 
 	private DealerVO dvo = DealerVO.getInstance();
 
+	@SuppressWarnings("unused")
 	private Stage primaryStage;
 
 	public void setPrimaryStage(Stage primaryStage) {

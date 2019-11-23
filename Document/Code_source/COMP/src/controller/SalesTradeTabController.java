@@ -1,7 +1,6 @@
 package controller;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -169,11 +168,14 @@ public class SalesTradeTabController implements Initializable {
 	private Object[] spinQtyList;
 
 	private int keyIdx;
+
 	private ProductVO[] pvoList;
+	private CdOrderVO covo = new CdOrderVO();
 	private CustomerDAO cdao = CustomerDAO.getInstance();
 	private CdOrderDAO codao = CdOrderDAO.getInstance();
 	private OrderChartDAO ocdao = OrderChartDAO.getInstance();
-	private CdOrderVO covo = new CdOrderVO();
+	
+	@SuppressWarnings("unused")
 	private Stage primaryStage;
 
 	public void setPvo(ProductVO pvo) {
@@ -308,7 +310,7 @@ public class SalesTradeTabController implements Initializable {
 		// 주문 내역 테이블에 각 제품의 주문 행 생성
 		if (success == true) {
 			OrderChartVO ocvo;
-			for (int i = 0, j = 0; i < pvoList.length; i++) {
+			for (int i = 0; i < pvoList.length; i++) {
 				if (pvoList[i] != null) {
 					if (chQtyArr[i] != 0) {
 						ocvo = new OrderChartVO();

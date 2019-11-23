@@ -15,14 +15,14 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 //			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/loginMain.fxml"));
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/salesMain.fxml"));
-//			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/manageMain.fxml"));
+//			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/salesMain.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/manageMain.fxml"));
 			//연결된 소스 속의 모든 객체를 생성하는 load()
 			Parent root = loader.load();
 			
 //			LoginMainController controller = loader.getController();
-			SalesMainController controller = loader.getController();
-//			ManageMainController controller = loader.getController();
+//			SalesMainController controller = loader.getController();
+			ManageMainController controller = loader.getController();
 			controller.setPrimaryStage(primaryStage);
 
 			Scene scene = new Scene(root);
@@ -42,6 +42,7 @@ public class Main extends Application {
 	}
 }
 
-
+//TODO 화면 전환 시, 페이드 인아웃 처리, Jmetro 적용
 //TODO 다 끝나면 printStack 찾아서 getMessage로 바꾸기
-//TODO 다 끝나면 주석 확인하기
+//TODO 다 끝나면 세부 주석 달기
+//TODO 다 끝나면 주석, 필드 위치 확인하기

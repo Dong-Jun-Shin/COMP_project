@@ -43,7 +43,7 @@ public class CdOrderDAO {
 	 * getProceedingOrderList() : 거래 중인 주문 리스트 조회 메소드
 	 * @return ArrayList<Order_ChartVO>
 	 */
-	public ArrayList<CdOrderVO> getProceedingOrderList(){
+	public ArrayList<CdOrderVO> getProgressOrderList(){
 		ArrayList<CdOrderVO> list = new ArrayList<CdOrderVO>();
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT cd_num, cd_sort, cd_reg, cd_price, c_num");
@@ -74,10 +74,10 @@ public class CdOrderDAO {
 			
 			
 		}catch(SQLException sqle) {
-			System.out.println("[  getProceedingOrderList()  ]    [ SQLException ]");
+			System.out.println("[  getProgressOrderList()  ]    [ SQLException ]");
 			sqle.printStackTrace();
 		}catch(Exception e) {
-			System.out.println("[  getProceedingOrderList()  ]    [ Unknown Exception ]");
+			System.out.println("[  getProgressOrderList()  ]    [ Unknown Exception ]");
 			e.printStackTrace();
 			
 		}finally {
@@ -93,7 +93,7 @@ public class CdOrderDAO {
 				}
 				
 			}catch(Exception e) {
-				System.out.println("[ getProceedingOrderList()  ]    [ Closed Error ]");
+				System.out.println("[ getProgressOrderList()  ]    [ Closed Error ]");
 				e.printStackTrace();
 			}
 			
@@ -108,7 +108,7 @@ public class CdOrderDAO {
 	 *  getCompletedOrderList() : 완료된 주문 리스트 조회 메소드
 	 * @return ArrayList<Order_ChartVO>
 	 */
-	public ArrayList<CdOrderVO> getCompletedOrderList(){
+	public ArrayList<CdOrderVO> getHistoryOrderList(){
 		ArrayList<CdOrderVO> list = new ArrayList<CdOrderVO>();
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT cd_num, cd_sort, cd_reg, cd_price, c_num");
@@ -136,10 +136,10 @@ public class CdOrderDAO {
 			
 			
 		}catch(SQLException sqle) {
-			System.out.println("[  getCompletedOrderList()  ]    [ SQLException ]");
+			System.out.println("[  getHistoryOrderList()  ]    [ SQLException ]");
 			sqle.printStackTrace();
 		}catch(Exception e) {
-			System.out.println("[  getCompletedOrderList()  ]    [ Unknown Exception ]");
+			System.out.println("[  getHistoryOrderList()  ]    [ Unknown Exception ]");
 			e.printStackTrace();
 			
 		}finally {
@@ -155,7 +155,7 @@ public class CdOrderDAO {
 				}
 				
 			}catch(Exception e) {
-				System.out.println("[  getCompletedChartList()  ]    [ Closed Error ]");
+				System.out.println("[  getHistoryOrderList()  ]    [ Closed Error ]");
 				e.printStackTrace();
 			}
 			
