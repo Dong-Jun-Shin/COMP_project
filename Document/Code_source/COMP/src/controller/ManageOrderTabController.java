@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,8 @@ import model.CdChartVO;
 import model.CdOrderDAO;
 import model.CdOrderVO;
 import model.DataUtil;
+import model.DealerVO;
+import model.EmailVO;
 
 public class ManageOrderTabController implements Initializable {
 	@FXML
@@ -36,6 +40,8 @@ public class ManageOrderTabController implements Initializable {
 	private TableView<CdChartVO> orderHistoryView;
 
 	String selectedCdChartIndex;
+	
+	private CdChartVO ccvo = new CdChartVO();
 
 	private static ObservableList<CdChartVO> progressDataList = FXCollections.observableArrayList();
 	private static ObservableList<CdChartVO> historyDataList = FXCollections.observableArrayList();
@@ -112,7 +118,10 @@ public class ManageOrderTabController implements Initializable {
 				success = codao.cd_orderUpdate(covo);
 
 				if (success == true) {
-					DataUtil.showInfoAlert("주문 처리 결과", "[" + lblCDNum.getText() + "]의 처리를 완료하였습니다.");
+					boolean sendSuccess = sendCancle();
+					if(sendSuccess) {
+						DataUtil.showInfoAlert("주문 처리 결과", "[" + lblCDNum.getText() + "]의 처리를 완료하였습니다.");
+					}
 					reset();
 				} else {
 					DataUtil.showInfoAlert("주문 처리 결과", "주문의 처리에 문제가 있어 완료하지 못하였습니다.");
@@ -132,6 +141,7 @@ public class ManageOrderTabController implements Initializable {
 		if (event.getClickCount() == 2) {
 			CdChartVO selectCdChart = orderProgressView.getSelectionModel().getSelectedItem();
 			if (selectCdChart != null) {
+				ccvo = selectCdChart;
 				selectedCdChartIndex = selectCdChart.getCd_num();
 
 				lblCDNum.setText(selectCdChart.getCd_num());
@@ -192,5 +202,47 @@ public class ManageOrderTabController implements Initializable {
 		setBtn(false);
 		progressTotalList();
 		historyTotalList();
+	}
+
+	private boolean sendCancle() {
+		boolean success = false;
+
+		DealerVO dvo = DealerVO.getInstance();
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/properties_file/DealerVO.dat"))) {
+			dvo = (DealerVO) ois.readObject();
+			// 자료가 들어갔으면 멈춘다.
+			if (dvo != null) {
+			} else {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			DataUtil.showAlert("정보 읽기 실패", "정보를 읽는 중 문제가 생겼습니다.");
+			e.printStackTrace();
+		}
+
+		/*
+		 * 제목 : '구매자명'님, 주문이 취소되었습니다. 
+		 * 본문 : 고객 - 성함, 연락처, 주소
+		 * 		------------------- 환불 금액
+		 */
+		StringBuffer sbHead = new StringBuffer();
+		sbHead.append(ccvo.getC_name() + "님, 주문취소가 완료되었습니다.");
+
+		StringBuffer sbSubject = new StringBuffer();
+		sbSubject.append(dvo.getDName() + "에서 구매해주셔서 감사합니다.\n 다음은 주문해주신 내역입니다.\n");
+		sbSubject.append(
+				"고객 정보 - " + ccvo.getC_name() + ", " + ccvo.getC_phone() + ", " + ccvo.getC_add() + "\n\n");
+		sbSubject.append("--------------------- 총금액 : " + ccvo.getCd_price() + " ---------------------\n\n");
+		sbSubject.append("입금 정보 - " + dvo.getDBName() + ", " + dvo.getDBNum() + ", " + dvo.getDBOwner() + "\n");
+
+		EmailVO evo = new EmailVO(dvo.getDEId(), dvo.getDEPw(), ccvo.getC_email(), ccvo.getC_name(), dvo.getDEId(),
+				dvo.getDName(), sbHead.toString(), sbSubject.toString());
+
+		String str = DataUtil.send(evo);
+		if (str.equals("Success")) {
+			success = true;
+		}
+
+		return success;
 	}
 }

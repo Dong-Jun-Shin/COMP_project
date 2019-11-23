@@ -1,10 +1,35 @@
 package controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 
 public class MenuController {
+	public void menuLogout(Stage primaryStage) {
+		try {
+			Parent root = null;
+			root = FXMLLoader.load(getClass().getResource("/view/loginMain.fxml"));
+
+			Scene scene = new Scene(root);
+//        	scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (Exception e) {
+			System.out.println("btnLogin() error = " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
 	public static void menuClose() {
 		Platform.exit();
 	}

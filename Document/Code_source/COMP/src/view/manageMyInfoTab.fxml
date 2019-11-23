@@ -25,7 +25,7 @@
 				<Insets bottom="30.0" left="10.0" top="10.0" />
 			</padding>
 		</Label>
-		<VBox alignment="TOP_CENTER" prefHeight="190.0" prefWidth="1080.0" spacing="20.0">
+		<VBox alignment="TOP_CENTER" prefHeight="160.0" prefWidth="1080.0" spacing="10.0">
 			<children>
 				<HBox alignment="CENTER" prefHeight="40.0" prefWidth="280.0" spacing="20.0">
 					<children>
@@ -53,8 +53,23 @@
 				<Insets top="10.0" />
 			</padding>
 		</VBox>
-		<VBox alignment="TOP_CENTER" prefHeight="120.0" prefWidth="1080.0" spacing="20.0">
+		<VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="1080.0" spacing="10.0">
 			<children>
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" prefWidth="60.0" text="이메일ID" />
+                  <TextField fx:id="txtDEId" prefWidth="160.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" prefWidth="60.0" text="이메일Pw" />
+                  <PasswordField fx:id="pwDEPasswd" prefWidth="160.0" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </HBox>
 				<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
 					<children>
 						<Label alignment="CENTER" prefWidth="60.0" text="전화번호" />
@@ -69,7 +84,7 @@
 				</HBox>
 			</children>
 		</VBox>
-		<VBox alignment="TOP_CENTER" prefHeight="180.0" prefWidth="1080.0" spacing="20.0">
+		<VBox alignment="TOP_CENTER" prefHeight="170.0" prefWidth="1080.0" spacing="10.0">
 			<children>
 				<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
 					<children>

@@ -177,7 +177,7 @@ public class CdChartDAO {
 		setDic();
 
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT cd_sort, cd_num, cd_price, c_num FROM cd_order WHERE cd_sort LIKE '거래완료' OR cd_sort LIKE '거래취소' ORDER BY cd_num");
+		sql.append("SELECT cd_sort, cd_num, cd_price, c_num FROM cd_order WHERE cd_sort LIKE '거래완료' OR cd_sort LIKE '거래취소' ORDER BY cd_sort, cd_num DESC");
 
 		CdChartVO ccvo = null;
 		Connection con = null;

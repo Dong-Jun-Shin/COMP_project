@@ -15,6 +15,7 @@
 			<menus>
 				<Menu mnemonicParsing="false" text="메뉴">
 					<items>
+						<MenuItem mnemonicParsing="false" onAction="#menuLogout" text="로그아웃" />
 						<MenuItem mnemonicParsing="false" text="종료" onAction="#menuClose"/>
 					</items>
 				</Menu>

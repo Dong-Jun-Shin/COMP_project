@@ -26,6 +26,10 @@ public class ManageMyInfoTabController implements Initializable {
 	@FXML
 	private PasswordField pwDPasswd;
 	@FXML
+	private TextField txtDEId;
+	@FXML
+	private PasswordField pwDEPasswd;
+	@FXML
 	private TextField txtDPhone;
 	@FXML
 	private TextField txtDAddress;
@@ -68,6 +72,8 @@ public class ManageMyInfoTabController implements Initializable {
 		// 각 필드에 판매업체 정보를 설정
 		txtDName.setText(dvo.getDName());
 		txtDId.setText(dvo.getDId());
+		txtDEId.setText(dvo.getDEId());
+		pwDEPasswd.setText(dvo.getDEPw());
 		txtDPhone.setText(dvo.getDPhone());
 		txtDAddress.setText(dvo.getDAddress());
 		txtDBOwner.setText(dvo.getDBOwner());
@@ -85,6 +91,12 @@ public class ManageMyInfoTabController implements Initializable {
 		if (!DataUtil.validityCheck(txtDName.getText(), "업체명")
 				|| !DataUtil.valLimitCheck(txtDName.getText(), 30)) {
 			return;
+		} else if (!DataUtil.validityCheck(txtDEId.getText(), "Email ID")
+				|| !DataUtil.valLimitCheck(txtDEId.getText(), 30)) {
+			return;
+		} else if (!DataUtil.validityCheck(pwDEPasswd.getText(), "Email PW")
+				|| !DataUtil.valLimitCheck(pwDEPasswd.getText(), 30)) {
+			return;
 		} else if (!DataUtil.validityCheck(txtDPhone.getText(), "전화번호")
 				|| !DataUtil.valLimitCheck(txtDPhone.getText(), 13)) {
 			return;
@@ -101,6 +113,8 @@ public class ManageMyInfoTabController implements Initializable {
 			return;
 		} else if (pwDPasswd.getText().equals(dvo.getDPasswd())) {
 			// 각 필드의 내용을 dvo에 설정
+			dvo.setDEId(txtDEId.getText());
+			dvo.setDEPw(pwDEPasswd.getText());
 			dvo.setDName(txtDName.getText());
 			dvo.setDPhone(txtDPhone.getText());
 			dvo.setDAddress(txtDAddress.getText());

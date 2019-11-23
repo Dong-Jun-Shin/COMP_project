@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +21,8 @@ import model.CdOrderVO;
 import model.CustomerDAO;
 import model.CustomerVO;
 import model.DataUtil;
+import model.DealerVO;
+import model.EmailVO;
 import model.OrderChartDAO;
 import model.OrderChartVO;
 import model.ProductVO;
@@ -174,7 +178,7 @@ public class SalesTradeTabController implements Initializable {
 	private CustomerDAO cdao = CustomerDAO.getInstance();
 	private CdOrderDAO codao = CdOrderDAO.getInstance();
 	private OrderChartDAO ocdao = OrderChartDAO.getInstance();
-	
+
 	@SuppressWarnings("unused")
 	private Stage primaryStage;
 
@@ -294,16 +298,16 @@ public class SalesTradeTabController implements Initializable {
 	@SuppressWarnings("unchecked")
 	public void btnOrderInsert(ActionEvent event) {
 		boolean success = false;
-		int[] chQtyArr = new int[pvoList.length]; 
-		
+		int[] chQtyArr = new int[pvoList.length];
+
 		for (int i = 0, j = 0; i < pvoList.length; i++) {
 			chQtyArr[i] = ((Spinner<Integer>) spinQtyList[i]).getValue();
-			if(chQtyArr[i] == 0 && ++j == 14) {
-					DataUtil.showAlert("수량 선택", "주문할 제품의 수량을 정해주세요.");
-					return;
+			if (chQtyArr[i] == 0 && ++j == 14) {
+				DataUtil.showAlert("수량 선택", "주문할 제품의 수량을 정해주세요.");
+				return;
 			}
 		}
-		
+
 		// 주문 테이블에 주문행 생성
 		success = codao.cd_orderInsert(covo);
 
@@ -324,12 +328,10 @@ public class SalesTradeTabController implements Initializable {
 		}
 
 		if (success == true) {
-			DataUtil.showInfoAlert("주문신청 결과", "[" + txtCName.getText() + "님]의 주문이 등록되었습니다.");
-			// TODO 이메일 전송 구현하기
-			/*
-			 * 이메일 전송 (판매자 이메일 -> 고객 이메일) 제목 : '구매자명'님, 주문하신 내역입니다. 본문 : 고객 - 성함, 연락처, 주소 제품
-			 * - 제품명, 개수, 금액 ------------------- 총금액 판매자 - 계좌주, 계좌번호, 계좌 번호
-			 */
+			boolean sendSuccess = sendBuy();
+			if(sendSuccess) {
+				DataUtil.showInfoAlert("주문신청 결과", "[" + txtCName.getText() + "님]의 주문이 등록되었습니다.");
+			}
 		} else {
 			DataUtil.showInfoAlert("주문신청 결과", "주문신청에 문제가 있어 완료하지 못하였습니다.");
 		}
@@ -456,5 +458,49 @@ public class SalesTradeTabController implements Initializable {
 
 	public void setField() {
 		txtNameList[keyIdx].setText(pvoList[keyIdx].getP_name());
+	}
+
+	public boolean sendBuy() {
+		boolean success = false;
+		
+		DealerVO dvo = DealerVO.getInstance();
+		try (ObjectInputStream ois = new ObjectInputStream(
+				new FileInputStream("src/properties_file/DealerVO.dat"))) {
+			dvo = (DealerVO) ois.readObject();
+			// 자료가 들어갔으면 멈춘다.
+			if (dvo != null) {
+			} else {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			DataUtil.showAlert("정보 읽기 실패", "정보를 읽는 중 문제가 생겼습니다.");
+			e.printStackTrace();
+		}
+
+		/*
+		 * 제목 : '구매자명'님, 주문하신 내역입니다. 
+		 * 본문 :  고객 - 성함, 연락처, 주소
+		 * 		 제품 - 제품명, 개수, 금액
+		 * 		------------------- 총금액
+		 * 		 판매자 - 계좌주, 계좌번호, 계좌 번호
+		 */
+		StringBuffer sbHead = new StringBuffer();
+		sbHead.append(txtCName + "님, 주문하신 내역입니다.");
+
+		StringBuffer sbSubject = new StringBuffer();
+		sbSubject.append(dvo.getDName() + "에서 구매해주셔서 감사합니다.\n 다음은 주문해주신 내역입니다.\n");
+		sbSubject.append("고객 정보 - " + txtCName.getText() + ", " + txtCPhone.getText() + ", " + txtCAddress.getText() + "\n\n");
+		sbSubject.append("--------------------- 총금액 : " + txtTotalPrice.getText() + " ---------------------\n\n");
+		sbSubject.append("입금 정보 - " + dvo.getDBName() + ", " + dvo.getDBNum()+ ", " + dvo.getDBOwner()+ "\n");
+		
+		EmailVO evo = new EmailVO(dvo.getDEId(), dvo.getDEPw(), txtCEmail.getText(), txtCName.getText(),
+				dvo.getDEId(), dvo.getDName(), sbHead.toString(), sbSubject.toString());
+
+		String str = DataUtil.send(evo);
+		if(str.equals("Success")) {
+			success = true;
+		}
+		
+		return success;
 	}
 }

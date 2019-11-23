@@ -19,7 +19,7 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/manageMain.fxml"));
 			//연결된 소스 속의 모든 객체를 생성하는 load()
 			Parent root = loader.load();
-			
+
 //			LoginMainController controller = loader.getController();
 //			SalesMainController controller = loader.getController();
 			ManageMainController controller = loader.getController();

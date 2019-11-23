@@ -91,6 +91,10 @@ public class ManageMainController implements Initializable {
 		});
 	}
 
+	public void menuLogout(ActionEvent event) {
+		new MenuController().menuLogout(primaryStage);
+	}
+
 	public void menuClose(ActionEvent event) {
 		MenuController.menuClose();
 	}
@@ -102,7 +106,4 @@ public class ManageMainController implements Initializable {
 	public void menuProgramInfo(ActionEvent event) {
 		MenuController.menuProgramInfo();
 	}
-
 }
-
-	//TODO 로그아웃 만들기

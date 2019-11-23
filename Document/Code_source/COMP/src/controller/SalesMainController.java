@@ -35,6 +35,10 @@ public class SalesMainController implements Initializable {
 		salesTradeTabController.setPrimaryStage(primaryStage);
 	}
 	
+	public void menuLogout(ActionEvent event) {
+		new MenuController().menuLogout(primaryStage);
+	}
+	
 	public void menuClose(ActionEvent event) {
 		MenuController.menuClose();
 	}
@@ -48,4 +52,3 @@ public class SalesMainController implements Initializable {
 	}
 }
 
-	//TODO 로그아웃 만들기

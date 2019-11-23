@@ -5,14 +5,12 @@ import java.io.Serializable;
 public class DealerVO implements Serializable {
 	private static final long serialVersionUID = -1576767060432378767L;
 	private String dName;
-//	private String dId = "infinityCM88";
-//	private String dPasswd = "unli88mite";
 	private String dId;
 	private String dPasswd;
+	private String dEId;
+	private String dEPw;
 	private String dPhone;
 	private String dAddress;
-//	private String dBOwner = "김명진";
-//	private String dBNum = "213215-04-235225";
 	private String dBOwner;
 	private String dBNum;
 	private String dBName;
@@ -71,6 +69,22 @@ public class DealerVO implements Serializable {
 		this.dPasswd = dPasswd;
 	}
 
+	public String getDEId() {
+		return dEId;
+	}
+	
+	public void setDEId(String dEId) {
+		this.dEId = dEId;
+	}
+	
+	public String getDEPw() {
+		return dEPw;
+	}
+	
+	public void setDEPw(String dEPw) {
+		this.dEPw = dEPw;
+	}
+	
 	public String getDPhone() {
 		return dPhone;
 	}
