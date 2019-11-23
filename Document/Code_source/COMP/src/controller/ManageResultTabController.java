@@ -57,9 +57,6 @@ public class ManageResultTabController implements Initializable {
 		}
 		mComponentRank.setItems(rankDataList);
 		
-		
-		
-		
 		setMSalesPieChart();
 		setMOrderBarChart();
 		setMSalesBarChart();
