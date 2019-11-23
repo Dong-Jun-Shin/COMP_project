@@ -393,17 +393,17 @@ public class CdOrderDAO {
 		StringBuffer sql = new StringBuffer();
 		
 		sql.append("SELECT (SELECT NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
-		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '1') AS w1,");
+		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '1') AS w1, ");
 		sql.append("(SELECT  NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
-		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '2' ) AS w2,");
+		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '2' ) AS w2, ");
 		sql.append("(SELECT  NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
-		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '3' ) AS w3,");
+		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '3' ) AS w3, ");
 		sql.append("(SELECT  NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
-		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '4' ) AS w4,");
+		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '4' ) AS w4, ");
 		sql.append("(SELECT  NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
-		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '5' ) AS w5");
+		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '5' ) AS w5 ");
 		sql.append("FROM order_chart oc, cd_order co WHERE co.cd_num = oc.cd_num ");
-		sql.append("GROUP BY TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W')");
+		sql.append("GROUP BY TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') ");
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -526,9 +526,13 @@ public class CdOrderDAO {
 	public ArrayList<RankVO> getCountRank() {
 		ArrayList<RankVO> list = new ArrayList<RankVO>();
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT SUBSTR(p_num,1,2) productSort, COUNT(ch_qty) AS count ");
-		sql.append(",RANK() OVER (ORDER BY COUNT(ch_qty)) as rank FROM order_chart ");
-		sql.append("GROUP BY SUBSTR(p_num,1,2) ORDER BY COUNT(ch_qty) ");
+		sql.append("SELECT SUBSTR(oc.p_num,1,2) productSort ,p.p_name AS p_name,  ");
+		sql.append("SUM(oc.ch_qty) AS count, p.p_price as p_price, p.p_price*SUM(oc.ch_qty) AS priceResult,");
+		sql.append("RANK() OVER (ORDER BY p.p_price*SUM(oc.ch_qty) desc) AS rank  ");
+		sql.append("FROM order_chart oc, product p WHERE oc.p_num = p.p_num  ");
+		sql.append("GROUP BY SUBSTR(oc.p_num,1,2), oc.p_num,  oc.p_num,  ");
+		sql.append("p.p_name, p.p_price ORDER BY p.p_price*SUM(oc.ch_qty) DESC  ");
+		
 		RankVO rvo = null;
 		
 		Connection con = null;
@@ -543,8 +547,11 @@ public class CdOrderDAO {
 			while(rs.next()) {
 				rvo = new RankVO();
 				rvo.setProductSort(rs.getString("productSort"));
+				rvo.setP_name(rs.getString("p_name"));
 				rvo.setCount(rs.getInt("count"));
-				rvo.setRank(rs.getInt("rank"));
+				rvo.setP_price(rs.getInt("p_price"));
+				rvo.setpriceResult(rs.getInt("priceResult"));
+//				rvo.setRank(rs.getInt("rank"));
 				list.add(rvo);
 			}
 			
