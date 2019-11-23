@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +13,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
+import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,15 +27,15 @@ import model.RankVO;
 
 public class ManageResultTabController implements Initializable {
 	@FXML
-	private BarChart mOrderBarChart;
+	private BarChart<String, Integer> mOrderBarChart;
 	@FXML
 	private PieChart mSalesPieChart;
 	@FXML
 	private TableView<RankVO> mComponentRank;
 	@FXML
-	private BarChart<String , Integer> mSalesBarChart;
+	private BarChart<String, Integer> mSalesBarChart;
 	@FXML
-	private LineChart ySalesLineChart;
+	private LineChart<String, Integer> ySalesLineChart;
 	
 	private CdOrderDAO codao = CdOrderDAO.getInstance();
 	private static ObservableList<RankVO> rankDataList = FXCollections.observableArrayList();
@@ -57,6 +61,9 @@ public class ManageResultTabController implements Initializable {
 		
 		
 		setMSalesPieChart();
+		setMOrderBarChart();
+		setMSalesBarChart();
+		setYSalesLineChart();
 		
 	}
 
@@ -76,9 +83,17 @@ public class ManageResultTabController implements Initializable {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void setMOrderBarChart() {
-		
-		
+		Map<String, Integer> resultMap = codao.getChartMonthOrder();
+		XYChart.Series<String, Integer> series = new XYChart.Series<>();
+		for(Map.Entry<String,Integer> entry : resultMap.entrySet()) {
+			String tmpString = entry.getKey();
+			int tmpValue = entry.getValue();
+			XYChart.Data<String, Integer> d = new XYChart.Data<String, Integer>(tmpString,tmpValue);
+			series.getData().add(d);
+		}
+		mOrderBarChart.getData().addAll(series);
 		
 	}
 	
@@ -101,13 +116,29 @@ public class ManageResultTabController implements Initializable {
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	public void setMSalesBarChart() {
+		Map<String, Integer> resultMap = codao.getChartMonthPrice();
+		XYChart.Series<String, Integer> series = new XYChart.Series<String, Integer>();
+		for(Map.Entry<String,Integer> result : resultMap.entrySet()) {
+			series.getData().add(new Data<String, Integer>(result.getKey(),result.getValue()));
+			
+		}
+		mSalesBarChart.getData().add(series);
+		
+		
 		
 		
 	}
 	
 	public void setYSalesLineChart() {
+		Map<String, Integer> resultMap = codao.getChartYearPrice();
+		XYChart.Series<String,Integer> series = new XYChart.Series<String, Integer>();
 		
+		for(Map.Entry<String, Integer> result : resultMap.entrySet()){
+			series.getData().add(new Data<String, Integer>(result.getKey(),result.getValue()));
+		}
+		ySalesLineChart.getData().add(series);
 		
 	}
 	
