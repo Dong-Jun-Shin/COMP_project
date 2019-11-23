@@ -225,9 +225,6 @@ public class SalesTradeTabController implements Initializable {
 
 		// 각 제품에 해당하는 pvo 배열 생성
 		pvoList = new ProductVO[txtNameList.length];
-//		for (int i = 0; i < pvoList.length; i++) {
-//			pvoList[i] = new ProductVO();
-//		}
 
 		// 가격의 기본 값으로 0을 설정
 		for (int i = 0; i < txtPriceList.length; i++) {
@@ -283,7 +280,7 @@ public class SalesTradeTabController implements Initializable {
 		int keyIdx = btnKey.get(event.getSource());
 
 		// 위치값에 해당하는 각 리스트의 값 초기화
-		((Spinner<Integer>) spinQtyList[keyIdx]).setValueFactory(new IntegerSpinnerValueFactory(0, 999));
+		((Spinner<Integer>)spinQtyList[keyIdx]).getValueFactory().setValue(0);
 		txtNameList[keyIdx].clear();
 		txtPriceList[keyIdx].setText("0");
 		pvoList[keyIdx] = null;
@@ -437,15 +434,15 @@ public class SalesTradeTabController implements Initializable {
 			// 스핀에 입력되어 있는 값을 가져온다.
 			int spinVal = ((Spinner<Integer>) spinQtyList[i]).getValue();
 
-			// 해당 위치의 제품이 비어있으면 경고창 출력, 아니면 가격 계산
-			if (spinVal == 1 && pvoList[keyIdx] == null) {
-				((Spinner<Integer>) spinQtyList[keyIdx]).setValueFactory(new IntegerSpinnerValueFactory(0, 999));
+			// 해당 위치의 제품이 비어있으면 selBool을 판단, 아니면 가격 계산
+			if (spinVal == 1 && pvoList[keyIdx] == null && pvoList[i] == null) {
+				((Spinner<Integer>)spinQtyList[keyIdx]).getValueFactory().setValue(0);
 				DataUtil.showAlert("제품 선택", "제품을 선택해주세요.");
 			} else if (spinVal > 0) {
 				txtPriceList[i].setText(pvoList[i].getP_price() + "");
 			}
 		}
-
+		
 		// 입력된 값 * 스핀값
 		for (int i = 0; i < txtPriceList.length; i++) {
 			txtPriceList[i].setText(
@@ -456,8 +453,11 @@ public class SalesTradeTabController implements Initializable {
 		setTotalPrice();
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setField() {
 		txtNameList[keyIdx].setText(pvoList[keyIdx].getP_name());
+		txtPriceList[keyIdx].setText(pvoList[keyIdx].getP_price()+"");
+		((Spinner<Integer>)spinQtyList[keyIdx]).getValueFactory().setValue(1);
 	}
 
 	public boolean sendBuy() {

@@ -70,8 +70,7 @@
 								<Insets bottom="10.0" />
 							</padding>
 						</Label>
-						<TableView fx:id="mComponentRank"
-							onMouseClicked="#mComponentRank" prefHeight="310.0"
+						<TableView fx:id="mComponentRank" prefHeight="310.0"
 							prefWidth="550.0">
 							<columns>
 								<TableColumn prefWidth="100.0" text="제품구분" />

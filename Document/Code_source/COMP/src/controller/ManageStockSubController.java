@@ -133,6 +133,7 @@ public class ManageStockSubController implements Initializable {
 		} else if (!DataUtil.validityCheck(txtTRNum.getText(), "거래처 번호")) {
 			return;
 		} else if (!DataUtil.validityCheck(txtPNum.getText(), "제품 번호")) {
+			DataUtil.showAlert("제품 입력", "재고 관리의 목록에서 원하시는 제품을 더블클릭 해주세요.");
 			return;
 		} else if (!DataUtil.validityCheck(txtWHQty.getText(), "입고 수량")) {
 			return;

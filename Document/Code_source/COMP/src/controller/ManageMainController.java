@@ -61,6 +61,13 @@ public class ManageMainController implements Initializable {
 				} catch (Exception e) {
 					System.out.println("changed() error = " + e.getMessage());
 				}
+			} else if (newValue == result) {
+				try {
+					manageResultTabController.reset();
+					;
+				} catch (Exception e) {
+					System.out.println("changed() error = " + e.getMessage());
+				}
 			} else if (newValue == customer) {
 				try {
 					manageCustomerTabController.customerTotalList();

@@ -128,7 +128,8 @@ public class ManageMyInfoTabController implements Initializable {
 				// 판매업체 정보 쓰기
 				DealerVO dvoVal = dvo;
 				oos.writeObject(dvoVal);
-				DataUtil.showInfoAlert("정보 변경 성공", "정보가 변경되었습니다.");
+				pwDPasswd.clear();
+				DataUtil.showInfoAlert("정보 변경 성공", "다음 프로그램 실행부터 변경된 정보가 적용됩니다.");
 			} catch (IOException io) {
 				io.printStackTrace();
 			}
