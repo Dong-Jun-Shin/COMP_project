@@ -403,9 +403,9 @@ public class SalesTradeTabController implements Initializable {
 		}
 	}
 
-	/*
-	 * setTotalPrice() : 총 금액 자동입력 메소드
-	 * 
+	/**
+	 *  setTotalPrice() : 총 금액 자동입력 메소드
+	 *  
 	 */
 	public void setTotalPrice() {
 		int resultPrice = 0;
@@ -419,41 +419,38 @@ public class SalesTradeTabController implements Initializable {
 
 	}
 
-	/*
-	 * setProductPriceAction(MouseEvent event) 제품별 가격 변동 메소드
+	/**
+	 * setProductPriceAction() : 제품별 가격 변동 메소드
 	 * 
+	 * @param event
 	 */
 	@SuppressWarnings("unchecked")
 	public void setProductPriceAction(MouseEvent event) {
-		// 눌린 버튼의 객체에 해당하는 위치 값을 가져온다.
-		int keyIdx = 0;
-
-		for (int i = 0; i < spinQtyList.length; i++) {
-			if (event.getSource() == spinQtyList[i]) {
-				keyIdx = i;
-				break;
-			}
-		}
-
 		// pvo를 받으면 각 텍스트에 단가 설정
 		for (int i = 0; i < pvoList.length; i++) {
 			// 스핀에 입력되어 있는 값을 가져온다.
 			int spinVal = ((Spinner<Integer>) spinQtyList[i]).getValue();
 
 			// 해당 위치의 제품이 비어있으면 selBool을 판단, 아니면 가격 계산
-			if (spinVal == 1 && pvoList[keyIdx] == null && pvoList[i] == null) {
-				((Spinner<Integer>) spinQtyList[keyIdx]).getValueFactory().setValue(0);
+			if (spinVal == 1 && pvoList[i] == null) {
+				((Spinner<Integer>) spinQtyList[i]).getValueFactory().setValue(0);
 				DataUtil.showAlert("제품 선택", "제품을 선택해주세요.");
 			}
 		}
 
-		// 입력된 값 * 스핀값
+		// 가격 텍스트 필드에 (입력된 값 * 스핀값) 설정
 		for (int i = 0; i < txtPriceList.length; i++) {
 			int spinVal = ((Spinner<Integer>) spinQtyList[i]).getValue();
-
+			String price = "0";
+			
+			//유효성 체크
 			if (spinVal > 1) {
-				txtPriceList[i].setText((pvoList[i].getP_price()) * spinVal + "");
+				price = pvoList[i].getP_price() * spinVal + "";
+			}else if(spinVal <= 1 && pvoList[i] != null) {
+				price = pvoList[i].getP_price() * spinVal + "";
 			}
+			
+			txtPriceList[i].setText(price);
 		}
 
 		setTotalPrice();
