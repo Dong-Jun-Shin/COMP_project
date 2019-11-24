@@ -88,7 +88,7 @@ public class SalesWatchSubController implements Initializable {
 			sttController.setField();
 			success = true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("btnSelProduct() error = " + e.getMessage());
 		}
 
 		return success;
@@ -96,6 +96,7 @@ public class SalesWatchSubController implements Initializable {
 
 	/**
 	 * setPInfo() : 제품의 정보를 각 필드에 설정한다.
+	 * 
 	 */
 	public void setPInfo() {
 		txtPNum.setText(pvo.getP_num());

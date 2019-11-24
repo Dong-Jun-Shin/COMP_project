@@ -94,7 +94,7 @@
 						<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
 							<children>
 								<Label alignment="CENTER" prefWidth="60.0" text="이미지" />
-								<TextField fx:id="txtPImg" prefWidth="160.0">
+								<TextField fx:id="txtPImg" editable="false" prefWidth="160.0">
 									<HBox.margin>
 										<Insets />
 									</HBox.margin>

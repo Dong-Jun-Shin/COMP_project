@@ -17,7 +17,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import model.DataUtil;
 import model.TraderDAO;
 import model.TraderVO;
@@ -60,28 +59,18 @@ public class ManageTraderTabController implements Initializable {
 
 	private TraderDAO trdao = TraderDAO.getInstance();
 
-	@SuppressWarnings("unused")
-	private Stage primaryStage;
-
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		clear();
-		setInsertBtn(true);
-
-		//// 테이블뷰 컬럼이름 설정
 		List<String> title = DataUtil.fieldName(new TraderVO());
 
-		// 설정을 받을 Table의 열
 		for (int i = 0; i < title.size(); i++) {
 			TableColumn<TraderVO, ?> columnName = traderTableView.getColumns().get(i);
 			// setCellValueFactory(obj) : objdp 있는 열로 테이블의 열을 설정해준다.
 			// new PropertyValueFactory<>() : 값을 가질 수 있는 열로 만든다.
 			columnName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
 		}
+
+		setInsertBtn(true);
 
 		// 테이블에 항목 설정
 		traderTableView.setItems(traderDataList);
@@ -141,7 +130,7 @@ public class ManageTraderTabController implements Initializable {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("btnTRInsert() error = " + e.getMessage());
 		}
 	}
 
@@ -192,7 +181,7 @@ public class ManageTraderTabController implements Initializable {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("btnTRUpdate() error = " + e.getMessage());
 		}
 	}
 
@@ -208,8 +197,7 @@ public class ManageTraderTabController implements Initializable {
 			tvo.setTr_num(selectedTraderIndex);
 			success = trdao.traderDelete(tvo);
 		} catch (Exception e) {
-			System.out.println("btnTRDelete() = [ " + e + " ]");
-			e.printStackTrace();
+			System.out.println("btnTRDelete() error = " + e.getMessage());
 		}
 
 		if (success == true) {
@@ -245,28 +233,27 @@ public class ManageTraderTabController implements Initializable {
 	 * @param event
 	 */
 	public void btnTRSearch(ActionEvent event) {
-		traderDataList.removeAll(traderDataList);
 		TraderVO tvo = null;
-		ArrayList<TraderVO> list;
+		ArrayList<TraderVO> list = null;
 
 		try {
-			switch (cbxTRSearchKey.getValue().toString()) {
-			case "거래처번호":
-				list = trdao.getTraderSelected("tr_num", txtTRSearchValue.getText());
-				break;
-
-			case "거래처명":
-				list = trdao.getTraderSelected("tr_name", txtTRSearchValue.getText());
-				break;
-
-			case "계좌주":
-				list = trdao.getTraderSelected("tr_bowner", txtTRSearchValue.getText());
-				break;
-
-			default:
+			if (txtTRSearchValue != null && txtTRSearchValue.getText().length() != 0) {
+				switch (cbxTRSearchKey.getValue()) {
+				case "거래처번호":
+					list = trdao.getTraderSelected("tr_num", txtTRSearchValue.getText());
+					break;
+				case "거래처명":
+					list = trdao.getTraderSelected("tr_name", txtTRSearchValue.getText());
+					break;
+				case "계좌주":
+					list = trdao.getTraderSelected("tr_bowner", txtTRSearchValue.getText());
+					break;
+				}
+			} else {
+				cbxTRSearchKey.getSelectionModel().clearSelection();
 				list = trdao.getTraderTotalList();
-				break;
 			}
+			traderDataList.removeAll(traderDataList);
 
 			for (int index = 0; index < list.size(); index++) {
 				// 결과 리스트에서 한 행을 가져다가 tvo에 대입
@@ -274,8 +261,10 @@ public class ManageTraderTabController implements Initializable {
 				// 한 행을 추가
 				traderDataList.add(tvo);
 			}
+		} catch (NullPointerException npe) {
+			DataUtil.showInfoAlert("검색 결과", "검색 구분을 선택해주세요.");
 		} catch (Exception e) {
-			System.out.println("traderTotalList() = [" + e.getMessage() + "]");
+			System.out.println("btnTRSearch() error = " + e.getMessage());
 		}
 	}
 
@@ -324,12 +313,13 @@ public class ManageTraderTabController implements Initializable {
 				traderDataList.add(tvo);
 			}
 		} catch (Exception e) {
-			System.out.println("traderTotalList() = [" + e.getMessage() + "]");
+			System.out.println("traderTotalList() error = " + e.getMessage());
 		}
 	}
 
 	/**
 	 * setCbxList() : 콤보박스에 목록을 설정
+	 * 
 	 */
 	public void setCbxList() {
 		cbxTRSearchKey.setItems(FXCollections.observableArrayList("거래처번호", "거래처명", "계좌주"));
@@ -364,6 +354,7 @@ public class ManageTraderTabController implements Initializable {
 
 	/**
 	 * clear() : 각 필드값 지우기
+	 * 
 	 */
 	private void clear() {
 		txtTRNum.clear();
@@ -385,7 +376,7 @@ public class ManageTraderTabController implements Initializable {
 		btnTRUpdate.setDisable(bool);
 		btnTRDelete.setDisable(bool);
 	}
-	
+
 	/**
 	 * reset() : 각 필드를 초기화, 버튼 제어 초기화, 테이블 뷰에 전체 리스트를 출력
 	 * 

@@ -1,7 +1,6 @@
 package model;
 
 public class TraderVO {
-
 	private String tr_num;
 	private String tr_name;
 	private String tr_phone;

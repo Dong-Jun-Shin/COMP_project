@@ -64,12 +64,10 @@ public class ProductDAO {
 			if (rs.next()) {
 				serialNumber = rs.getString("productCount");
 			}
-		} catch (SQLException e) {
-			System.out.println("쿼리 getProductCount() error = [" + e + " ]");
-			e.printStackTrace();
+		} catch (SQLException sqle) {
+			System.out.println("getProductCount() error = " + sqle.getMessage());
 		} catch (Exception e) {
-			System.out.println("error = [" + e + " ]");
-			e.printStackTrace();
+			System.out.println("getProductCount() error = " + e.getMessage());
 		} finally {
 			try {
 				// 생성의 역순으로 닫기
@@ -80,30 +78,29 @@ public class ProductDAO {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
-				System.out.println("DB 연동 해제 error = [" + e + " ]");
+				System.out.println("getProductCount() error = " + e.getMessage());
 			}
 		}
 
 		return serialNumber;
 	}
-	
+
 	/**
 	 * getProductTotalList() : 전체 제품 리스트 조회 메소드
 	 * 
-	 * @return ArrayList<ProductVO>
+	 * @return ArrayList<ProductVO> DB의 조회한 데이터를 리스트로 반환
 	 */
 	public ArrayList<ProductVO> getProductTotalList() {
-
-		StringBuffer sql = new StringBuffer();
 		ArrayList<ProductVO> list = new ArrayList<ProductVO>();
+		ProductVO pvo = null;
+		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT p_name ,p_price ,p_size ,p_grt ,p_date ,p_img ,p_qty ,p_num ,p_reg ");
 		sql.append("FROM product ");
 		sql.append("ORDER BY p_num");
 
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ProductVO pvo = null;
-		Connection con = null;
 
 		try {
 			con = getConnection();
@@ -127,25 +124,22 @@ public class ProductDAO {
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[  public ArrayList<ProductVO> getProductTotalList()  ]    [ SQLException ]");
-			sqle.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("[  public ArrayList<ProductVO> getProductTotalList()  ]    [ Unknown Exception ]");
-			e.printStackTrace();
 		} finally {
 			try {
-				if (con != null) {
-					con.close();
+				if (rs != null) {
+					rs.close();
 				}
 				if (pstmt != null) {
 					pstmt.close();
 				}
-				if (rs != null) {
-					rs.close();
+				if (con != null) {
+					con.close();
 				}
 			} catch (Exception e) {
 				System.out.println(
 						"[  public ArrayList<ProductVO> getProductTotalList()  ]    [ Connect Closed Exception ]");
-				e.printStackTrace();
 			}
 		}
 
@@ -153,39 +147,29 @@ public class ProductDAO {
 	}
 
 	/**
-	 * getProductSelected(String p_num) : 선택한 제품 조회 메소드
+	 * getProductSelected() : 선택한 제품 조회 메소드
 	 * 
-	 * @param p_num (String) : 조회할 제품 번호
-	 * @return ArrayList<ProductVO>
-	 * @throws SQLException, Exception
+	 * @param category 조회할 검색 구분
+	 * @param searchWord 조회할 키워드
+	 * @return ArrayList<ProductVO> DB의 조회한 데이터를 리스트로 반환
 	 */
 	public ArrayList<ProductVO> getProductSelected(String category, String searchWord) {
-		StringBuffer sql = new StringBuffer();
 		ArrayList<ProductVO> list = new ArrayList<ProductVO>();
+		ProductVO pvo = null;
+		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT p_name, p_price, p_size, p_grt, p_date, p_img, p_qty, p_num, p_reg ");
-		sql.append("FROM product ");	
-		
-		switch (category) {
-		case "제품번호":
-			sql.append("WHERE p_num LIKE ?");
-			break;
-		case "제품명":
-			sql.append("WHERE p_name LIKE ?");
-			break;
-		}
-		
+		sql.append("FROM product ");
+		sql.append("WHERE " + category + " LIKE ? ");
 		sql.append("ORDER BY p_num");
-		
+
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		ProductVO pvo = null;
-		Connection con = null;
 
 		try {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, "%" + searchWord + "%");
-			
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -204,27 +188,24 @@ public class ProductDAO {
 			}
 		} catch (SQLException sqle) {
 			System.out
-					.println("[  public ArrayList<ProductVO> getProductSelected(String p_num)  ]    [ SQLException ]");
-			sqle.printStackTrace();
+					.println("[  public ArrayList<ProductVO> getProductSelected()  ]    [ SQLException ]");
 		} catch (Exception e) {
 			System.out.println(
-					"[  public ArrayList<ProductVO> getProductSelected(String p_num)  ]    [ Unknown Exception ]");
-			e.printStackTrace();
+					"[  public ArrayList<ProductVO> getProductSelected()  ]    [ Unknown Exception ]");
 		} finally {
 			try {
-				if (con != null) {
-					con.close();
+				if (rs != null) {
+					rs.close();
 				}
 				if (pstmt != null) {
 					pstmt.close();
 				}
-				if (rs != null) {
-					rs.close();
+				if (con != null) {
+					con.close();
 				}
 			} catch (Exception e) {
 				System.out.println(
-						"[  public ArrayList<ProductVO> getProductSelected(String p_num)  ]    [ Connect Closed Exception ]");
-				e.printStackTrace();
+						"[  public ArrayList<ProductVO> getProductSelected()  ]    [ Connect Closed Exception ]");
 			}
 		}
 
@@ -232,21 +213,21 @@ public class ProductDAO {
 	}
 
 	/**
-	 * productInsert(ProductVO pvo) : 제품 등록 메소드
+	 * productInsert() : 제품 등록 메소드
 	 * 
-	 * @param pvo (ProductVO) : 등록할 제품
-	 * @return boolean;
+	 * @param pvo 등록할 제품
+	 * @return result 등록 결과
 	 */
 	public boolean productInsert(ProductVO pvo) {
+		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO product ");
 		// 제품번호, 제품명, 값, 크기, 보증기간, 출시일, 이미지명, 제품갯수
 		sql.append("(p_num, p_name ,p_price ,p_size ,p_grt ,p_date ,p_img ,p_qty) ");
 		sql.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?) ");
 
-		boolean result = false;
-		PreparedStatement pstmt = null;
 		Connection con = null;
+		PreparedStatement pstmt = null;
 
 		try {
 			con = getConnection();
@@ -266,12 +247,8 @@ public class ProductDAO {
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[   productInsert(ProductVO pvo)  ] [  SQLException  ]");
-			sqle.printStackTrace();
-			result = false;
 		} catch (Exception e) {
 			System.out.println("[   productInsert(ProductVO pvo)  ] [  Exception  ]");
-			e.printStackTrace();
-			result = false;
 		} finally {
 			try {
 				if (pstmt != null) {
@@ -282,7 +259,6 @@ public class ProductDAO {
 				}
 			} catch (Exception e) {
 				System.out.println("[   productInsert(ProductVO pvo)  ] [  closed Error  ]");
-				e.printStackTrace();
 			}
 		}
 
@@ -290,10 +266,10 @@ public class ProductDAO {
 	}
 
 	/**
-	 * productUpdate(ProductVO pvo) : 제품 수정 메소드
+	 * productUpdate() : 제품 수정 메소드
 	 * 
-	 * @param pvo (ProductVO) : 수정할 제품
-	 * @return boolean
+	 * @param pvo 수정할 제품
+	 * @return result 수정 결과
 	 */
 	public boolean productUpdate(ProductVO pvo) {
 		boolean result = false;
@@ -307,9 +283,9 @@ public class ProductDAO {
 		sql.append("p_img = ?, "); // 이미지명
 		sql.append("p_qty = ? "); // 개수
 		sql.append("WHERE p_num = ? "); // 제품번호 구분
-		
-		PreparedStatement pstmt = null;
+
 		Connection con = null;
+		PreparedStatement pstmt = null;
 
 		try {
 			con = getConnection();
@@ -322,19 +298,15 @@ public class ProductDAO {
 			pstmt.setString(6, pvo.getP_img());
 			pstmt.setInt(7, pvo.getP_qty());
 			pstmt.setString(8, pvo.getP_num());
-			
+
 			int i = pstmt.executeUpdate();
 			if (i == 1) {
 				result = true;
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[  productUpdate(ProductVO pvo)  ] [  SQLException  ]");
-			sqle.printStackTrace();
-			result = false;
 		} catch (Exception e) {
 			System.out.println("[  productUpdate(ProductVO pvo)  ] [  Exception  ]");
-			e.printStackTrace();
-			result = false;
 		} finally {
 			try {
 				if (pstmt != null) {
@@ -345,7 +317,6 @@ public class ProductDAO {
 				}
 			} catch (Exception e) {
 				System.out.println("[  productUpdate(ProductVO pvo)  ] [  closed Error  ]");
-				e.printStackTrace();
 			}
 		}
 
@@ -353,36 +324,32 @@ public class ProductDAO {
 	}
 
 	/**
-	 * productDelete(ProductVO pvo) : 제품 삭제 메소드
+	 * productDelete() : 제품 삭제 메소드
 	 * 
-	 * @param pvo (ProductVO) : 삭제할 제품
-	 * @return boolean
+	 * @param pvo 삭제할 제품
+	 * @return result 삭제 결과
 	 */
 	public boolean productDelete(ProductVO pvo) {
+		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("DELETE FROM product WHERE p_num = ?");
 
-		boolean result = false;
-		PreparedStatement pstmt = null;
 		Connection con = null;
+		PreparedStatement pstmt = null;
 
 		try {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, pvo.getP_num());
-			
+
 			int i = pstmt.executeUpdate();
 			if (i == 1) {
 				result = true;
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[  productDelete(ProductVO pvo)  ] [  SQLException  ]");
-			sqle.printStackTrace();
-			result = false;
 		} catch (Exception e) {
 			System.out.println("[  productDelete(ProductVO pvo)  ] [  Exception  ]");
-			e.printStackTrace();
-			result = false;
 		} finally {
 			try {
 				if (pstmt != null) {
@@ -393,7 +360,6 @@ public class ProductDAO {
 				}
 			} catch (Exception e) {
 				System.out.println("[  productDelete(ProductVO pvo)  ] [  closed Error  ]");
-				e.printStackTrace();
 			}
 		}
 

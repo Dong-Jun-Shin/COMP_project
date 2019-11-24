@@ -1,9 +1,7 @@
 package controller;
 
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import model.DataUtil;
 import model.DealerVO;
 
@@ -44,30 +41,9 @@ public class ManageMyInfoTabController implements Initializable {
 
 	private DealerVO dvo = DealerVO.getInstance();
 
-	@SuppressWarnings("unused")
-	private Stage primaryStage;
-
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// 판매업체 정보 읽기
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/properties_file/DealerVO.dat"))) {
-			while (true) {
-				dvo = (DealerVO) ois.readObject();
-				// 자료가 들어갔으면 멈춘다.
-				if (dvo != null) {
-					break;
-				} else {
-					throw new Exception();
-				}
-			}
-		} catch (Exception e) {
-			DataUtil.showAlert("정보 읽기 실패", "정보를 읽는 중 문제가 생겼습니다.");
-			e.printStackTrace();
-		}
+		dvo = DealerVO.getInstance();
 
 		// 각 필드에 판매업체 정보를 설정
 		txtDName.setText(dvo.getDName());
@@ -88,8 +64,7 @@ public class ManageMyInfoTabController implements Initializable {
 	 */
 	public void btnDUpdate(ActionEvent event) {
 		// 각 필드의 유효성 체크
-		if (!DataUtil.validityCheck(txtDName.getText(), "업체명")
-				|| !DataUtil.valLimitCheck(txtDName.getText(), 30)) {
+		if (!DataUtil.validityCheck(txtDName.getText(), "업체명") || !DataUtil.valLimitCheck(txtDName.getText(), 30)) {
 			return;
 		} else if (!DataUtil.validityCheck(txtDEId.getText(), "Email ID")
 				|| !DataUtil.valLimitCheck(txtDEId.getText(), 30)) {
@@ -126,12 +101,11 @@ public class ManageMyInfoTabController implements Initializable {
 			try (ObjectOutputStream oos = new ObjectOutputStream(
 					new FileOutputStream("src/properties_file/DealerVO.dat"))) {
 				// 판매업체 정보 쓰기
-				DealerVO dvoVal = dvo;
-				oos.writeObject(dvoVal);
+				oos.writeObject(dvo);
 				pwDPasswd.clear();
 				DataUtil.showInfoAlert("정보 변경 성공", "다음 프로그램 실행부터 변경된 정보가 적용됩니다.");
 			} catch (IOException io) {
-				io.printStackTrace();
+				System.out.println("btnDUpdate() error = " + io.getMessage());
 			}
 		} else {
 			DataUtil.showAlert("정보 변경 실패", "비밀번호가 일치하지 않습니다.");

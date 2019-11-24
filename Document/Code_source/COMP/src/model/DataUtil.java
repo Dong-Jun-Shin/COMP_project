@@ -8,7 +8,6 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 import org.apache.log4j.Logger;
 
-import controller.SalesTradeTabController;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -17,11 +16,11 @@ public class DataUtil extends NumberFormatException {
 	private static Logger logger = Logger.getLogger(DataUtil.class);
 
 	/**
-	 * fieldName(Object obj) : 파일 유효성 검사 메소드
+	 * fieldName() : 파일 유효성 검사 메소드
 	 * 
-	 * @param obj (Object) : 검사 대상
-	 * @return List<String>
-	 **/
+	 * @param obj 검사 대상
+	 * @return List<String> 파일 이름을 담은 리스트 반환
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static List<String> fieldName(Object obj) {
 		Field[] fields = obj.getClass().getDeclaredFields();
@@ -31,7 +30,6 @@ public class DataUtil extends NumberFormatException {
 				result.add(fields[i].getName());
 			} catch (Exception e) {
 				System.out.println("[   fieldName(Object obj)  ]");
-				e.printStackTrace();
 				return null;
 			}
 		}
@@ -39,11 +37,11 @@ public class DataUtil extends NumberFormatException {
 	}
 
 	/**
-	 * validityCheck(String value, String data) : 값 입력 체크 메소드
+	 * validityCheck() : 값 입력 체크 메소드
 	 * 
-	 * @param value (String) : 입력 대상
-	 * @param data  (String) : 출력문
-	 * @return boolean
+	 * @param value 입력 대상
+	 * @param data 출력문
+	 * @return result 검사 결과
 	 */
 	public static boolean validityCheck(String value, String data) {
 		boolean result = true;
@@ -79,10 +77,9 @@ public class DataUtil extends NumberFormatException {
 	}
 
 	/**
-	 * valLimitCheck() : 각 자리의 데이터 범위 유효여부를 체크 (name, id, pw, phone, address, email,
-	 * bNum)
+	 * valLimitCheck() : 각 자리의 데이터 범위 유효여부를 체크 (name, id, pw, phone, address, email, bNum)
 	 * 
-	 * @param value     확인할 데이터 문자열
+	 * @param value 확인할 데이터 문자열
 	 * @param fieldName 데이터 범위의 기준 (이름, id, 전화번호...)
 	 * @return result 이상 없으면 true
 	 */
@@ -109,7 +106,6 @@ public class DataUtil extends NumberFormatException {
 	 * 
 	 * @param date 체크할 날짜를 받는다.
 	 * @return sb "YYYY-MM-DD"로 변환된 StringBuffer를 반환
-	 * @throws NumberFormatException 받은 문자열이 공백을 포함하거나, 형식에 맞지 않으면 발생
 	 */
 	public static StringBuffer dateCheck(String date) {
 		StringBuffer sb = new StringBuffer();
@@ -146,6 +142,12 @@ public class DataUtil extends NumberFormatException {
 		return sb;
 	}
 
+	/**
+	 * getKey() : 필요한 문자열 리스트를 반환
+	 * 
+	 * @param sel 필요한 리스트의 이름
+	 * @return key 선택한 문자열 배열 반환
+	 */
 	public static String[] getKey(String sel) {
 		String key[];
 		switch (sel) {
@@ -167,6 +169,11 @@ public class DataUtil extends NumberFormatException {
 		return key;
 	}
 
+	/**
+	 * getIdxVal() : 인덱스에 해당하는 숫자 리스트를 반환
+	 *
+	 * @return idxVal 숫자 리스트(0 ~ 13)
+	 */
 	public static Integer[] getIdxVal() {
 		Integer idxVal[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
 
@@ -199,6 +206,13 @@ public class DataUtil extends NumberFormatException {
 		alert.showAndWait();
 	}
 	
+	/**
+	 * send() : 이메일을 전송
+	 * 
+	 * @param evo 메일 전송에 필요한 데이터
+	 * @return result 메일 전송 결과
+	 */
+	@SuppressWarnings("deprecation")
 	public static String send(EmailVO evo) {
 		long beginTime = System.currentTimeMillis();
 		SimpleEmail email = new SimpleEmail();

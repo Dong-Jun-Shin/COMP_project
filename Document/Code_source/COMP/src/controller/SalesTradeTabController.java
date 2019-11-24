@@ -26,7 +26,6 @@ import model.EmailVO;
 import model.OrderChartDAO;
 import model.OrderChartVO;
 import model.ProductVO;
-import javafx.stage.Stage;
 
 public class SalesTradeTabController implements Initializable {
 	@FXML
@@ -179,18 +178,11 @@ public class SalesTradeTabController implements Initializable {
 	private CdOrderDAO codao = CdOrderDAO.getInstance();
 	private OrderChartDAO ocdao = OrderChartDAO.getInstance();
 
-	@SuppressWarnings("unused")
-	private Stage primaryStage;
-
 	public void setPvo(ProductVO pvo) {
 		String key = pvo.getP_num().substring(0, pvo.getP_num().indexOf("_"));
 		keyIdx = dicKey.get(key);
 
 		this.pvoList[keyIdx] = pvo;
-	}
-
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
 	}
 
 	@Override
@@ -202,6 +194,7 @@ public class SalesTradeTabController implements Initializable {
 
 	/**
 	 * setList() : Map을 생성하고 각 txtName의 필드들과 txtPrice의 필드들, spinQty의 필드들을 배열로 만든다.
+	 * 
 	 */
 	private void setList() {
 		// Map<key, value> 설정
@@ -230,7 +223,6 @@ public class SalesTradeTabController implements Initializable {
 		for (int i = 0; i < txtPriceList.length; i++) {
 			txtPriceList[i].setText(0 + "");
 		}
-
 	}
 
 	/**
@@ -242,7 +234,6 @@ public class SalesTradeTabController implements Initializable {
 		if (!DataUtil.validityCheck(txtCId.getText(), "ID")) {
 			return;
 		} else if (cdao.customerLoginOverlap(txtCId.getText())) {
-			//
 			CustomerVO cvo = cdao.getCustomerSelected("c_id", txtCId.getText()).get(0);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
 			String cdnumYear = sdf.format(new Date());
@@ -265,6 +256,11 @@ public class SalesTradeTabController implements Initializable {
 		}
 	}
 
+	/**
+	 * btnOrderClr() : 주문하기 탭의 각 필드와 변수를 초기화 해준다.
+	 * 
+	 * @param event
+	 */
 	public void btnOrderClr(ActionEvent event) {
 		covo = new CdOrderVO();
 		reset();
@@ -280,7 +276,7 @@ public class SalesTradeTabController implements Initializable {
 		int keyIdx = btnKey.get(event.getSource());
 
 		// 위치값에 해당하는 각 리스트의 값 초기화
-		((Spinner<Integer>)spinQtyList[keyIdx]).getValueFactory().setValue(0);
+		((Spinner<Integer>) spinQtyList[keyIdx]).getValueFactory().setValue(0);
 		txtNameList[keyIdx].clear();
 		txtPriceList[keyIdx].setText("0");
 		pvoList[keyIdx] = null;
@@ -291,12 +287,15 @@ public class SalesTradeTabController implements Initializable {
 
 	/**
 	 * btnOrderInsert(ActionEvent event) : 주문 입력 이벤트
+	 * 
+	 * @param event
 	 */
 	@SuppressWarnings("unchecked")
 	public void btnOrderInsert(ActionEvent event) {
 		boolean success = false;
 		int[] chQtyArr = new int[pvoList.length];
-
+		
+		//선택된 제품들의 수량을 배열로 생성
 		for (int i = 0, j = 0; i < pvoList.length; i++) {
 			chQtyArr[i] = ((Spinner<Integer>) spinQtyList[i]).getValue();
 			if (chQtyArr[i] == 0 && ++j == 14) {
@@ -308,9 +307,9 @@ public class SalesTradeTabController implements Initializable {
 		// 주문 테이블에 주문행 생성
 		success = codao.cd_orderInsert(covo);
 
-		// 주문 내역 테이블에 각 제품의 주문 행 생성
 		if (success == true) {
 			OrderChartVO ocvo;
+			// 주문 내역 테이블에 각 제품의 주문 행 생성
 			for (int i = 0; i < pvoList.length; i++) {
 				if (pvoList[i] != null) {
 					if (chQtyArr[i] != 0) {
@@ -322,23 +321,26 @@ public class SalesTradeTabController implements Initializable {
 					}
 				}
 			}
-		}
 
-		if (success == true) {
+			//주문 안내 메일 전송
 			boolean sendSuccess = sendBuy();
-			if(sendSuccess) {
-				DataUtil.showInfoAlert("주문신청 결과", "[" + txtCName.getText() + "님]의 주문이 등록되었습니다.");
+			
+			// 이메일 전송 여부
+			String alertSend = "안내 이메일 전송을 실패했습니다.";
+			if (sendSuccess) {
+				alertSend = "안내 이메일 전송을 성공하였습니다.";
 			}
-		} else {
+			
+			DataUtil.showInfoAlert("주문신청 결과", "[" + txtCName.getText() + "님]의 주문이 등록되었습니다.\n" + alertSend);
+			reset();
+		}else {
 			DataUtil.showInfoAlert("주문신청 결과", "주문신청에 문제가 있어 완료하지 못하였습니다.");
 		}
-
-		reset();
-
 	}
 
 	/**
 	 * editable() : 필드 입력 불가 지정 메소드
+	 * 
 	 */
 	@SuppressWarnings("unchecked")
 	public void editable() {
@@ -364,6 +366,7 @@ public class SalesTradeTabController implements Initializable {
 
 	/**
 	 * reset() : 전체 데이터 리셋 메소드
+	 * 
 	 */
 	public void reset() {
 		for (int i = 0; i < txtNameList.length; i++) {
@@ -389,6 +392,7 @@ public class SalesTradeTabController implements Initializable {
 
 	/**
 	 * setSpineerDefaultValue() : 스피너 값 설정 메소드
+	 * 
 	 */
 	@SuppressWarnings("unchecked")
 	public void setSpineerDefaultValue() {
@@ -401,6 +405,7 @@ public class SalesTradeTabController implements Initializable {
 
 	/*
 	 * setTotalPrice() : 총 금액 자동입력 메소드
+	 * 
 	 */
 	public void setTotalPrice() {
 		int resultPrice = 0;
@@ -416,6 +421,7 @@ public class SalesTradeTabController implements Initializable {
 
 	/*
 	 * setProductPriceAction(MouseEvent event) 제품별 가격 변동 메소드
+	 * 
 	 */
 	@SuppressWarnings("unchecked")
 	public void setProductPriceAction(MouseEvent event) {
@@ -436,36 +442,47 @@ public class SalesTradeTabController implements Initializable {
 
 			// 해당 위치의 제품이 비어있으면 selBool을 판단, 아니면 가격 계산
 			if (spinVal == 1 && pvoList[keyIdx] == null && pvoList[i] == null) {
-				((Spinner<Integer>)spinQtyList[keyIdx]).getValueFactory().setValue(0);
+				((Spinner<Integer>) spinQtyList[keyIdx]).getValueFactory().setValue(0);
 				DataUtil.showAlert("제품 선택", "제품을 선택해주세요.");
-			} else if (spinVal > 0) {
-				txtPriceList[i].setText(pvoList[i].getP_price() + "");
 			}
 		}
-		
+
 		// 입력된 값 * 스핀값
 		for (int i = 0; i < txtPriceList.length; i++) {
-			txtPriceList[i].setText(
-					(Integer.parseInt(txtPriceList[i].getText())) * (((Spinner<Integer>) spinQtyList[i]).getValue())
-							+ "");
+			int spinVal = ((Spinner<Integer>) spinQtyList[i]).getValue();
+
+			if (spinVal > 1) {
+				txtPriceList[i].setText((pvoList[i].getP_price()) * spinVal + "");
+			}
 		}
 
 		setTotalPrice();
 	}
 
+	/**
+	 * setField() : 선택되어 있는 위치에 해당하는 필드와 스피너를 기본값으로 설정
+	 * 
+	 */
 	@SuppressWarnings("unchecked")
 	public void setField() {
 		txtNameList[keyIdx].setText(pvoList[keyIdx].getP_name());
-		txtPriceList[keyIdx].setText(pvoList[keyIdx].getP_price()+"");
-		((Spinner<Integer>)spinQtyList[keyIdx]).getValueFactory().setValue(1);
+		txtPriceList[keyIdx].setText(pvoList[keyIdx].getP_price() + "");
+		((Spinner<Integer>) spinQtyList[keyIdx]).getValueFactory().setValue(1);
+
 	}
 
+	/**
+	 * sendBuy() : 주문에 대한 안내 메일을 전송
+	 * 
+	 * @return success 메일 전송 여부
+	 */
 	public boolean sendBuy() {
 		boolean success = false;
-		
+
 		DealerVO dvo = DealerVO.getInstance();
-		try (ObjectInputStream ois = new ObjectInputStream(
-				new FileInputStream("src/properties_file/DealerVO.dat"))) {
+		dvo.reset();
+
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/properties_file/DealerVO.dat"))) {
 			dvo = (DealerVO) ois.readObject();
 			// 자료가 들어갔으면 멈춘다.
 			if (dvo != null) {
@@ -474,33 +491,31 @@ public class SalesTradeTabController implements Initializable {
 			}
 		} catch (Exception e) {
 			DataUtil.showAlert("정보 읽기 실패", "정보를 읽는 중 문제가 생겼습니다.");
-			e.printStackTrace();
+			System.out.println("sendBuy() error = " + e.getMessage());
 		}
 
 		/*
-		 * 제목 : '구매자명'님, 주문하신 내역입니다. 
-		 * 본문 :  고객 - 성함, 연락처, 주소
-		 * 		 제품 - 제품명, 개수, 금액
-		 * 		------------------- 총금액
-		 * 		 판매자 - 계좌주, 계좌번호, 계좌 번호
+		 * 제목 : '구매자명'님, 주문하신 내역입니다. 본문 : 고객 - 성함, 연락처, 주소 제품 - 제품명, 개수, 금액
+		 * ------------------- 총금액 판매자 - 계좌주, 계좌번호, 계좌 번호
 		 */
 		StringBuffer sbHead = new StringBuffer();
-		sbHead.append(txtCName + "님, 주문하신 내역입니다.");
+		sbHead.append(txtCName.toString() + "님, 주문하신 내역입니다.");
 
 		StringBuffer sbSubject = new StringBuffer();
 		sbSubject.append(dvo.getDName() + "에서 구매해주셔서 감사합니다.\n 다음은 주문해주신 내역입니다.\n");
-		sbSubject.append("고객 정보 - " + txtCName.getText() + ", " + txtCPhone.getText() + ", " + txtCAddress.getText() + "\n\n");
+		sbSubject.append(
+				"고객 정보 - " + txtCName.getText() + ", " + txtCPhone.getText() + ", " + txtCAddress.getText() + "\n\n");
 		sbSubject.append("--------------------- 총금액 : " + txtTotalPrice.getText() + " ---------------------\n\n");
-		sbSubject.append("입금 정보 - " + dvo.getDBName() + ", " + dvo.getDBNum()+ ", " + dvo.getDBOwner()+ "\n");
-		
-		EmailVO evo = new EmailVO(dvo.getDEId(), dvo.getDEPw(), txtCEmail.getText(), txtCName.getText(),
-				dvo.getDEId(), dvo.getDName(), sbHead.toString(), sbSubject.toString());
+		sbSubject.append("입금 정보 - " + dvo.getDBName() + ", " + dvo.getDBNum() + ", " + dvo.getDBOwner() + "\n");
+
+		EmailVO evo = new EmailVO(dvo.getDEId(), dvo.getDEPw(), txtCEmail.getText(), txtCName.getText(), dvo.getDEId(),
+				dvo.getDName(), sbHead.toString(), sbSubject.toString());
 
 		String str = DataUtil.send(evo);
-		if(str.equals("Success")) {
+		if (str.equals("Success")) {
 			success = true;
 		}
-		
+
 		return success;
 	}
 }

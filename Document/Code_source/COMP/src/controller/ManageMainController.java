@@ -46,14 +46,9 @@ public class ManageMainController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		manageStockTabController.setMstController(manageStockTabController);
 		manageStockTabController.setPrimaryStage(primaryStage);
-		manageResultTabController.setPrimaryStage(primaryStage);
-		manageCustomerTabController.setPrimaryStage(primaryStage);
-		manageOrderTabController.setPrimaryStage(primaryStage);
-		manageMyInfoTabController.setPrimaryStage(primaryStage);
-		manageTraderTabController.setPrimaryStage(primaryStage);
 
+		//각 탭으로 이동되었을 때 새로고침 기능 실행
 		manageMainPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue == stock) {
 				try {

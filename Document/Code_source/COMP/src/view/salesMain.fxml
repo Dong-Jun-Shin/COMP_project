@@ -29,7 +29,7 @@
 		</MenuBar>
 	</top>
 	<center>
-		<TabPane prefHeight="200.0" prefWidth="200.0"
+		<TabPane fx:id="salesMainPane" prefHeight="200.0" prefWidth="200.0"
 			tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
 			<tabs>
 				<Tab text="제품조회" fx:id="watch">

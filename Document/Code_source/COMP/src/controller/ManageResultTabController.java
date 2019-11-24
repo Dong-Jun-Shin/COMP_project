@@ -18,17 +18,15 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import model.CdOrderDAO;
 import model.DataUtil;
-import model.OrderChartDAO;
 import model.RankVO;
 
 public class ManageResultTabController implements Initializable {
 	@FXML
 	private BarChart<String, Integer> mOrderBarChart;
 	@FXML
-	private PieChart mSalesPieChart;
+	private PieChart ySalesPieChart;
 	@FXML
 	private TableView<RankVO> mComponentRank;
 	@FXML
@@ -36,16 +34,9 @@ public class ManageResultTabController implements Initializable {
 	@FXML
 	private LineChart<String, Integer> ySalesLineChart;
 
-	private OrderChartDAO ocdao = OrderChartDAO.getInstance();
-	private CdOrderDAO codao = CdOrderDAO.getInstance();
 	private static ObservableList<RankVO> rankDataList = FXCollections.observableArrayList();
-	
-	@SuppressWarnings("unused")
-	private Stage primaryStage;
 
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-	}
+	private CdOrderDAO codao = CdOrderDAO.getInstance();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -56,11 +47,16 @@ public class ManageResultTabController implements Initializable {
 			columnName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
 		}
 		mComponentRank.setItems(rankDataList);
-		
+
 		reset();
 	}
 
+	/**
+	 * rankTotalList() : '부품별 매출 1위' 테이블을 새로고침한다.
+	 * 
+	 */
 	public void rankTotalList() {
+		// TODO 월 단위로 수정하기
 		rankDataList.removeAll(rankDataList);
 		RankVO rvo = null;
 		ArrayList<RankVO> list;
@@ -76,24 +72,27 @@ public class ManageResultTabController implements Initializable {
 		try {
 			list = codao.getCountRank();
 
-			// Key 기준으로 순서 정렬 
+			// Key 기준으로 순서 정렬
 			list = judgeSort(list);
 
 			for (int i = 0; i < list.size(); i++) {
 				rvo = list.get(i);
-				
-				//제품 구분 코드를 제품 구분 명으로 변경
+
+				// 제품 구분 코드를 제품 구분 명으로 변경
 				rvo.setProductSort(p_sort.get(rvo.getProductSort()));
-				
+
 				rankDataList.add(rvo);
 			}
 		} catch (Exception e) {
-			System.out.println("[  setMComponentRank()  ]  [  Exception  ]");
-			e.printStackTrace();
+			System.out.println("rankTotalList() error = " + e.getMessage());
 		}
-	}	
-	
-	public void setMSalesPieChart() {
+	}
+
+	/**
+	 * setYSalesPieChart() : 주문 데이터로 '연 판매량 분포'를 설정한다.
+	 * 
+	 */
+	public void setYSalesPieChart() {
 		Map<String, Integer> resultMap = codao.getChartYearPrice();
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
@@ -101,14 +100,17 @@ public class ManageResultTabController implements Initializable {
 			pieChartData.add(new PieChart.Data(result.getKey(), result.getValue()));
 		}
 
-		mSalesPieChart.setData(pieChartData);
-
+		ySalesPieChart.setData(pieChartData);
 	}
 
+	/**
+	 * setMOrderBarChart() : 주문 데이터로 '월 판매량'를 설정한다.
+	 * 
+	 */
 	@SuppressWarnings("unchecked")
 	public void setMOrderBarChart() {
 		mOrderBarChart.getData().clear();
-		
+
 		Map<String, Integer> resultMap = codao.getChartMonthOrder();
 		XYChart.Series<String, Integer> series = new XYChart.Series<>();
 		for (Map.Entry<String, Integer> entry : resultMap.entrySet()) {
@@ -117,41 +119,53 @@ public class ManageResultTabController implements Initializable {
 			XYChart.Data<String, Integer> d = new XYChart.Data<String, Integer>(tmpString, tmpValue);
 			series.getData().add(d);
 		}
+		
 		mOrderBarChart.getData().addAll(series);
 		mOrderBarChart.setLegendVisible(false);
-		
-
 	}
 
+	/**
+	 * setMSalesBarChart() : 주문 데이터로 '월 매출액'을 설정한다.
+	 * 
+	 */
 	public void setMSalesBarChart() {
-		
 		mSalesBarChart.getData().clear();
-		
+
 		Map<String, Integer> resultMap = codao.getChartMonthPrice();
 		XYChart.Series<String, Integer> series = new XYChart.Series<String, Integer>();
 		for (Map.Entry<String, Integer> result : resultMap.entrySet()) {
 			series.getData().add(new Data<String, Integer>(result.getKey(), result.getValue()));
 
 		}
+		
 		mSalesBarChart.getData().add(series);
 		mSalesBarChart.setLegendVisible(false);
-		
 	}
 
+	/**
+	 * setYSalesLineChart() : 주문 데이터로 '연 매출액'을 설정한다.
+	 * 
+	 */
 	public void setYSalesLineChart() {
 		ySalesLineChart.getData().clear();
-		
+
 		Map<String, Integer> resultMap = codao.getChartYearPrice();
 		XYChart.Series<String, Integer> series = new XYChart.Series<String, Integer>();
 
 		for (Map.Entry<String, Integer> result : resultMap.entrySet()) {
 			series.getData().add(new Data<String, Integer>(result.getKey(), result.getValue()));
 		}
+		
 		ySalesLineChart.getData().add(series);
 		ySalesLineChart.setLegendVisible(false);
-
 	}
 
+	/**
+	 * judgeSort() : 가상으로 정해준 순서를 기준으로 List를 정렬해서 반환해준다.
+	 * 
+	 * @param before 정렬할 List
+	 * @return after 정렬된 List
+	 */
 	private ArrayList<RankVO> judgeSort(ArrayList<RankVO> before) {
 		ArrayList<RankVO> after = new ArrayList<RankVO>();
 		String[] judge = DataUtil.getKey("id");
@@ -166,10 +180,14 @@ public class ManageResultTabController implements Initializable {
 
 		return after;
 	}
-	
+
+	/**
+	 * reset() : 각 차트와 테이블을 정보를 새로고침한다.
+	 * 
+	 */
 	public void reset() {
 		rankTotalList();
-		setMSalesPieChart();
+		setYSalesPieChart();
 		setMOrderBarChart();
 		setMSalesBarChart();
 		setYSalesLineChart();

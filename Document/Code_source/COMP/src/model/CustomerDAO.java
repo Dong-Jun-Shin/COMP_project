@@ -62,12 +62,10 @@ public class CustomerDAO {
 			if (rs.next()) {
 				serialNumber = rs.getString("customerCount");
 			}
-		} catch (SQLException e) {
-			System.out.println("쿼리 getCustomerCount() error = [" + e + " ]");
-			e.printStackTrace();
+		} catch (SQLException sqle) {
+			System.out.println("getCustomerCount() error = " + sqle.getMessage());
 		} catch (Exception e) {
-			System.out.println("error = [" + e + " ]");
-			e.printStackTrace();
+			System.out.println("getCustomerCount() error = " + e.getMessage());
 		} finally {
 			try {
 				// 생성의 역순으로 닫기
@@ -78,7 +76,7 @@ public class CustomerDAO {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
-				System.out.println("DB 연동 해제 error = [" + e + " ]");
+				System.out.println("getCustomerCount() error = " + e.getMessage());
 			}
 		}
 
@@ -88,22 +86,20 @@ public class CustomerDAO {
 	/**
 	 * customerLoginOverlap() : ID 조회 메소드
 	 * 
-	 * @param c_id (String) : 입력한 ID
-	 * @return boolean
-	 * @throws SQLException, Exception
+	 * @param c_id 입력한 ID
+	 * @return result 조회 결과 반환
 	 */
 	public boolean customerLoginOverlap(String c_id) {
+		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT c_num ,c_name ,c_id ,c_pw ,c_phone ,c_add ,c_birth ,c_email ,c_reg ");
 		sql.append("FROM customer ");
 		sql.append("WHERE c_id = ?");
 		sql.append("ORDER BY c_num");
 
-		boolean result = false;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
 
 		try {
 			con = getConnection();
@@ -116,12 +112,8 @@ public class CustomerDAO {
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[  CustomerLogin(String c_id)  ]    [ SQLException ]");
-			sqle.printStackTrace();
-			return false;
 		} catch (Exception e) {
 			System.out.println("[  CustomerLogin(String c_id)  ]    [ Unknown Exception ]");
-			e.printStackTrace();
-			return false;
 		} finally {
 			try {
 				if (con != null) {
@@ -135,29 +127,28 @@ public class CustomerDAO {
 				}
 			} catch (Exception e) {
 				System.out.println("[  CustomerLogin(String c_id)  ]    [ Connect Closed Exception ]");
-				e.printStackTrace();
 			}
 		}
-		
+
 		return result;
 	}
 
 	/**
 	 * getCustomerTotalList() : 고객 정보 전체 조회 메소드
 	 * 
-	 * @return ArrayList<CustomerVO>
+	 * @return ArrayList<CustomerVO> DB의 조회한 데이터를 리스트로 반환
 	 */
 	public ArrayList<CustomerVO> getCustomerTotalList() {
+		ArrayList<CustomerVO> list = new ArrayList<CustomerVO>();
+		CustomerVO cvo = null;
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT c_num ,c_name ,c_id, c_pw, c_phone ,c_add ,c_birth ,c_email ,c_reg ");
 		sql.append("FROM customer ");
 		sql.append("ORDER BY c_num ");
-		
-		ArrayList<CustomerVO> list = new ArrayList<CustomerVO>();
+
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		Connection con = null;
-		CustomerVO cvo = null;
 
 		try {
 			con = getConnection();
@@ -166,7 +157,7 @@ public class CustomerDAO {
 
 			while (rs.next()) {
 				String s_birth = rs.getString("c_birth").substring(0, 10);
-				
+
 				cvo = new CustomerVO();
 				cvo.setC_num(rs.getString("c_num"));
 				cvo.setC_name(rs.getString("c_name"));
@@ -181,10 +172,8 @@ public class CustomerDAO {
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[  getCustomerTotalList()  ]    [ SQLException ]");
-			sqle.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("[  getCustomerTotalList()  ]    [ Unknown Exception ]");
-			e.printStackTrace();
 		} finally {
 			try {
 				if (con != null) {
@@ -198,7 +187,6 @@ public class CustomerDAO {
 				}
 			} catch (Exception e) {
 				System.out.println("[ getCustomerTotalList()  ]    [ Closed Error ]");
-				e.printStackTrace();
 			}
 		}
 
@@ -206,23 +194,23 @@ public class CustomerDAO {
 	}
 
 	/**
-	 * getCustomerSelected(String category, String searchWord) : 특정 고객 정보 조회 메소드
+	 * getCustomerSelected() : 특정 고객 정보 조회 메소드
 	 * 
-	 * @param category   (String) : 검색 구분
-	 * @param searchWord (String) : 검색 키워드
-	 * @return ArrayList<CustomerVO>
+	 * @param category 검색 구분
+	 * @param searchWord 검색 키워드
+	 * @return ArrayList<CustomerVO> DB의 조회한 데이터를 리스트로 반환
 	 */
 	public ArrayList<CustomerVO> getCustomerSelected(String category, String searchWord) {
+		ArrayList<CustomerVO> list = new ArrayList<CustomerVO>();
+		CustomerVO cvo = null;
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT c_num, c_name, c_id, c_pw, c_phone, c_add, c_birth, c_email, c_reg ");
 		sql.append("FROM customer WHERE " + category + " LIKE ? ");
 		sql.append("ORDER BY c_num");
 
-		ArrayList<CustomerVO> list = new ArrayList<CustomerVO>();
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Connection con = null;
-		CustomerVO cvo = null;
 
 		try {
 			con = getConnection();
@@ -245,24 +233,21 @@ public class CustomerDAO {
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[  getCustomerList(String category, String searchWord)  ]    [ SQLException ]");
-			sqle.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("[  getCustomerList(String category, String searchWord)  ]    [ Unknown Exception ]");
-			e.printStackTrace();
 		} finally {
 			try {
-				if (con != null) {
-					con.close();
+				if (rs != null) {
+					rs.close();
 				}
 				if (pstmt != null) {
 					pstmt.close();
 				}
-				if (rs != null) {
-					rs.close();
+				if (con != null) {
+					con.close();
 				}
 			} catch (Exception e) {
 				System.out.println("[  getCustomerList(String category, String searchWord)  ]    [ Closed Error ]");
-				e.printStackTrace();
 			}
 		}
 
@@ -270,20 +255,20 @@ public class CustomerDAO {
 	}
 
 	/**
-	 * customerInsert(CustomerVO cvo) : 계정 정보 등록 메소드
+	 * customerInsert() : 계정 정보 등록 메소드
 	 * 
-	 * @param cvo (CustomerVO) : 등록할 계정
-	 * @return boolean
+	 * @param cvo 등록할 계정
+	 * @return success 등록 여부
 	 */
 	public boolean customerInsert(CustomerVO cvo) {
+		boolean success = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO customer (c_num, c_name, c_id, c_pw, c_phone, c_add, c_birth, c_email) ");
 		// 번호, 이름, ID, PW, 전화번호, 주소, 생년월일, 이메일
 		sql.append(" VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
-		boolean success = false;
-		PreparedStatement pstmt = null;
 		Connection con = null;
+		PreparedStatement pstmt = null;
 
 		try {
 			con = getConnection();
@@ -296,17 +281,15 @@ public class CustomerDAO {
 			pstmt.setString(6, cvo.getC_add());
 			pstmt.setDate(7, Date.valueOf(cvo.getC_birth()));
 			pstmt.setString(8, cvo.getC_email());
-			
+
 			int i = pstmt.executeUpdate();
 			if (i == 1) {
 				success = true;
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[  CustomerInsert(CustomerVO cvo)  ] [  SQLException  ]");
-			sqle.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("[  CustomerInsert(CustomerVO cvo)  ] [  Exception  ]");
-			e.printStackTrace();
 		} finally {
 			try {
 				if (pstmt != null) {
@@ -317,7 +300,6 @@ public class CustomerDAO {
 				}
 			} catch (Exception e) {
 				System.out.println("[  CustomerInsert(CustomerVO cvo)  ] [  closed Error  ]");
-				e.printStackTrace();
 			}
 		}
 
@@ -325,20 +307,20 @@ public class CustomerDAO {
 	}
 
 	/**
-	 * customerUpdate(CustomerVO cvo) : 계정 정보 수정 메소드
+	 * customerUpdate() : 계정 정보 수정 메소드
 	 * 
-	 * @param cvo (CustomerVO) : 수정할 계정
-	 * @return boolean
+	 * @param cvo 수정할 계정
+	 * @return success 수정 여부
 	 */
 	public boolean customerUpdate(CustomerVO cvo) {
+		boolean success = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE customer ");
 		sql.append("SET c_pw = ?, c_phone = ?, ");
 		sql.append("c_add = ?, c_email = ? WHERE c_num = ? ");
-		
-		boolean success = false;
-		PreparedStatement pstmt = null;
+
 		Connection con = null;
+		PreparedStatement pstmt = null;
 
 		try {
 			con = getConnection();
@@ -348,19 +330,15 @@ public class CustomerDAO {
 			pstmt.setString(3, cvo.getC_add());
 			pstmt.setString(4, cvo.getC_email());
 			pstmt.setString(5, cvo.getC_num());
-			
+
 			int i = pstmt.executeUpdate();
 			if (i == 1) {
 				success = true;
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[  CustomerUpdate(CustomerVO cvo)  ] [  SQLException  ]");
-			sqle.printStackTrace();
-			success = false;
 		} catch (Exception e) {
 			System.out.println("[  CustomerUpdate(CustomerVO cvo)  ] [  Exception  ]");
-			e.printStackTrace();
-			success = false;
 		} finally {
 			try {
 				if (pstmt != null) {
@@ -371,24 +349,23 @@ public class CustomerDAO {
 				}
 			} catch (Exception e) {
 				System.out.println("[  CustomerUpdate(CustomerVO cvo)  ] [  closed Error  ]");
-				e.printStackTrace();
 			}
 		}
-		
+
 		return success;
 	}
 
 	/**
-	 * customerDelete(CustomerVO cvo) : 계정 정보 삭제 메소드
+	 * customerDelete() : 계정 정보 삭제 메소드
 	 * 
-	 * @param cvo (CustomerVO) : 삭제할 계정
-	 * @return boolean
+	 * @param cvo 삭제할 계정
+	 * @return success 삭제 여부
 	 */
 	public boolean customerDelete(CustomerVO cvo) {
+		boolean success = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("DELETE FROM customer WHERE c_num = ? ");
 
-		boolean success = false;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -396,17 +373,15 @@ public class CustomerDAO {
 			con = getConnection();
 			pstmt = con.prepareStatement(sql.toString());
 			pstmt.setString(1, cvo.getC_num());
-			
+
 			int cnt = pstmt.executeUpdate();
 			if (cnt == 1) {
 				success = true;
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[  CustomerDelete(CustomerVO cvo)  ] [  SQLException  ]");
-			sqle.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("[  CustomerDelete(CustomerVO cvo)  ] [  Exception  ]");
-			e.printStackTrace();
 		} finally {
 			try {
 				if (pstmt != null) {
@@ -417,10 +392,9 @@ public class CustomerDAO {
 				}
 			} catch (Exception e) {
 				System.out.println("[  CustomerDelete(CustomerVO cvo)  ] [  closed Error  ]");
-				e.printStackTrace();
 			}
 		}
-		
+
 		return success;
 	}
 }

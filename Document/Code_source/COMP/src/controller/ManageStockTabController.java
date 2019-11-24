@@ -18,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -77,11 +78,6 @@ public class ManageStockTabController implements Initializable {
 	private HashMap<String, String> dicKey = new HashMap<String, String>();
 	private HashMap<String, String> dicVal = new HashMap<String, String>();
 
-	private static ObservableList<ProductVO> productDataList = FXCollections.observableArrayList();
-	private ProductDAO pddao = ProductDAO.getInstance();
-	private ProductVO pvo = new ProductVO();
-	String selectedProductIndex;
-
 	//// 사진을 가져오고 셋하기 위한 필드
 	private File selectedFile = null;
 	// 이미지 파일명
@@ -89,13 +85,14 @@ public class ManageStockTabController implements Initializable {
 	// 이미지 저장할 폴더를 매개변수로 파일 객체 생성
 	private File dirSave;
 
-	private ManageStockTabController mstController;
-	
-	private Stage primaryStage;
+	String selectedProductIndex;
 
-	public void setMstController(ManageStockTabController mstController) {
-		this.mstController = mstController;
-	}
+	private static ObservableList<ProductVO> productDataList = FXCollections.observableArrayList();
+
+	private ProductVO pvo = new ProductVO();
+	private ProductDAO pddao = ProductDAO.getInstance();
+
+	private Stage primaryStage;
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -120,7 +117,7 @@ public class ManageStockTabController implements Initializable {
 	}
 
 	/**
-	 * btnPInsert(ActionEvent event) : 제품 등록 메소드
+	 * btnPInsert() : 제품 등록 메소드
 	 * 
 	 * @param event
 	 */
@@ -128,8 +125,7 @@ public class ManageStockTabController implements Initializable {
 		boolean success = false;
 
 		try {
-			if (!DataUtil.validityCheck(txtPNum.getText(), "제품번호") 
-					|| !DataUtil.valLimitCheck(txtPNum.getText(), 6)) {
+			if (!DataUtil.validityCheck(txtPNum.getText(), "제품번호") || !DataUtil.valLimitCheck(txtPNum.getText(), 6)) {
 				System.out.println("1");
 				return;
 			} else if (!DataUtil.validityCheck(txtPName.getText(), "제품명")
@@ -178,12 +174,12 @@ public class ManageStockTabController implements Initializable {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("btnPInsert() error = " + e.getMessage());
 		}
 	}
 
 	/**
-	 * btnPUpdate(ActionEvent event) : 제품 업데이트 메소드
+	 * btnPUpdate() : 제품 업데이트 메소드
 	 * 
 	 * @param event
 	 */
@@ -229,7 +225,7 @@ public class ManageStockTabController implements Initializable {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("btnPUpdate() error = " + e.getMessage());
 		}
 	}
 
@@ -246,8 +242,7 @@ public class ManageStockTabController implements Initializable {
 			imageDelete();
 			success = pddao.productDelete(pvo);
 		} catch (Exception e) {
-			System.out.println("btnCDelete() = [ " + e + " ]");
-			e.printStackTrace();
+			System.out.println("btnPDelete() error = " + e.getMessage());
 		}
 
 		if (success == true) {
@@ -259,7 +254,7 @@ public class ManageStockTabController implements Initializable {
 	}
 
 	/**
-	 * btnImgChoice(ActionEvent event) : 이미지 선택 메소드
+	 * btnImgChoice() : 이미지 선택 메소드
 	 * 
 	 * @param event
 	 */
@@ -276,7 +271,7 @@ public class ManageStockTabController implements Initializable {
 				txtPImg.setText(dicKey.get(cbxPSort.getValue().toString()) + "/" + selectFileName + ".jpg");
 			}
 		} catch (Exception e) { /* MalformedURLException */
-			System.out.println("btnImageFileAction()= [ " + e + " ]");
+			System.out.println("btnImgChoice() error = " + e.getMessage());
 		}
 	}
 
@@ -289,10 +284,12 @@ public class ManageStockTabController implements Initializable {
 	private String imageSave(File file) {
 		BufferedInputStream bis = null;
 		BufferedOutputStream bos = null;
+
 		int data = -1;
 		String fileName = null;
 		String dir = "src/image/" + dicKey.get(cbxPSort.getValue().toString());
 		dirSave = new File(dir);
+
 		try {
 			// 폴더 지정
 			File dirMake = new File(dirSave.getAbsolutePath());
@@ -304,7 +301,8 @@ public class ManageStockTabController implements Initializable {
 
 			// 이미지 파일명 생성
 			bis = new BufferedInputStream(new FileInputStream(file));
-			bos = new BufferedOutputStream(new FileOutputStream(dirSave.getAbsolutePath() + "/" + selectFileName + ".jpg"));
+			bos = new BufferedOutputStream(
+					new FileOutputStream(dirSave.getAbsolutePath() + "/" + selectFileName + ".jpg"));
 
 			// 선택한 이미지 파일 InputStream의 마지막에 이르렀을 경우는 -1
 			while ((data = bis.read()) != -1) {
@@ -312,7 +310,7 @@ public class ManageStockTabController implements Initializable {
 				bos.flush();
 			}
 		} catch (Exception e) {
-			System.out.println("imageSave()= [ " + e + " ]");
+			System.out.println("imageSave() error = " + e.getMessage());
 		} finally {
 			try {
 				if (bos != null)
@@ -320,7 +318,7 @@ public class ManageStockTabController implements Initializable {
 				if (bis != null)
 					bis.close();
 			} catch (IOException e) {
-				System.out.println("imageSaveClose()= [ " + e + " ]");
+				System.out.println("imageSave() error = " + e.getMessage());
 			}
 		}
 
@@ -338,21 +336,19 @@ public class ManageStockTabController implements Initializable {
 		try {
 			// 삭제 이미지 파일
 			// getAbsolutePath() : 절대경로 표시
-			File fileDelete = new File(dirSave.getAbsolutePath() + "/" + selectFileName + ".jpg");
-
+			File fileDelete = new File(dirSave.getAbsolutePath() + "/" + selectFileName);
+			
 			// isDirecctory() : 경로 객체를 확인
 			// isFile() : 파일명 객체를 확인
 			// exists() : 해당 객체(파일 || 폴더)이 존재하는지 여부를 반환
-			if (fileDelete.exists() && fileDelete.isFile()) {
+			if (fileDelete.exists()) {
 				result = fileDelete.delete();
 			}
-		} catch (Exception ie) {
-			System.out.println("imageDelete() = [ " + ie.getMessage() + "]");
-			ie.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("imageDelete() error = " + e.getMessage());
 			result = false;
 		}
 		return result;
-
 	}
 
 	/**
@@ -362,21 +358,27 @@ public class ManageStockTabController implements Initializable {
 	 */
 	public void btnPSearch(ActionEvent event) {
 		ProductVO pvo = null;
-		ArrayList<ProductVO> list;
+		ArrayList<ProductVO> list = null;
 
 		try {
-			String cbxStr = cbxPSearchKey.getValue().toString();
-
-			if (cbxStr != null) {
-				list = pddao.getProductSelected(cbxStr, txtPSearchValue.getText());
+			if (txtPSearchValue != null && txtPSearchValue.getText().length() != 0) {
+				switch (cbxPSearchKey.getValue()) {
+				case "제품번호":
+					list = pddao.getProductSelected("p_num", txtPSearchValue.getText());
+					break;
+				case "제품명":
+					list = pddao.getProductSelected("p_name", txtPSearchValue.getText());
+					break;
+				}
 			} else {
+				cbxPSearchKey.getSelectionModel().clearSelection();
 				list = pddao.getProductTotalList();
 			}
 
 			productDataList.removeAll(productDataList);
 
 			for (int index = 0; index < list.size(); index++) {
-				// 결과 리스트에서 한 행을 가져다가 tvo에 대입
+				// 결과 리스트에서 한 행을 가져다가 pvo에 대입
 				pvo = list.get(index);
 				// 한 행을 추가
 				productDataList.add(pvo);
@@ -384,7 +386,7 @@ public class ManageStockTabController implements Initializable {
 		} catch (NullPointerException npe) {
 			DataUtil.showInfoAlert("검색 결과", "검색 구분을 선택해주세요.");
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("btnPSearch() error = " + e.getMessage());
 		}
 	}
 
@@ -399,22 +401,23 @@ public class ManageStockTabController implements Initializable {
 		dialog.initModality(Modality.WINDOW_MODAL);
 		dialog.initOwner(primaryStage);
 		dialog.setTitle("입고관리");
-		
+
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/manageStockSub.fxml"));
 			Parent parent = loader.load();
-			
+
 			ManageStockSubController mssController = loader.getController();
 			mssController.setPrimaryStage(primaryStage);
+			mssController.setMstController(this);
 			mssController.setStage(dialog);
-			mssController.setMstController(mstController);
-			mssController.setMssController(mssController);
 			mssController.setPvo(pvo);
-			mssController.setWHInfo();	 
-			mssController.showWindow(parent);
-			
+			mssController.setWHInfo();
+
+			Scene scene = new Scene(parent);
+			dialog.setScene(scene);
+			dialog.setResizable(false);
+			dialog.show();
 		} catch (Exception e) {
-			e.printStackTrace();
 			System.out.println("btnWHPopup() error = " + e.getMessage());
 		}
 	}
@@ -449,7 +452,8 @@ public class ManageStockTabController implements Initializable {
 				txtPDate.setText(selectProduct.getP_date());
 				txtPImg.setText(selectProduct.getP_img());
 
-				editable(true);
+				cbxPSort.getEditor().setEditable(false);
+				setDisable(true);
 			}
 
 		}
@@ -475,8 +479,7 @@ public class ManageStockTabController implements Initializable {
 				productDataList.add(pvo);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("productTotalList() = [" + e.getMessage() + "]");
+			System.out.println("productTotalList() error = " + e.getMessage());
 		}
 	}
 
@@ -486,6 +489,7 @@ public class ManageStockTabController implements Initializable {
 	 */
 	public void reset() {
 		txtPDate.clear();
+		cbxPSort.setValue("");
 		txtPGrt.clear();
 		txtPImg.clear();
 		txtPName.clear();
@@ -494,12 +498,14 @@ public class ManageStockTabController implements Initializable {
 		txtPQty.clear();
 		txtPSearchValue.clear();
 		txtPSize.clear();
-		editable(false);
+		cbxPSort.getEditor().setEditable(true);
+		setDisable(false);
 		productTotalList();
 	}
 
 	/**
 	 * setList() : Map을 생성하고 각 txtName의 필드들과 txtPrice의 필드들, spinQty의 필드들을 배열로 만든다.
+	 * 
 	 */
 	private void setList() {
 		// Map<key, value> 설정
@@ -514,6 +520,7 @@ public class ManageStockTabController implements Initializable {
 
 	/**
 	 * setCbxList() : 콤보박스에 목록을 설정
+	 * 
 	 */
 	public void setCbxList() {
 		cbxPSort.setItems(FXCollections.observableArrayList(DataUtil.getKey("pSort")));
@@ -525,27 +532,31 @@ public class ManageStockTabController implements Initializable {
 	 * 
 	 * @param event
 	 */
-
 	public void setPNum(MouseEvent event) {
 		try {
-			StringBuffer sb = new StringBuffer();
-			String numVal = dicKey.get(cbxPSort.getValue().toString());
-			sb.append(numVal + "_");
-			sb.append((selectFileName = pddao.getProductCount(numVal)));
-			txtPNum.setText(sb.toString());
-			
-			btnImgChoice.setDisable(false);
+			if (cbxPSort.getValue().toString() != "") {
+				StringBuffer sb = new StringBuffer();
+				String numVal = dicKey.get(cbxPSort.getValue().toString());
+				sb.append(numVal + "_");
+				sb.append((selectFileName = pddao.getProductCount(numVal)));
+				txtPNum.setText(sb.toString());
+
+				btnImgChoice.setDisable(false);
+			} else {
+				DataUtil.showInfoAlert("제품 선택", "제품 구분을 먼저 선택해주세요.");
+			}
+
 		} catch (NullPointerException npe) {
 			DataUtil.showInfoAlert("제품 선택", "제품 구분을 먼저 선택해주세요.");
 		}
 	}
-
+	
 	/**
-	 * editable() : 각 필드의 수정 여부를 설정
+	 * setDisable() : 각 필드의 수정 여부를 설정
 	 * 
 	 * @param bool true면 수정가능, false면 수정불가
-	 */
-	public void editable(Boolean bool) {
+	 */	
+	public void setDisable(boolean bool) {
 		btnImgChoice.setDisable(!bool);
 		btnPInsert.setDisable(bool);
 		btnPUpdate.setDisable(!bool);

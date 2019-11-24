@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -66,35 +64,27 @@ public class SalesWatchTabController implements Initializable {
 	@FXML
 	private Button btnNext;
 
-	@SuppressWarnings("unused")
-	private Stage primaryStage;
-
-	private SalesTradeTabController sttController;
-
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-	}
-
-	public void setSttController(SalesTradeTabController sttController) {
-		this.sttController = sttController;
-	}
-
-	private ProductDAO pddao = ProductDAO.getInstance();
-
 	// 선택된 제품 종류
 	private String key = null;
 
 	// 제품 페이지 카운트
 	private int pPageNum = 0;
 
-	// 이미지 파일명
+	// 이미지 파일명, 경로, 파일
 	private String selectFileName[] = new String[16];
-	// 이미지 파일 경로
 	private String localUrl = "";
 	private Image localImage;
 
 	// 제품조회 서브창 팝업
 	private Popup popup = new Popup();
+
+	private ProductDAO pddao = ProductDAO.getInstance();
+
+	private SalesTradeTabController sttController;
+
+	public void setSttController(SalesTradeTabController sttController) {
+		this.sttController = sttController;
+	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
@@ -118,12 +108,11 @@ public class SalesWatchTabController implements Initializable {
 		productTreeView.getStylesheets().add("/application/treeView.css");
 		productTreeView.getStyleClass().add("my-tree-view");
 
-
 		// root 설정
 		Image comChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/COM.png"), 10, 10, false, false);
 		TreeItem<String> root = new TreeItem("제품구성", new ImageView(comChildIcon));
 		root.setExpanded(true);
-		
+
 		// TreeView 생성
 		for (int i = 0; i < itemList.length; i++) {
 			TreeItem<String> item = (TreeItem<String>) itemList[i];
@@ -156,13 +145,13 @@ public class SalesWatchTabController implements Initializable {
 				int imgIdx = (col) + (row * 4);
 
 				// pvo 값 호출
-				ArrayList<ProductVO> list = pddao.getProductSelected("제품번호", (key + "_" + selectFileName[imgIdx]));
+				ArrayList<ProductVO> list = pddao.getProductSelected("p_num", (key + "_" + selectFileName[imgIdx]));
 				ProductVO pvo = new ProductVO();
 
 				if (list.size() > 0) {
 					pvo = list.get(0);
 				}
-				
+
 				// 팝업의 FXML 로드
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/salesWatchSub.fxml"));
 				Parent parent = loader.load();
@@ -181,7 +170,7 @@ public class SalesWatchTabController implements Initializable {
 				swsController.handlePopup(parent);
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println("imageSel() error = " + e.getMessage());
 			}
 		}
 	}
@@ -217,8 +206,6 @@ public class SalesWatchTabController implements Initializable {
 	/**
 	 * setPageBtn() : 첫 페이지거나 끝 페이지에 따른 버튼 제어
 	 * 
-	 * @param bool    페이지가 처음이거나 끝인지 판단. false면 처음이거나 끝.
-	 * @param selFunc 이전버튼으로 인한 앞으로 이동인지, 다음버튼으로 인한 뒤로 이동인지 판단.
 	 */
 	private void setPageBtn() {
 		// 첫 페이지면 이전버튼 비활성화
@@ -330,13 +317,12 @@ public class SalesWatchTabController implements Initializable {
 	}
 
 	/**
-	 * TreeView 이벤트 적용을 위한 내부 클래스
+	 * class MyTreeCell : (내부 클래스) TreeView의 이벤트 적용
+	 * 
 	 */
 	class MyTreeCell extends TreeCell<String> {
 		public MyTreeCell() {
-			selectedProperty().addListener(new ChangeListener<Boolean>() {
-				@Override
-				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+			selectedProperty().addListener((observable, oldValue, newValue) -> {
 					// Root 선택시 기능제어
 					if (newValue && !getTreeItem().getValue().equals("제품구성")) {
 						// 페이지번호 초기화
@@ -348,10 +334,9 @@ public class SalesWatchTabController implements Initializable {
 						// 이동에 따른 첫 페이지 초기화
 						setPageBtn();
 					}
-				}
 			});
 		}
-
+		
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);

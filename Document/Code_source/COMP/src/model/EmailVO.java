@@ -9,12 +9,12 @@ public class EmailVO {
 	private String emailFromName;
 	private String emailSubject;
 	private String emailMsg;
-	
+
 	public EmailVO() {
 	}
 
-	public EmailVO(String googleId, String googlePwd, String emailTo, String emailToName,
-			String emailFrom, String emailFromName, String emailSubject, String emailMsg) {
+	public EmailVO(String googleId, String googlePwd, String emailTo, String emailToName, String emailFrom,
+			String emailFromName, String emailSubject, String emailMsg) {
 		super();
 		this.googleId = googleId;
 		this.googlePwd = googlePwd;
@@ -96,5 +96,5 @@ public class EmailVO {
 				+ emailToName + ", emailFrom=" + emailFrom + ", emailFromName=" + emailFromName + ", emailSubject="
 				+ emailSubject + ", emailMsg=" + emailMsg + "]";
 	}
-	
+
 }

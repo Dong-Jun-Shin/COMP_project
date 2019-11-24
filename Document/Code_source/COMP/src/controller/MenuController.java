@@ -1,10 +1,5 @@
 package controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,26 +9,40 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class MenuController {
+	/**
+	 * menuLogout() : 로그인 창으로 보여준다.
+	 * 
+	 * @param primaryStage 바뀔 메인 윈도우
+	 */
 	public void menuLogout(Stage primaryStage) {
 		try {
-			Parent root = null;
-			root = FXMLLoader.load(getClass().getResource("/view/loginMain.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/loginMain.fxml"));
+			Parent root = loader.load();
+			LoginMainController lController = loader.getController();
 
+			lController.setPrimaryStage(primaryStage);
+			
 			Scene scene = new Scene(root);
-//        	scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-
+			
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (Exception e) {
 			System.out.println("btnLogin() error = " + e.getMessage());
-			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * menuClose() : 창을 종료한다.
+	 *
+	 */
 	public static void menuClose() {
 		Platform.exit();
 	}
-
+	
+	/**
+	 * menuConnectInfo() : 문의할 곳에 대한 정보를 보여준다.
+	 * 
+	 */
 	public static void menuConnectInfo() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText("문의하기");
@@ -48,6 +57,10 @@ public class MenuController {
 		alert.showAndWait();
 	}
 
+	/**
+	 * menuProgramInfo() : 프로그램의 정보를 보여준다. 
+	 * 
+	 */
 	public static void menuProgramInfo() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setHeaderText("프로그램 정보");

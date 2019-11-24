@@ -21,24 +21,32 @@ public class SalesMainController implements Initializable {
 	private Tab trade;
 	@FXML
 	private SalesTradeTabController salesTradeTabController;
-		
+
 	private Stage primaryStage;
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		salesWatchTabController.setSttController(salesTradeTabController);
-		salesWatchTabController.setPrimaryStage(primaryStage);
-		salesTradeTabController.setPrimaryStage(primaryStage);
+		
+		salesMainPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue == trade) {
+				try {
+					salesTradeTabController.setTotalPrice();
+				} catch (Exception e) {
+					System.out.println("changed() error = " + e.getMessage());
+				}
+			} 
+		});
 	}
-	
+
 	public void menuLogout(ActionEvent event) {
 		new MenuController().menuLogout(primaryStage);
 	}
-	
+
 	public void menuClose(ActionEvent event) {
 		MenuController.menuClose();
 	}
@@ -51,4 +59,3 @@ public class SalesMainController implements Initializable {
 		MenuController.menuProgramInfo();
 	}
 }
-

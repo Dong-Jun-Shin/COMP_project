@@ -40,13 +40,14 @@ public class OrderChartDAO {
 	/**
 	 * getOrder_ChartList() : 주문 내역 조회 메소드
 	 * 
-	 * @return ArrayList<Order_ChartVO>
+	 * @return ArrayList<Order_ChartVO> DB의 조회한 데이터를 리스트로 반환
 	 */
 	public ArrayList<OrderChartVO> getOrder_ChartList() {
 		ArrayList<OrderChartVO> list = new ArrayList<OrderChartVO>();
+		OrderChartVO ovo = null;
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ch_num, cd_num, ch_qty, p_num FROM order_chart");
-		OrderChartVO ovo = null;
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -64,41 +65,34 @@ public class OrderChartDAO {
 				ovo.setP_num(rs.getString("p_num"));
 				list.add(ovo);
 			}
-
 		} catch (SQLException sqle) {
 			System.out.println("[  getOrder_ChartList()  ]    [ SQLException ]");
-			sqle.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("[  getOrder_ChartList()  ]    [ Unknown Exception ]");
-			e.printStackTrace();
-
 		} finally {
 			try {
-				if (con != null) {
-					con.close();
+				if (rs != null) {
+					rs.close();
 				}
 				if (pstmt != null) {
 					pstmt.close();
 				}
-				if (rs != null) {
-					rs.close();
+				if (con != null) {
+					con.close();
 				}
-
 			} catch (Exception e) {
 				System.out.println("[  getOrder_ChartList()  ]    [ Closed Error ]");
-				e.printStackTrace();
 			}
-
 		}
 
 		return list;
 	}
 
 	/**
-	 * order_ChartInsert(Order_ChartVO ovo) : 주문 내역 등록 메소드
+	 * order_ChartInsert() : 주문 내역 등록 메소드
 	 * 
-	 * @param ocvo (Order_ChartVO) : 등록할 주문 내역
-	 * @return boolean
+	 * @param ocvo 등록할 주문 내역
+	 * @return result 등록 결과
 	 */
 	public boolean order_ChartInsert(OrderChartVO ocvo) {
 		boolean result = false;
@@ -106,6 +100,7 @@ public class OrderChartDAO {
 		sql.append("INSERT INTO order_chart(ch_num, cd_num, ch_qty, p_num)");
 		sql.append("VALUES ('O_'||LPAD(TO_CHAR(ch_num_seq.NEXTVAL),4,'0')");
 		sql.append(", ?, ?, ?)");
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -115,6 +110,7 @@ public class OrderChartDAO {
 			pstmt.setString(1, ocvo.getCd_num());
 			pstmt.setInt(2, ocvo.getCh_qty());
 			pstmt.setString(3, ocvo.getP_num());
+			
 			int i = pstmt.executeUpdate();
 			if (i == 1) {
 				result = true;
@@ -122,14 +118,9 @@ public class OrderChartDAO {
 
 		} catch (SQLException sqle) {
 			System.out.println("[  order_ChartInsert(Order_ChartVO ovo)  ] [  SQLException  ]");
-			sqle.printStackTrace();
-			result = false;
 		} catch (Exception e) {
 			System.out.println("[ order_ChartInsert(Order_ChartVO ovo)  ] [  Exception  ]");
-			e.printStackTrace();
-			result = false;
 		} finally {
-
 			try {
 				if (pstmt != null) {
 					pstmt.close();
@@ -139,13 +130,9 @@ public class OrderChartDAO {
 				}
 			} catch (Exception e) {
 				System.out.println("[  order_ChartInsert(Order_ChartVO ovo)  ] [  closed Error  ]");
-				e.printStackTrace();
 			}
-
 		}
 
 		return result;
 	}
-
-	
 }

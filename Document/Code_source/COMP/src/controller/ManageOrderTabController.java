@@ -1,7 +1,5 @@
 package controller;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import model.CdChartDAO;
 import model.CdChartVO;
 import model.CdOrderDAO;
@@ -40,21 +37,13 @@ public class ManageOrderTabController implements Initializable {
 	private TableView<CdChartVO> orderHistoryView;
 
 	String selectedCdChartIndex;
-	
-	private CdChartVO ccvo = new CdChartVO();
 
 	private static ObservableList<CdChartVO> progressDataList = FXCollections.observableArrayList();
 	private static ObservableList<CdChartVO> historyDataList = FXCollections.observableArrayList();
 
+	private CdChartVO ccvo = new CdChartVO();
 	private CdOrderDAO codao = CdOrderDAO.getInstance();
 	private CdChartDAO ccdao = CdChartDAO.getInstance();
-
-	@SuppressWarnings("unused")
-	private Stage primaryStage;
-
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
-	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -79,6 +68,11 @@ public class ManageOrderTabController implements Initializable {
 		historyTotalList();
 	}
 
+	/**
+	 * btnOrderComplete() : 선택한 주문의 상태를 '거래완료'로 변경한다.
+	 * 
+	 * @param event
+	 */
 	public void btnOrderComplete(ActionEvent event) {
 		boolean success = false;
 		try {
@@ -100,10 +94,15 @@ public class ManageOrderTabController implements Initializable {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("btnOrderComplete() error = " + e.getMessage());
 		}
 	}
 
+	/**
+	 * btnOrderCancel() : 선택한 주문의 상태를 '거래취소'로 변경하고, 취소 안내 메일을 전송한다.
+	 * 
+	 * @param event
+	 */
 	public void btnOrderCancel(ActionEvent event) {
 		boolean success = false;
 		try {
@@ -117,26 +116,33 @@ public class ManageOrderTabController implements Initializable {
 
 				success = codao.cd_orderUpdate(covo);
 
+				// 거래 취소의 성공 여부
 				if (success == true) {
+					// 취소 이메일 전송
 					boolean sendSuccess = sendCancle();
-					if(sendSuccess) {
-						DataUtil.showInfoAlert("주문 처리 결과", "[" + lblCDNum.getText() + "]의 처리를 완료하였습니다.");
+
+					String alertSend = "안내 이메일 전송을 실패했습니다.";
+					// 이메일 전송 여부
+					if (sendSuccess) {
+						alertSend = "안내 이메일 전송을 성공하였습니다.";
 					}
+					DataUtil.showInfoAlert("주문 처리 결과", "[" + lblCDNum.getText() + "]의 처리를 완료하였습니다.\n" + alertSend);
+
 					reset();
 				} else {
 					DataUtil.showInfoAlert("주문 처리 결과", "주문의 처리에 문제가 있어 완료하지 못하였습니다.");
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("btnOrderCancel() error = " + e.getMessage());
 		}
-		// TODO 이메일 전송 구현하기
-		/*
-		 * 이메일 전송 (판매자 이메일 -> 고객 이메일) 제목 : '구매자명'님, 주문이 취소되었습니다. 본문 : 고객 - 성함, 연락처, 주소
-		 * 제품 - 제품명, 개수, 금액 ------------------- 환불 금액
-		 */
 	}
 
+	/**
+	 * orderProgressView() : '진행 중인 주문 내역' 테이블을 더블 클릭하면, 해당 주문을 선택한다.
+	 * 
+	 * @param event
+	 */
 	public void orderProgressView(MouseEvent event) {
 		if (event.getClickCount() == 2) {
 			CdChartVO selectCdChart = orderProgressView.getSelectionModel().getSelectedItem();
@@ -151,6 +157,10 @@ public class ManageOrderTabController implements Initializable {
 		}
 	}
 
+	/**
+	 * progressTotalList() : '진행 중인 주문 내역' 테이블의 내용을 가져와서, 테이블에 설정해준다.
+	 * 
+	 */
 	public void progressTotalList() {
 		progressDataList.removeAll(progressDataList);
 		CdChartVO ccvo = null;
@@ -166,11 +176,14 @@ public class ManageOrderTabController implements Initializable {
 				progressDataList.add(ccvo);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("progressTotalList() = [" + e.getMessage() + "]");
+			System.out.println("progressTotalList() error = " + e.getMessage());
 		}
 	}
 
+	/**
+	 * historyTotalList() : '이전 주문 내역' 테이블의 내용을 가져와서, 테이블에 설정해준다.
+	 * 
+	 */
 	public void historyTotalList() {
 		historyDataList.removeAll(historyDataList);
 		CdChartVO ccvo = null;
@@ -186,16 +199,24 @@ public class ManageOrderTabController implements Initializable {
 				historyDataList.add(ccvo);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("historyTotalList() = [" + e.getMessage() + "]");
+			System.out.println("historyTotalList() error = " + e.getMessage());
 		}
 	}
 
+	/**
+	 * setBtn() : 주문처리 하는 버튼의 상태를 제어
+	 * 
+	 * @param bool true면 클릭 가능, false면 클릭 불가능
+	 */
 	private void setBtn(boolean bool) {
 		btnOrderComplete.setDisable(!bool);
 		btnOrderCancel.setDisable(!bool);
 	}
 
+	/**
+	 * reset() : 선택된 주문을 선택 해제하고, '진행 중인 주문 내역'과 '이전 주문 내역'의 테이블을 새로고침해준다.
+	 * 
+	 */
 	private void reset() {
 		lblCDNum.setText("(주문번호)");
 		selectedCdChartIndex = null;
@@ -204,34 +225,26 @@ public class ManageOrderTabController implements Initializable {
 		historyTotalList();
 	}
 
+	/**
+	 * sendCancle() : 취소 안내 메일을 전송한다.
+	 * 
+	 * @return success 메일의 전송 결과
+	 */
 	private boolean sendCancle() {
 		boolean success = false;
 
 		DealerVO dvo = DealerVO.getInstance();
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/properties_file/DealerVO.dat"))) {
-			dvo = (DealerVO) ois.readObject();
-			// 자료가 들어갔으면 멈춘다.
-			if (dvo != null) {
-			} else {
-				throw new Exception();
-			}
-		} catch (Exception e) {
-			DataUtil.showAlert("정보 읽기 실패", "정보를 읽는 중 문제가 생겼습니다.");
-			e.printStackTrace();
-		}
+		dvo.reset();
 
 		/*
-		 * 제목 : '구매자명'님, 주문이 취소되었습니다. 
-		 * 본문 : 고객 - 성함, 연락처, 주소
-		 * 		------------------- 환불 금액
+		 * 제목 : '구매자명'님, 주문이 취소되었습니다. 본문 : 고객 - 성함, 연락처, 주소 ------------------- 환불 금액
 		 */
 		StringBuffer sbHead = new StringBuffer();
 		sbHead.append(ccvo.getC_name() + "님, 주문취소가 완료되었습니다.");
 
 		StringBuffer sbSubject = new StringBuffer();
 		sbSubject.append(dvo.getDName() + "에서 구매해주셔서 감사합니다.\n 다음은 주문해주신 내역입니다.\n");
-		sbSubject.append(
-				"고객 정보 - " + ccvo.getC_name() + ", " + ccvo.getC_phone() + ", " + ccvo.getC_add() + "\n\n");
+		sbSubject.append("고객 정보 - " + ccvo.getC_name() + ", " + ccvo.getC_phone() + ", " + ccvo.getC_add() + "\n\n");
 		sbSubject.append("--------------------- 총금액 : " + ccvo.getCd_price() + " ---------------------\n\n");
 		sbSubject.append("입금 정보 - " + dvo.getDBName() + ", " + dvo.getDBNum() + ", " + dvo.getDBOwner() + "\n");
 

@@ -46,7 +46,7 @@
 				</HBox>
 			</children>
 		</VBox>
-		<Button id="btnIdSearch" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="확인">
+		<Button id="btnIdSearch" onAction="#btnIdSearch" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="확인">
 			<VBox.margin>
 				<Insets top="30.0" />
 			</VBox.margin>

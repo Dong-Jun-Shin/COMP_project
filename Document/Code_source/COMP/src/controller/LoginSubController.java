@@ -6,11 +6,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import model.DataUtil;
 import model.DealerVO;
 
@@ -26,68 +26,67 @@ public class LoginSubController implements Initializable {
 	@FXML
 	private Button btnIdSearch;
 	@FXML
-	private HBox idBox; 
-	
+	private HBox idBox;
+
 	private DealerVO dVO = DealerVO.getInstance();
-	
+
+	private Stage dialog;
+
+	public void setDialog(Stage dialog) {
+		this.dialog = dialog;
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-			
+
 	}
 
 	/**
 	 * idPwSearch() : 라디오버튼에 따른 ID 텍스트 필드 숨기기
+	 * 
 	 * @param event
 	 */
 	public void idPwSearch(ActionEvent event) {
 		if (groupSearch.getSelectedToggle().getUserData().toString().equals("pwSearch")) {
 			idBox.setVisible(true);
-		}else if(groupSearch.getSelectedToggle().getUserData().toString().equals("idSearch")) {
+		} else if (groupSearch.getSelectedToggle().getUserData().toString().equals("idSearch")) {
 			idBox.setVisible(false);
 		}
 	}
-	
+
 	/**
 	 * btnIdSearch() : ID & PW 찾기
-	 * @param parent
-	 * @return success 찾기 결과
+	 * 
+	 * @param event
 	 */
-	public boolean btnIdSearch(Parent parent) {
-		TextField txtBOwner = (TextField) parent.lookup("#txtBOwner");
-		TextField txtBNum = (TextField) parent.lookup("#txtBNum");
-		TextField txtSearchID = (TextField) parent.lookup("#txtSearchID");
-		HBox idBox = (HBox)parent.lookup("#idBox");
-		boolean success = false;
-		
-		//유효성검사
+	public void btnIdSearch(ActionEvent event) {
+		// 유효성검사
 		if (!DataUtil.validityCheck(txtBOwner.getText(), "계좌주를 "))
-			return success;
+			return;
 		else if (!DataUtil.validityCheck(txtBNum.getText(), "계좌번호를 "))
-			return success;
+			return;
 		else if (idBox.isVisible() && !DataUtil.validityCheck(txtSearchID.getText(), "ID를 "))
-			return success;
-		
-		//입력 정보를 판단 후, 결과 출력
-		StringBuffer sb = new StringBuffer();
+			return;
 
+		// 입력 정보를 판단 후, 결과 출력
+		StringBuffer sb = new StringBuffer();
 		if (txtBOwner.getText().equals(dVO.getDBOwner()) && txtBNum.getText().equals(dVO.getDBNum())) {
 			sb.append("ID : ");
 			sb.append(dVO.getDId());
-			if(txtSearchID.getText().equals(dVO.getDId())) {
+			if (txtSearchID.getText().equals(dVO.getDId())) {
 				sb.append("\nPW : ");
 				sb.append(dVO.getDPasswd());
-				success = true;
-			}else if(idBox.isVisible()){
+				DataUtil.showAlert("ID & PW 결과", sb.toString());
+				dialog.close();
+			} else if (idBox.isVisible()) {
 				sb = new StringBuffer();
 				sb.append("ID가 잘못되었습니다.\n");
 				sb.append("다시 입력해주세요.\n");
 			}
-		}else{
+		} else {
 			sb.append("계좌주 또는 계좌번호가 잘못되었습니다.\n");
 			sb.append("다시 입력해주세요.\n");
 		}
 		DataUtil.showAlert("ID & PW 결과", sb.toString());
-
-		return success;
 	}
 }

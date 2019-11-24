@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 public class CdChartDAO {
 	private static CdChartDAO instance = null;
+
 	private HashMap<String, String> dicKey = new HashMap<String, String>();
 
 	private CdChartDAO() {
@@ -42,7 +43,7 @@ public class CdChartDAO {
 	/**
 	 * getProgressOrderList() : 거래 중인 주문 리스트 조회 메소드
 	 * 
-	 * @return ArrayList<Order_ChartVO>
+	 * @return ArrayList<Order_ChartVO> DB의 조회한 데이터를 리스트로 반환
 	 */
 	public ArrayList<CdChartVO> getProgressOrderList() {
 		ArrayList<CdChartVO> list = new ArrayList<CdChartVO>();
@@ -134,15 +135,10 @@ public class CdChartDAO {
 					qtyM.invoke(list.get(i), qty);
 				}
 			}
-		} catch (
-
-		SQLException sqle) {
-			System.out.println("[  getProgressOrderList()  ]    [ SQLException ]");
-			sqle.printStackTrace();
+		} catch (SQLException sqle) {
+			System.out.println("getProgressOrderList() error = " + sqle.getMessage());
 		} catch (Exception e) {
-			System.out.println("[  getProgressOrderList()  ]    [ Unknown Exception ]");
-			e.printStackTrace();
-
+			System.out.println("getProgressOrderList() error = " + e.getMessage());
 		} finally {
 			try {
 				if (con != null) {
@@ -154,12 +150,9 @@ public class CdChartDAO {
 				if (rs != null) {
 					rs.close();
 				}
-
 			} catch (Exception e) {
-				System.out.println("[ getProgressOrderList()  ]    [ Closed Error ]");
-				e.printStackTrace();
+				System.out.println("getProgressOrderList() error = " + e.getMessage());
 			}
-
 		}
 
 		return list;
@@ -168,7 +161,7 @@ public class CdChartDAO {
 	/**
 	 * getHistoryOrderList() : 완료된 주문 리스트 조회 메소드
 	 * 
-	 * @return ArrayList<Order_ChartVO>
+	 * @return ArrayList<Order_ChartVO> DB의 조회한 데이터를 리스트로 반환
 	 */
 	public ArrayList<CdChartVO> getHistoryOrderList() {
 		ArrayList<CdChartVO> list = new ArrayList<CdChartVO>();
@@ -177,7 +170,8 @@ public class CdChartDAO {
 		setDic();
 
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT cd_sort, cd_num, cd_price, c_num FROM cd_order WHERE cd_sort LIKE '거래완료' OR cd_sort LIKE '거래취소' ORDER BY cd_sort, cd_num DESC");
+		sql.append(
+				"SELECT cd_sort, cd_num, cd_price, c_num FROM cd_order WHERE cd_sort LIKE '거래완료' OR cd_sort LIKE '거래취소' ORDER BY cd_sort, cd_num DESC");
 
 		CdChartVO ccvo = null;
 		Connection con = null;
@@ -260,15 +254,10 @@ public class CdChartDAO {
 					qtyM.invoke(list.get(i), qty);
 				}
 			}
-		} catch (
-
-		SQLException sqle) {
-			System.out.println("[  getProgressOrderList()  ]    [ SQLException ]");
-			sqle.printStackTrace();
+		} catch (SQLException sqle) {
+			System.out.println("getHistoryOrderList() error = " + sqle.getMessage());
 		} catch (Exception e) {
-			System.out.println("[  getProgressOrderList()  ]    [ Unknown Exception ]");
-			e.printStackTrace();
-
+			System.out.println("getHistoryOrderList() error = " + e.getMessage());
 		} finally {
 			try {
 				if (con != null) {
@@ -280,17 +269,18 @@ public class CdChartDAO {
 				if (rs != null) {
 					rs.close();
 				}
-
 			} catch (Exception e) {
-				System.out.println("[ getProgressOrderList()  ]    [ Closed Error ]");
-				e.printStackTrace();
+				System.out.println("getHistoryOrderList() error = " + e.getMessage());
 			}
-
 		}
 
 		return list;
 	}
 
+	/**
+	 * setDic() : 인덱스 id와 메소드명에 들어갈 문자열을 연결한 리스트를 만든다.
+	 * 
+	 */
 	public void setDic() {
 		String[] key = DataUtil.getKey("id");
 		String[] val = DataUtil.getKey("method");

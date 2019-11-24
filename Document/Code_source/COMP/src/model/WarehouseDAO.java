@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class WarehouseDAO {
-
 	private static WarehouseDAO instance = null;
 
 	private WarehouseDAO() {
@@ -61,12 +60,10 @@ public class WarehouseDAO {
 			if (rs.next()) {
 				serialNumber = rs.getString("warehouseCount");
 			}
-		} catch (SQLException e) {
-			System.out.println("쿼리 getWarehouseCount() error = [" + e + " ]");
-			e.printStackTrace();
+		} catch (SQLException ie) {
+			System.out.println("getWarehouseCount() error = " + ie.getMessage());
 		} catch (Exception e) {
-			System.out.println("error = [" + e + " ]");
-			e.printStackTrace();
+			System.out.println("getWarehouseCount() error = " + e.getMessage());
 		} finally {
 			try {
 				// 생성의 역순으로 닫기
@@ -77,7 +74,7 @@ public class WarehouseDAO {
 				if (con != null)
 					con.close();
 			} catch (Exception e) {
-				System.out.println("DB 연동 해제 error = [" + e + " ]");
+				System.out.println("getWarehouseCount() error = " + e.getMessage());
 			}
 		}
 
@@ -113,14 +110,10 @@ public class WarehouseDAO {
 				wvo.setP_num(rs.getString("p_num"));
 				list.add(wvo);
 			}
-
 		} catch (SQLException sqle) {
 			System.out.println("[  getWarehouseTotalList()  ]    [ SQLException ]");
-			sqle.printStackTrace();
 		} catch (Exception e) {
 			System.out.println("[  getWarehouseTotalList()  ]    [ Unknown Exception ]");
-			e.printStackTrace();
-
 		} finally {
 			try {
 				if (con != null) {
@@ -132,30 +125,28 @@ public class WarehouseDAO {
 				if (rs != null) {
 					rs.close();
 				}
-
 			} catch (Exception e) {
 				System.out.println("[  getWarehouseTotalList()  ]    [ Closed Error ]");
-				e.printStackTrace();
 			}
-
 		}
 
 		return list;
 	}
 
 	/**
-	 * warehouseInsert(WarehouseVO wvo) : 입고 내역 등록 메소드
+	 * warehouseInsert() : 입고 내역 등록 메소드
 	 * 
-	 * @param wvo (WarehouseVO) : 등록할 입고 내역
-	 * @return boolean
+	 * @param wvo 등록할 입고 내역
+	 * @return result 등록 결과
 	 */
 	public boolean warehouseInsert(WarehouseVO wvo) {
-		Boolean result = false;
+		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO warehouse (wh_num, wh_qty, tr_num, p_num) ");
 		sql.append("VALUES (?, ?, ? , ?) ");
-		PreparedStatement pstmt = null;
+		
 		Connection con = null;
+		PreparedStatement pstmt = null;
 
 		try {
 			con = getConnection();
@@ -171,12 +162,8 @@ public class WarehouseDAO {
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[  warehouseInsert(WarehouseVO wvo)  ] [  SQLException  ]");
-			sqle.printStackTrace();
-			result = false;
 		} catch (Exception e) {
 			System.out.println("[  warehouseInsert(WarehouseVO wvo)  ] [  Exception  ]");
-			e.printStackTrace();
-			result = false;
 		} finally {
 			try {
 				if (pstmt != null) {
@@ -187,7 +174,6 @@ public class WarehouseDAO {
 				}
 			} catch (Exception e) {
 				System.out.println("[  warehouseInsert(WarehouseVO wvo)  ] [  closed Error  ]");
-				e.printStackTrace();
 			}
 		}
 
@@ -195,15 +181,16 @@ public class WarehouseDAO {
 	}
 
 	/**
-	 * warehouseDelete(WarehouseVO wvo) : 입고 내역 삭제 메소드
+	 * warehouseDelete() : 입고 내역 삭제 메소드
 	 * 
-	 * @param wvo (WarehouseVO) : 삭제할 입고 내역
-	 * @return boolean
+	 * @param wvo 삭제할 입고 내역
+	 * @return result 삭제 결과
 	 */
 	public boolean warehouseDelete(WarehouseVO wvo) {
-		Boolean result = false;
+		boolean result = false;
 		StringBuffer sql = new StringBuffer();
 		sql.append("DELETE FROM warehouse WHERE wh_num = ? ");
+		
 		PreparedStatement pstmt = null;
 		Connection con = null;
 
@@ -219,12 +206,8 @@ public class WarehouseDAO {
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[  warehouseDelete(WarehouseVO wvo)  ] [  SQLException  ]");
-			sqle.printStackTrace();
-			result = false;
 		} catch (Exception e) {
 			System.out.println("[  warehouseDelete(WarehouseVO wvo)  ] [  Exception  ]");
-			e.printStackTrace();
-			result = false;
 		} finally {
 			try {
 				if (pstmt != null) {
@@ -235,7 +218,6 @@ public class WarehouseDAO {
 				}
 			} catch (Exception e) {
 				System.out.println("[  warehouseDelete(WarehouseVO wvo)  ] [  closed Error  ]");
-				e.printStackTrace();
 			}
 		}
 

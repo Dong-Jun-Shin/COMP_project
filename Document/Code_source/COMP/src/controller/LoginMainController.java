@@ -57,7 +57,7 @@ public class LoginMainController implements Initializable {
 	}
 
 	/**
-	 * btnLogin() : 로그인
+	 * btnLogin() : 선택한 라디오 버튼에 따라 해당 화면으로 전환
 	 * 
 	 * @param event
 	 */
@@ -68,19 +68,28 @@ public class LoginMainController implements Initializable {
 		else if (!DataUtil.validityCheck(pwLoginPasswd.getText(), "PW를 "))
 			return;
 
-		// 로그인
 		if (txtLoginId.getText().equals(dVO.getDId()) && pwLoginPasswd.getText().equals(dVO.getDPasswd())) {
 			try {
+				FXMLLoader loader = null;
 				Parent root = null;
+				
+				SalesMainController sController = null;
+				ManageMainController mController = null;
+				
 				// 라디오 버튼에 따른 창을 로드
 				if (groupChoice.getSelectedToggle().getUserData().toString().equals("salesLogin")) {
-					root = FXMLLoader.load(getClass().getResource("/view/salesMain.fxml"));
+					loader = new FXMLLoader(getClass().getResource("/view/salesMain.fxml"));
+					root = loader.load();
+					sController = loader.getController();
+					sController.setPrimaryStage(primaryStage);
 				} else if (groupChoice.getSelectedToggle().getUserData().toString().equals("managerLogin")) {
-					root = FXMLLoader.load(getClass().getResource("/view/manageMain.fxml"));
+					loader = new FXMLLoader(getClass().getResource("/view/manageMain.fxml"));
+					root = loader.load();
+					mController = loader.getController();
+					mController.setPrimaryStage(primaryStage);
 				}
 
 				Scene scene = new Scene(root);
-//            	scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
 				primaryStage.setScene(scene);
 				primaryStage.show();
@@ -93,7 +102,7 @@ public class LoginMainController implements Initializable {
 	}
 
 	/**
-	 * btnIdFindPopup() : ID & PW 찾기
+	 * btnIdFindPopup() : 'ID & PW 찾기' Modal을 띄운다. 
 	 * 
 	 * @param event
 	 */
@@ -104,14 +113,11 @@ public class LoginMainController implements Initializable {
 		dialog.setTitle("ID & PW 찾기");
 
 		try {
-			Parent parent = FXMLLoader.load(getClass().getResource("/view/loginSub.fxml"));
-			Button btnIdSearch = (Button) parent.lookup("#btnIdSearch");
-			btnIdSearch.setOnAction((e) -> {
-				LoginSubController lsController = new LoginSubController();
-				if (lsController.btnIdSearch(parent) == true) {
-					dialog.close();
-				}
-			});
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/loginSub.fxml"));
+			Parent parent = loader.load();
+
+			LoginSubController lsController = loader.getController();
+			lsController.setDialog(dialog);
 
 			Scene scene = new Scene(parent);
 			dialog.setScene(scene);

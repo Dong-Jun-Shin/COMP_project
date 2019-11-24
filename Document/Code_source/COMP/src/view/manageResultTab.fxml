@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="750.0" prefWidth="1100.0"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="controller.ManageResultTabController">
+<HBox prefHeight="750.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManageResultTabController">
 	<children>
 		<VBox prefHeight="200.0" prefWidth="650.0" spacing="30.0">
 			<padding>
@@ -19,8 +24,7 @@
 					<children>
 						<VBox alignment="CENTER" prefHeight="400.0" prefWidth="350.0">
 							<children>
-								<Label alignment="CENTER_RIGHT" prefHeight="35.0"
-									prefWidth="180.0" text="[월 판매량]">
+								<Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="180.0" text="[월 판매량]">
 									<font>
 										<Font size="20.0" />
 									</font>
@@ -30,20 +34,17 @@
 								</Label>
 								<BarChart fx:id="mOrderBarChart">
 									<xAxis>
-										<CategoryAxis endMargin="4.0" label="주차"
-											side="BOTTOM" startMargin="1.0" />
+										<CategoryAxis endMargin="4.0" label="주차" side="BOTTOM" startMargin="1.0" />
 									</xAxis>
 									<yAxis>
-										<NumberAxis label="판매량" side="LEFT"
-											upperBound="1000.0" />
+										<NumberAxis label="판매량" side="LEFT" upperBound="1000.0" />
 									</yAxis>
 								</BarChart>
 							</children>
 						</VBox>
 						<VBox alignment="CENTER" prefHeight="400.0" prefWidth="350.0">
 							<children>
-								<Label alignment="CENTER" prefHeight="35.0"
-									prefWidth="180.0" text="[월 매출 분포]">
+								<Label alignment="CENTER" prefHeight="35.0" prefWidth="180.0" text="[연 판매량]">
 									<font>
 										<Font size="20.0" />
 									</font>
@@ -51,8 +52,7 @@
 										<Insets right="5.0" top="10.0" />
 									</padding>
 								</Label>
-								<PieChart fx:id="mSalesPieChart" prefHeight="265.0"
-									prefWidth="239.0" />
+								<PieChart fx:id="ySalesPieChart" prefHeight="265.0" prefWidth="239.0" />
 							</children>
 						</VBox>
 					</children>
@@ -62,7 +62,7 @@
 				</HBox>
 				<VBox prefHeight="350.0" prefWidth="650.0">
 					<children>
-						<Label prefWidth="200.0" text="[부품별 월 매출 순위]">
+						<Label prefWidth="200.0" text="[부품별 매출 1위]">
 							<font>
 								<Font size="20.0" />
 							</font>
@@ -70,8 +70,7 @@
 								<Insets bottom="10.0" />
 							</padding>
 						</Label>
-						<TableView fx:id="mComponentRank" prefHeight="310.0"
-							prefWidth="550.0">
+						<TableView fx:id="mComponentRank" prefHeight="310.0" prefWidth="550.0">
 							<columns>
 								<TableColumn prefWidth="100.0" text="제품구분" />
 								<TableColumn prefWidth="180.0" text="제품명" />
@@ -91,8 +90,7 @@
 			<children>
 				<VBox alignment="CENTER" prefHeight="400.0" prefWidth="100.0">
 					<children>
-						<Label alignment="CENTER_RIGHT" prefHeight="35.0"
-							prefWidth="180.0" text="[월 매출액]">
+						<Label alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="180.0" text="[월 매출액]">
 							<font>
 								<Font size="20.0" />
 							</font>
@@ -102,20 +100,17 @@
 						</Label>
 						<BarChart fx:id="mSalesBarChart">
 							<xAxis>
-								<CategoryAxis endMargin="4.0" label="주차"
-									side="BOTTOM" startMargin="1.0" />
+								<CategoryAxis endMargin="4.0" label="주차" side="BOTTOM" startMargin="1.0" />
 							</xAxis>
 							<yAxis>
-								<NumberAxis label="매출금액(만)" side="LEFT"
-									upperBound="10000.0" />
+								<NumberAxis label="매출금액(만)" side="LEFT" upperBound="10000.0" />
 							</yAxis>
 						</BarChart>
 					</children>
 				</VBox>
 				<VBox alignment="CENTER" prefHeight="400.0" prefWidth="100.0">
 					<children>
-						<Label alignment="CENTER_RIGHT" prefWidth="180.0"
-							text="[연 매출액]">
+						<Label alignment="CENTER_RIGHT" prefWidth="180.0" text="[연 매출액]">
 							<font>
 								<Font size="20.0" />
 							</font>
@@ -125,12 +120,10 @@
 						</Label>
 						<LineChart fx:id="ySalesLineChart">
 							<xAxis>
-								<CategoryAxis endMargin="12.0" label="월"
-									side="BOTTOM" startMargin="1.0" />
+								<CategoryAxis endMargin="12.0" label="월" side="BOTTOM" startMargin="1.0" />
 							</xAxis>
 							<yAxis>
-								<NumberAxis label="매출금액(만)" side="LEFT"
-									upperBound="30000.0" />
+								<NumberAxis label="매출금액(만)" side="LEFT" upperBound="30000.0" />
 							</yAxis>
 						</LineChart>
 					</children>
@@ -142,4 +135,3 @@
 		</VBox>
 	</children>
 </HBox>
-

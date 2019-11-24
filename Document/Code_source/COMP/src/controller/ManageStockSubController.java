@@ -49,15 +49,13 @@ public class ManageStockSubController implements Initializable {
 
 	private ManageStockTabController mstController;
 
-	private ManageStockSubController mssController;
-
-	private WarehouseDAO whdao = WarehouseDAO.getInstance();
-	private ProductVO pvo;
-
 	private Stage stage;
 	private Stage primaryStage;
 
 	private ObservableList<WarehouseVO> whDataList = FXCollections.observableArrayList();
+
+	private WarehouseDAO whdao = WarehouseDAO.getInstance();
+	private ProductVO pvo;
 
 	public TextField getTxtTRNum() {
 		return txtTRNum;
@@ -65,10 +63,6 @@ public class ManageStockSubController implements Initializable {
 
 	public void setMstController(ManageStockTabController mstController) {
 		this.mstController = mstController;
-	}
-
-	public void setMssController(ManageStockSubController mssController) {
-		this.mssController = mssController;
 	}
 
 	public void setPvo(ProductVO pvo) {
@@ -104,6 +98,11 @@ public class ManageStockSubController implements Initializable {
 		wareTotalList();
 	}
 
+	/**
+	 * txtTRPopup() : 거래처 목록을 테이블 형태로 보여준다.
+	 * 
+	 * @param event
+	 */
 	public void txtTRPopup(MouseEvent event) {
 		Stage dialog = new Stage(StageStyle.UTILITY);
 		dialog.initModality(Modality.WINDOW_MODAL);
@@ -116,17 +115,24 @@ public class ManageStockSubController implements Initializable {
 			Parent parent = loader.load();
 
 			ManageWHSubController mwsController = loader.getController();
-			mwsController.setPrimaryStage(primaryStage);
-			mwsController.setMssController(mssController);
+			mwsController.setMssController(this);
 			mwsController.setStage(dialog);
-			mwsController.showWindow(parent);
 
+			Scene scene = new Scene(parent);
+			dialog.setScene(scene);
+			dialog.setResizable(false);
+			dialog.show();
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("txtTRPopup() error = " + e.getMessage());
 		}
 
 	}
 
+	/**
+	 * btnWHInsert() : 입고내역을 등록한다.
+	 * 
+	 * @param event
+	 */
 	public void btnWHInsert(ActionEvent event) {
 		if (!DataUtil.validityCheck(txtWHNum.getText(), "입고 번호")) {
 			return;
@@ -145,11 +151,16 @@ public class ManageStockSubController implements Initializable {
 			wvo.setWh_qty(Integer.parseInt(txtWHQty.getText()));
 			whdao.warehouseInsert(wvo);
 			mstController.productTotalList();
-			
+
 			stage.close();
 		}
 	}
 
+	/**
+	 * btnWHDelete() : 입고내역을 삭제한다.
+	 * 
+	 * @param event
+	 */
 	public void btnWHDelete(ActionEvent event) {
 		if (!DataUtil.validityCheck(txtWHNum.getText(), "입고 번호")) {
 			return;
@@ -163,26 +174,25 @@ public class ManageStockSubController implements Initializable {
 
 			whdao.warehouseDelete(wvo);
 			mstController.productTotalList();
-			
+
 			reset();
 		}
 	}
 
 	/**
-	 * setWHNum() : 새로운 거래처에게 부여될 다음 번호를 가져온다.
+	 * btnWHClear() : 입고 탭의 필드 내용을 초기화하고 테이블을 새로고침 한다.
 	 * 
+	 * @param event
 	 */
-	public void setWHNum() {
-		StringBuffer sb = new StringBuffer();
-		sb.append("WH_");
-		sb.append(whdao.getWareHouseCount());
-		txtWHNum.setText(sb.toString());
-	}
-
 	public void btnWHClear(ActionEvent event) {
 		reset();
 	}
 
+	/**
+	 * whTableView() : 입고 테이블을 더블클릭하면 해당 입고내역을 선택해서 보여준다.
+	 * 
+	 * @param event
+	 */
 	public void whTableView(MouseEvent event) {
 		if (event.getClickCount() == 2) {
 			WarehouseVO wvo = whTableView.getSelectionModel().getSelectedItem();
@@ -191,6 +201,7 @@ public class ManageStockSubController implements Initializable {
 				txtTRNum.setText(wvo.getTr_num());
 				txtPNum.setText(wvo.getP_num());
 				txtWHQty.setText(Integer.toString(wvo.getWh_qty()));
+				txtWHQty.setEditable(false);
 				setInsertBtn(false);
 			}
 		}
@@ -215,11 +226,21 @@ public class ManageStockSubController implements Initializable {
 				whDataList.add(wvo);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("wareTotalList() = [" + e.getMessage() + "]");
+			System.out.println("wareTotalList() error = " + e.getMessage());
 		}
 	}
 
+	/**
+	 * setWHNum() : 새로운 거래처에게 부여될 다음 번호를 가져온다.
+	 * 
+	 */
+	public void setWHNum() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("WH_");
+		sb.append(whdao.getWareHouseCount());
+		txtWHNum.setText(sb.toString());
+	}
+	
 	/**
 	 * setInsertBtn() : 버튼의 활성화를 제어
 	 * 
@@ -230,22 +251,25 @@ public class ManageStockSubController implements Initializable {
 		btnWHDelete.setDisable(bool);
 	}
 
+	/**
+	 * setWHInfo() : 재고관리의 선택한 제품번호를 입고 내역의 제품번호로 설정한다.
+	 * 
+	 */
 	public void setWHInfo() {
 		txtPNum.setText(pvo.getP_num());
 	}
 
-	public void showWindow(Parent parent) {
-		Scene scene = new Scene(parent);
-		stage.setScene(scene);
-		stage.setResizable(false);
-		stage.show();
-	}
-
+	/**
+	 * reset() : 입고 내역의 필드를 초기화하고 버튼 제어를 해준다.
+	 * 
+	 */
 	private void reset() {
 		setWHNum();
 		txtTRNum.clear();
 		txtPNum.setText(pvo.getP_num());
 		txtWHQty.clear();
+		txtWHQty.setEditable(true);
 		setInsertBtn(true);
+		wareTotalList();
 	}
 }

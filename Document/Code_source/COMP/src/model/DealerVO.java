@@ -1,5 +1,7 @@
 package model;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 public class DealerVO implements Serializable {
@@ -15,33 +17,15 @@ public class DealerVO implements Serializable {
 	private String dBNum;
 	private String dBName;
 
-//	private String dName = "명륜컴퓨터";
-////	private String dId = "infinityCM88";
-////	private String dPasswd = "unli88mite";
-//	private String dId = "a1234";
-//	private String dPasswd = "1234";
-//	private String dPhone = "02-5587-4523";
-//	private String dAddress = "서울특별시 동대문구";
-////	private String dBOwner = "김명진";
-////	private String dBNum = "213215-04-235225";
-//	private String dBOwner = "김길동";
-//	private String dBNum = "000000-00-000000";
-//	private String dBName = "국민은행";
-
 	private DealerVO() {
+		reset();
 	}
 
 	private static DealerVO instance = null;
 
-	/**
-	 * getInstance() : 싱글톤 구현
-	 * 
-	 * @return
-	 */
 	public static final DealerVO getInstance() {
-		if (instance == null) {
-			instance = new DealerVO();
-		}
+		if (instance == null)
+			new DealerVO();
 		return instance;
 	}
 
@@ -72,19 +56,19 @@ public class DealerVO implements Serializable {
 	public String getDEId() {
 		return dEId;
 	}
-	
+
 	public void setDEId(String dEId) {
 		this.dEId = dEId;
 	}
-	
+
 	public String getDEPw() {
 		return dEPw;
 	}
-	
+
 	public void setDEPw(String dEPw) {
 		this.dEPw = dEPw;
 	}
-	
+
 	public String getDPhone() {
 		return dPhone;
 	}
@@ -151,4 +135,24 @@ public class DealerVO implements Serializable {
 				+ ", dAddress=" + dAddress + ", dBOwner=" + dBOwner + ", dBNum=" + dBNum + ", dBName=" + dBName + "]";
 	}
 
+	/**
+	 * reset() : 파일에 저장되어 있는 판매업체의 정보를 읽기
+	 * 
+	 */
+	public void reset() {
+		// 판매업체 정보 읽기
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/properties_file/DealerVO.dat"))) {
+			while (true) {
+				instance = (DealerVO) ois.readObject();
+				// 자료가 들어갔으면 멈춘다.
+				if (instance != null) {
+					break;
+				} else {
+					throw new Exception();
+				}
+			}
+		} catch (Exception e) {
+			DataUtil.showAlert("정보 읽기 실패", "정보를 읽는 중 문제가 생겼습니다.");
+		}
+	}
 }
