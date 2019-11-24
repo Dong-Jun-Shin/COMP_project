@@ -331,11 +331,11 @@ public class CdOrderDAO {
 		Map<String,Integer> resultMap = new HashMap<>();
 		StringBuffer sql = new StringBuffer();
 		
-		sql.append("SELECT (SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '1') AS w1, ");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '2') AS w2, ");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '3') AS w3, ");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '4') AS w4, ");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '5') AS w5 ");
+		sql.append("SELECT (SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND  TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '1') AS w1, ");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '2') AS w2, ");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '3') AS w3, ");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '4') AS w4, ");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '5') AS w5 ");
 		sql.append("FROM cd_order GROUP BY TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W')");
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -460,18 +460,18 @@ public class CdOrderDAO {
 	public Map<String, Integer> getChartYearPrice(){
 		Map<String,Integer> resultMap = new HashMap<>();
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT (SELECT  NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '1') AS m1 , ");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '2') AS m2 ,");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '3') AS m3 ,");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '4') AS m4 ,");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '5') AS m5 ,");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '6') AS m6 ,");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '7') AS m7 ,");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '8') AS m8 ,");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '9') AS m9 ,");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '10') AS m10 ,");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '11') AS m11 , ");
-		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE SUBSTR(cd_num,3,2) = '12') AS m12 ");
+		sql.append("SELECT (SELECT  NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '1') AS m1 , ");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '2') AS m2 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '3') AS m3 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '4') AS m4 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '5') AS m5 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '6') AS m6 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '7') AS m7 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '8') AS m8 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '9') AS m9 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '10') AS m10 ,");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '11') AS m11 , ");
+		sql.append("(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '12') AS m12 ");
 		sql.append("FROM cd_order GROUP BY SUBSTR(cd_num,3,2) ");
 		Connection con = null;
 		PreparedStatement pstmt = null;
