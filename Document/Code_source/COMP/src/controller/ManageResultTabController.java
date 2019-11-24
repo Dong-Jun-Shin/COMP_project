@@ -18,10 +18,10 @@ import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import model.CdOrderDAO;
 import model.DataUtil;
+import model.OrderChartDAO;
 import model.RankVO;
 
 public class ManageResultTabController implements Initializable {
@@ -36,9 +36,10 @@ public class ManageResultTabController implements Initializable {
 	@FXML
 	private LineChart<String, Integer> ySalesLineChart;
 
+	private OrderChartDAO ocdao = OrderChartDAO.getInstance();
 	private CdOrderDAO codao = CdOrderDAO.getInstance();
 	private static ObservableList<RankVO> rankDataList = FXCollections.observableArrayList();
-
+	
 	@SuppressWarnings("unused")
 	private Stage primaryStage;
 
@@ -93,7 +94,7 @@ public class ManageResultTabController implements Initializable {
 	}	
 	
 	public void setMSalesPieChart() {
-		Map<String, Integer> resultMap = codao.getChartMonthPrice();
+		Map<String, Integer> resultMap = codao.getChartYearPrice();
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
 		for (Map.Entry<String, Integer> result : resultMap.entrySet()) {
@@ -117,10 +118,13 @@ public class ManageResultTabController implements Initializable {
 			series.getData().add(d);
 		}
 		mOrderBarChart.getData().addAll(series);
+		mOrderBarChart.setLegendVisible(false);
+		
 
 	}
 
 	public void setMSalesBarChart() {
+		
 		mSalesBarChart.getData().clear();
 		
 		Map<String, Integer> resultMap = codao.getChartMonthPrice();
@@ -130,7 +134,8 @@ public class ManageResultTabController implements Initializable {
 
 		}
 		mSalesBarChart.getData().add(series);
-
+		mSalesBarChart.setLegendVisible(false);
+		
 	}
 
 	public void setYSalesLineChart() {
@@ -143,6 +148,7 @@ public class ManageResultTabController implements Initializable {
 			series.getData().add(new Data<String, Integer>(result.getKey(), result.getValue()));
 		}
 		ySalesLineChart.getData().add(series);
+		ySalesLineChart.setLegendVisible(false);
 
 	}
 

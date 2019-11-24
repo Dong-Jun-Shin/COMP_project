@@ -392,18 +392,17 @@ public class CdOrderDAO {
 		Map<String,Integer> resultMap = new HashMap<>();
 		StringBuffer sql = new StringBuffer();
 		
-		sql.append("SELECT (SELECT NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
-		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '1') AS w1, ");
-		sql.append("(SELECT  NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
-		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '2' ) AS w2, ");
-		sql.append("(SELECT  NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
-		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '3' ) AS w3, ");
-		sql.append("(SELECT  NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
-		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '4' ) AS w4, ");
-		sql.append("(SELECT  NVL(SUM(oc.ch_qty),0) FROM order_chart oc, cd_order co ");
-		sql.append("WHERE co.cd_num = oc.cd_num AND TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') = '5' ) AS w5 ");
-		sql.append("FROM order_chart oc, cd_order co WHERE co.cd_num = oc.cd_num ");
-		sql.append("GROUP BY TO_CHAR(TO_DATE(SUBSTR(co.cd_num,1,6),'yymmdd'),'W') ");
+		sql.append("SELECT (SELECT COUNT(DISTINCT(cd_num)) FROM cd_order ");
+		sql.append(" WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '1') AS w1, ");
+		sql.append(" (SELECT COUNT(DISTINCT(cd_num)) FROM cd_order  ");
+		sql.append(" WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '2') AS w2, ");
+		sql.append(" (SELECT COUNT(DISTINCT(cd_num)) FROM cd_order ");
+		sql.append(" WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '3') AS w3, ");
+		sql.append(" (SELECT COUNT(DISTINCT(cd_num)) FROM cd_order ");
+		sql.append(" WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '4') AS w4, ");
+		sql.append(" (SELECT COUNT(DISTINCT(cd_num)) FROM cd_order ");
+		sql.append(" WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '5') AS w5 ");
+		sql.append(" FROM cd_order GROUP BY TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W')");
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
