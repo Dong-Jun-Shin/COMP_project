@@ -505,7 +505,8 @@ public class CdOrderDAO {
 		sql.append("SUM(oc.ch_qty) AS count, p.p_price AS p_price, p.p_price*SUM(oc.ch_qty) AS priceResult, ");
 		sql.append("RANK() OVER (ORDER BY p.p_price*SUM(oc.ch_qty) desc) AS rank ");
 		sql.append("FROM order_chart oc, product p, cd_order c ");
-		sql.append("WHERE oc.p_num = p.p_num AND c.cd_num = oc.cd_num AND c.cd_sort = '거래완료' ");
+		sql.append("WHERE oc.p_num = p.p_num AND c.cd_num = oc.cd_num ");
+		sql.append("	AND c.cd_sort = '거래완료' AND SUBSTR(oc.cd_num,3,2) = TO_CHAR(SYSDATE, 'MM') ");
 		sql.append("GROUP BY oc.p_num, p.p_name, p.p_price ");
 		sql.append("ORDER BY oc.p_num, p.p_price*SUM(oc.ch_qty) DESC");
 

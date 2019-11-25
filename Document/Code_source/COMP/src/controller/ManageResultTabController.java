@@ -56,7 +56,6 @@ public class ManageResultTabController implements Initializable {
 	 * 
 	 */
 	public void rankTotalList() {
-		// TODO 월 단위로 수정하기
 		rankDataList.removeAll(rankDataList);
 		RankVO rvo = null;
 		ArrayList<RankVO> list;

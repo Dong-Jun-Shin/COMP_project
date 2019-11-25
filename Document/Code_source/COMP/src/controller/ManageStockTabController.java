@@ -108,7 +108,7 @@ public class ManageStockTabController implements Initializable {
 			TableColumn<ProductVO, ?> columnName = productTableView.getColumns().get(i);
 			columnName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
 		}
-
+		
 		productTableView.setItems(productDataList);
 
 		setList();
@@ -152,7 +152,7 @@ public class ManageStockTabController implements Initializable {
 				if (selectedFile != null) {
 					imageSave(selectedFile);
 				}
-
+				
 				ProductVO pvo = new ProductVO();
 				pvo.setP_num(txtPNum.getText());
 				pvo.setP_name(txtPName.getText());
@@ -267,10 +267,20 @@ public class ManageStockTabController implements Initializable {
 			fc.setInitialDirectory(new File("C:/"));
 
 			selectedFile = fc.showOpenDialog(primaryStage);
-			if (selectedFile != null) {
+			
+			//확장자명 얻기
+			String chkStr = selectedFile.getAbsolutePath();
+			chkStr = chkStr.substring(chkStr.length()-4, chkStr.length());
+			
+			//선택한 파일 타입을 체크 후, 이미지 지정
+			if (selectedFile != null && chkStr.equals(".jpg")) {
 				txtPImg.setText(dicKey.get(cbxPSort.getValue().toString()) + "/" + selectFileName + ".jpg");
+			}else {
+				selectedFile = null;
+				DataUtil.showAlert("이미지 선택 오류", "이미지 파일을 선택해주세요.");
 			}
-		} catch (Exception e) { /* MalformedURLException */
+			
+		} catch (Exception e) {
 			System.out.println("btnImgChoice() error = " + e.getMessage());
 		}
 	}
@@ -294,7 +304,7 @@ public class ManageStockTabController implements Initializable {
 			// 폴더 지정
 			File dirMake = new File(dirSave.getAbsolutePath());
 
-			// 폴더가 없을 시, 이미지 저장 폴더 생성
+			// 폴더가 없을 시, 이미지 저장 폴더 생성	
 			if (!dirMake.exists()) {
 				dirMake.mkdirs();
 			}
@@ -337,7 +347,7 @@ public class ManageStockTabController implements Initializable {
 			// 삭제 이미지 파일
 			// getAbsolutePath() : 절대경로 표시
 			File fileDelete = new File(dirSave.getAbsolutePath() + "/" + selectFileName);
-			
+
 			// isDirecctory() : 경로 객체를 확인
 			// isFile() : 파일명 객체를 확인
 			// exists() : 해당 객체(파일 || 폴더)이 존재하는지 여부를 반환
@@ -498,7 +508,6 @@ public class ManageStockTabController implements Initializable {
 		txtPQty.clear();
 		txtPSearchValue.clear();
 		txtPSize.clear();
-		cbxPSort.getEditor().setEditable(true);
 		setDisable(false);
 		productTotalList();
 	}
@@ -535,13 +544,15 @@ public class ManageStockTabController implements Initializable {
 	public void setPNum(MouseEvent event) {
 		try {
 			if (cbxPSort.getValue().toString() != "") {
-				StringBuffer sb = new StringBuffer();
-				String numVal = dicKey.get(cbxPSort.getValue().toString());
-				sb.append(numVal + "_");
-				sb.append((selectFileName = pddao.getProductCount(numVal)));
-				txtPNum.setText(sb.toString());
+				if (selectedProductIndex == null) {
+					StringBuffer sb = new StringBuffer();
+					String numVal = dicKey.get(cbxPSort.getValue().toString());
+					sb.append(numVal + "_");
+					sb.append((selectFileName = pddao.getProductCount(numVal)));
+					txtPNum.setText(sb.toString());
 
-				btnImgChoice.setDisable(false);
+					btnImgChoice.setDisable(false);
+				}
 			} else {
 				DataUtil.showInfoAlert("제품 선택", "제품 구분을 먼저 선택해주세요.");
 			}
@@ -550,12 +561,12 @@ public class ManageStockTabController implements Initializable {
 			DataUtil.showInfoAlert("제품 선택", "제품 구분을 먼저 선택해주세요.");
 		}
 	}
-	
+
 	/**
 	 * setDisable() : 각 필드의 수정 여부를 설정
 	 * 
 	 * @param bool true면 수정가능, false면 수정불가
-	 */	
+	 */
 	public void setDisable(boolean bool) {
 		btnImgChoice.setDisable(!bool);
 		btnPInsert.setDisable(bool);
