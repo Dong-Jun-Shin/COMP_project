@@ -85,6 +85,8 @@ public class ManageStockTabController implements Initializable {
 	// 이미지 저장할 폴더를 매개변수로 파일 객체 생성
 	private File dirSave;
 
+	private static boolean theme;
+	
 	String selectedProductIndex;
 
 	private static ObservableList<ProductVO> productDataList = FXCollections.observableArrayList();
@@ -93,9 +95,13 @@ public class ManageStockTabController implements Initializable {
 	private ProductDAO pddao = ProductDAO.getInstance();
 
 	private Stage primaryStage;
-
+	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
+	}
+
+	public static void setTheme(boolean theme) {
+		ManageStockTabController.theme = theme;
 	}
 
 	@Override
@@ -413,8 +419,14 @@ public class ManageStockTabController implements Initializable {
 		dialog.setTitle("입고관리");
 
 		try {
+			ManageStockSubController.setTheme(theme);
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/manageStockSub.fxml"));
 			Parent parent = loader.load();
+			if (theme) {
+				DataUtil.setTheme(parent, "LIGHT");
+			} else {
+				DataUtil.setTheme(parent, "DARK");
+			}
 
 			ManageStockSubController mssController = loader.getController();
 			mssController.setPrimaryStage(primaryStage);

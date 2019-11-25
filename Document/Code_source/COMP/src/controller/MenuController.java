@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import model.DataUtil;
 
 public class MenuController {
 	/**
@@ -18,9 +19,11 @@ public class MenuController {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/loginMain.fxml"));
 			Parent root = loader.load();
+			DataUtil.setTheme(root, "LIGHT");
+			
 			LoginMainController lController = loader.getController();
-
 			lController.setPrimaryStage(primaryStage);
+			lController.setRoot(root);
 			
 			Scene scene = new Scene(root);
 			

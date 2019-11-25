@@ -48,15 +48,17 @@ public class ManageStockSubController implements Initializable {
 	private TableView<WarehouseVO> whTableView;
 
 	private ManageStockTabController mstController;
-
-	private Stage stage;
-	private Stage primaryStage;
-
+	
+	private static boolean theme;
+	
 	private ObservableList<WarehouseVO> whDataList = FXCollections.observableArrayList();
 
 	private WarehouseDAO whdao = WarehouseDAO.getInstance();
 	private ProductVO pvo;
 
+	private Stage primaryStage;
+	private Stage stage;
+	
 	public TextField getTxtTRNum() {
 		return txtTRNum;
 	}
@@ -64,19 +66,23 @@ public class ManageStockSubController implements Initializable {
 	public void setMstController(ManageStockTabController mstController) {
 		this.mstController = mstController;
 	}
+	
+	public static void setTheme(boolean theme) {
+		ManageStockSubController.theme = theme;
+	}
 
 	public void setPvo(ProductVO pvo) {
 		this.pvo = pvo;
 	}
 
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
-
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
-
+	
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		List<String> title = DataUtil.fieldName(new WarehouseVO());
@@ -113,10 +119,16 @@ public class ManageStockSubController implements Initializable {
 			// 팝업의 FXML 로드
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/manageWareHouseSub.fxml"));
 			Parent parent = loader.load();
-
+			if (theme) {
+				DataUtil.setTheme(parent, "LIGHT");
+			} else {
+				DataUtil.setTheme(parent, "DARK");
+			}
+			
 			ManageWHSubController mwsController = loader.getController();
 			mwsController.setMssController(this);
 			mwsController.setStage(dialog);
+			
 
 			Scene scene = new Scene(parent);
 			dialog.setScene(scene);

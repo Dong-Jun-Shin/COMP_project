@@ -75,15 +75,25 @@ public class SalesWatchTabController implements Initializable {
 	private String localUrl = "";
 	private Image localImage;
 
+	private static boolean theme;
+	
 	// 제품조회 서브창 팝업
 	private Popup popup = new Popup();
 
 	private ProductDAO pddao = ProductDAO.getInstance();
 
 	private SalesTradeTabController sttController;
-
+	
 	public void setSttController(SalesTradeTabController sttController) {
 		this.sttController = sttController;
+	}
+	
+	public static boolean isTheme() {
+		return theme;
+	}
+
+	public static void setTheme(boolean theme) {
+		SalesWatchTabController.theme = theme;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -155,10 +165,12 @@ public class SalesWatchTabController implements Initializable {
 				// 팝업의 FXML 로드
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/salesWatchSub.fxml"));
 				Parent parent = loader.load();
-
-				// Popup의 배경색, 테두리 설정
-				parent.setStyle("-fx-background-color:white;" + "-fx-border-color: skyblue;" + "-fx-border-width:2;"
-						+ "-fx-border-radius:3;" + "-fx-hgap:3;-fx-vgap:5;");
+				
+				if (theme) {
+					DataUtil.setTheme(parent, "LIGHT");
+				} else {
+					DataUtil.setTheme(parent, "DARK");
+				}
 
 				// 로드된 FXML의 Controller 연결
 				SalesWatchSubController swsController = loader.getController();
@@ -171,6 +183,7 @@ public class SalesWatchTabController implements Initializable {
 
 			} catch (Exception e) {
 				System.out.println("imageSel() error = " + e.getMessage());
+				e.printStackTrace();
 			}
 		}
 	}

@@ -61,7 +61,7 @@ public class ManageCustomerTabController implements Initializable {
 	private static ObservableList<CustomerVO> customerDataList = FXCollections.observableArrayList();
 
 	private CustomerDAO cdao = CustomerDAO.getInstance();
-
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// 테이블뷰의 컬럼이름이 될 필드명을 가져온다.
