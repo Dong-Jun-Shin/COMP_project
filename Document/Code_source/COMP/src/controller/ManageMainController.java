@@ -38,21 +38,14 @@ public class ManageMainController implements Initializable {
 	@FXML
 	private ManageTraderTabController manageTraderTabController;
 
-	private static boolean theme;	
-	
 	private Stage primaryStage;
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
 	
-	public static void setTheme(boolean theme) {
-		ManageMainController.theme = theme;
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ManageStockTabController.setTheme(theme);
 		manageStockTabController.setPrimaryStage(primaryStage);
 		
 		//각 탭으로 이동되었을 때 새로고침 기능 실행

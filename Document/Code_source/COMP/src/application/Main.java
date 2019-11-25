@@ -8,6 +8,7 @@ import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 public class Main extends Application {
 	@Override
@@ -26,12 +27,12 @@ public class Main extends Application {
 			Scene scene = new Scene(root);
 
 			primaryStage.setTitle("COMP(Component Order Management Program)[Ver1.0]");
+			primaryStage.getIcons().add(new Image("file:src/image/titleIcon.png"));
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.show();
 		} catch (Exception e) {
 			System.out.println("start() error = " + e.getMessage());
-			e.printStackTrace();
 		}
 	}
 

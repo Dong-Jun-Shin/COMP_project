@@ -75,25 +75,15 @@ public class SalesWatchTabController implements Initializable {
 	private String localUrl = "";
 	private Image localImage;
 
-	private static boolean theme;
-	
 	// 제품조회 서브창 팝업
 	private Popup popup = new Popup();
 
 	private ProductDAO pddao = ProductDAO.getInstance();
 
 	private SalesTradeTabController sttController;
-	
+
 	public void setSttController(SalesTradeTabController sttController) {
 		this.sttController = sttController;
-	}
-	
-	public static boolean isTheme() {
-		return theme;
-	}
-
-	public static void setTheme(boolean theme) {
-		SalesWatchTabController.theme = theme;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -118,8 +108,17 @@ public class SalesWatchTabController implements Initializable {
 		productTreeView.getStylesheets().add("/application/treeView.css");
 		productTreeView.getStyleClass().add("my-tree-view");
 
-		// root 설정
-		Image comChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/COM.png"), 10, 10, false, false);
+		// 이미지 경로 설정과 root 설정
+		StringBuffer selImg = new StringBuffer();
+		selImg.append("/image/TreeView/");
+
+		if (LoginMainController.isTheme()) {
+			selImg.append("COM_LIGHT.png");
+		} else {
+			selImg.append("COM_DARK.png");
+		}
+
+		Image comChildIcon = new Image(getClass().getResourceAsStream(selImg.toString()), 10, 10, false, false);
 		TreeItem<String> root = new TreeItem("제품구성", new ImageView(comChildIcon));
 		root.setExpanded(true);
 
@@ -165,12 +164,21 @@ public class SalesWatchTabController implements Initializable {
 				// 팝업의 FXML 로드
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/salesWatchSub.fxml"));
 				Parent parent = loader.load();
-				
-				if (theme) {
-					DataUtil.setTheme(parent, "LIGHT");
+
+				// Popup의 배경색과 테두리 설정
+				String selBorderColor = "";
+				String selBackColor = "";
+				if (LoginMainController.isTheme()) {
+					selBackColor = "#EFF8FF";
+					selBorderColor = "black";
 				} else {
-					DataUtil.setTheme(parent, "DARK");
+					selBackColor = "#555555";
+					selBorderColor = "skyblue";
 				}
+				
+				parent.setStyle(
+						"-fx-background-color: " + selBackColor + ";" + "-fx-border-color: " + selBorderColor + ";"
+								+ "-fx-border-width:2;" + "-fx-border-radius:3;" + "-fx-hgap:3;-fx-vgap:5;");
 
 				// 로드된 FXML의 Controller 연결
 				SalesWatchSubController swsController = loader.getController();
@@ -183,7 +191,6 @@ public class SalesWatchTabController implements Initializable {
 
 			} catch (Exception e) {
 				System.out.println("imageSel() error = " + e.getMessage());
-				e.printStackTrace();
 			}
 		}
 	}
@@ -336,20 +343,20 @@ public class SalesWatchTabController implements Initializable {
 	class MyTreeCell extends TreeCell<String> {
 		public MyTreeCell() {
 			selectedProperty().addListener((observable, oldValue, newValue) -> {
-					// Root 선택시 기능제어
-					if (newValue && !getTreeItem().getValue().equals("제품구성")) {
-						// 페이지번호 초기화
-						pPageNum = 0;
-						// 현재 선택된 TreeItem에 따른 고유값 부여
-						setKey(getTreeItem().getValue());
-						// ImageView에 첫 페이지 이미지 설정
-						setImgView(0);
-						// 이동에 따른 첫 페이지 초기화
-						setPageBtn();
-					}
+				// Root 선택시 기능제어
+				if (newValue && !getTreeItem().getValue().equals("제품구성")) {
+					// 페이지번호 초기화
+					pPageNum = 0;
+					// 현재 선택된 TreeItem에 따른 고유값 부여
+					setKey(getTreeItem().getValue());
+					// ImageView에 첫 페이지 이미지 설정
+					setImgView(0);
+					// 이동에 따른 첫 페이지 초기화
+					setPageBtn();
+				}
 			});
 		}
-		
+
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);

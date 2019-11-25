@@ -7,12 +7,27 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import model.ProductVO;
 
 public class SalesWatchSubController implements Initializable {
+	@FXML
+	private Label lblTitle;
+	@FXML
+	private Label lblPNum;
+	@FXML
+	private Label lblPName;
+	@FXML
+	private Label lblPPrice;
+	@FXML
+	private Label lblPSize;
+	@FXML
+	private Label lblPGrt;
+	@FXML
+	private Label lblPDate;
 	@FXML
 	private TextField txtPNum;
 	@FXML
@@ -54,7 +69,8 @@ public class SalesWatchSubController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		setTheme();
+		setEditable(false);
 	}
 
 	/**
@@ -107,4 +123,40 @@ public class SalesWatchSubController implements Initializable {
 		txtPDate.setText(pvo.getP_date());
 	}
 
+	/**
+	 * setEditable() : 각 필드의 수정 여부를 설정
+	 * 
+	 * @param bool true면 수정가능, false면 수정불가
+	 */
+	private void setEditable(boolean bool) {
+		txtPNum.setEditable(bool);
+		txtPName.setEditable(bool);
+		txtPPrice.setEditable(bool);
+		txtPSize.setEditable(bool);
+		txtPGrt.setEditable(bool);
+		txtPDate.setEditable(bool);
+	}
+
+	/**
+	 * setTheme() : 설정한 테마에 맞춰서, 색깔을 설정
+	 * 
+	 */
+	private void setTheme() {
+		StringBuffer lblColor = new StringBuffer();
+		lblColor.append("-fx-text-fill: ");
+
+		if (LoginMainController.isTheme()) {
+			lblColor.append("black;");
+		} else {
+			lblColor.append("white;");
+		}
+		
+		lblTitle.setStyle(lblColor.toString());
+		lblPNum.setStyle(lblColor.toString());
+		lblPName.setStyle(lblColor.toString());
+		lblPPrice.setStyle(lblColor.toString());
+		lblPSize.setStyle(lblColor.toString());
+		lblPGrt.setStyle(lblColor.toString());
+		lblPDate.setStyle(lblColor.toString());
+	}
 }

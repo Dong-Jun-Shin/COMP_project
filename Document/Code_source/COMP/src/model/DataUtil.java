@@ -8,6 +8,7 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 import org.apache.log4j.Logger;
 
+import controller.LoginMainController;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -260,20 +261,17 @@ public class DataUtil extends NumberFormatException {
 	/**
 	 * setTheme() : 선택한 테마를 적용해서 반환
 	 * 
-	 * @param root 적용할 Parent
+	 * @param root  적용할 Parent
 	 * @param theme LIGHT, DARK
-	 * @return root 적용된  Parent
+	 * @return root 적용된 Parent
 	 */
-	public static void setTheme(Parent root, String theme) {
-		switch (theme) {
-		case "LIGHT":
+	public static void setTheme(Parent root) {
+		if (LoginMainController.isTheme()) {
 			new JMetro(root, Style.LIGHT);
 			root.setStyle("-fx-background-color:#EFF8FF;");
-			break;
-		case "DARK":
+		} else {
 			new JMetro(root, Style.DARK);
 			root.setStyle("-fx-background-color:#555555;");
-			break;
 		}
 	}
 }

@@ -4,11 +4,13 @@ TextField txtLoginId
 PasswordField pwLoginPasswd
 Button btnLogin
 Button btnIdFindPopup
+ToggleButton themeBtn
 
 #salesLogin()
 #managerLogin()
 #btnLogin(ActionEvent event)
 #btnIdFindPopup(ActionEvent event)
+#btnChangeTheme(MouseEvent event)
 #menuClose(ActionEvent event)
 #menuConnectInfo(ActionEvent event)
 #menuProgramInfo(ActionEvent event)
@@ -63,6 +65,13 @@ Button btnNext
 
 
 -------------[salesWatchSub]
+Label lblTitle
+Label lblPNum
+Label lblPName
+Label lblPPrice
+Label lblPSize
+Label lblPGrt
+Label lblPDate
 TextField txtPNum
 TextField txtPName
 TextField txtPPrice

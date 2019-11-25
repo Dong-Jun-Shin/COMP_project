@@ -128,7 +128,7 @@
 				</HBox>
 				<TableView fx:id="customerTableView" onMouseClicked="#customerTableView" prefHeight="600.0" prefWidth="690.0">
 					<columns>
-						<TableColumn editable="false" prefWidth="75.0" text="고객번호" />
+						<TableColumn editable="false" prefWidth="150.0" text="고객번호" />
 						<TableColumn editable="false" prefWidth="75.0" text="고객명" />
 						<TableColumn editable="false" prefWidth="75.0" text="고객ID" />
 						<TableColumn editable="false" prefWidth="75.0" text="전화번호" />

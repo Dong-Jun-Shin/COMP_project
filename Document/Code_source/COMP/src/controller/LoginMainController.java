@@ -39,7 +39,7 @@ public class LoginMainController implements Initializable {
 	@FXML
 	private ToggleButton themeBtn;
 
-	private boolean theme = true;
+	private static boolean theme = true;
 
 	private StringBuffer selectFileName = new StringBuffer();
 
@@ -53,12 +53,8 @@ public class LoginMainController implements Initializable {
 		this.primaryStage = primaryStage;
 	}
 
-	public boolean isTheme() {
+	public static boolean isTheme() {
 		return theme;
-	}
-
-	public void setTheme(boolean theme) {
-		this.theme = theme;
 	}
 
 	public Parent getRoot() {
@@ -68,7 +64,7 @@ public class LoginMainController implements Initializable {
 	public void setRoot(Parent root) {
 		this.root = root;
 	}
-
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		imgChange();
@@ -88,36 +84,26 @@ public class LoginMainController implements Initializable {
 
 		if (txtLoginId.getText().equals(dVO.getDId()) && pwLoginPasswd.getText().equals(dVO.getDPasswd())) {
 			try {
+				String selTab = groupChoice.getSelectedToggle().getUserData().toString();
 				FXMLLoader loader = null;
 				Parent root = null;
 
 				SalesMainController sController = null;
 				ManageMainController mController = null;
-				
+
 				// 라디오 버튼에 따른 창을 로드
-				if (groupChoice.getSelectedToggle().getUserData().toString().equals("salesLogin")) {
-					SalesMainController.setTheme(theme);
+				if (selTab.equals("salesLogin")) {
 					loader = new FXMLLoader(getClass().getResource("/view/salesMain.fxml"));
 					root = loader.load();
-					if(theme) {
-						DataUtil.setTheme(root, "LIGHT");				
-					}else {
-						DataUtil.setTheme(root, "DARK");		
-					}
+					DataUtil.setTheme(root);
 
 					sController = loader.getController();
 					sController.setPrimaryStage(primaryStage);
-				} else if (groupChoice.getSelectedToggle().getUserData().toString().equals("managerLogin")) {
-					ManageMainController.setTheme(theme);
+				} else if (selTab.equals("managerLogin")) {
 					loader = new FXMLLoader(getClass().getResource("/view/manageMain.fxml"));
 					root = loader.load();
-					
-					if(theme) {
-						DataUtil.setTheme(root, "LIGHT");				
-					}else {
-						DataUtil.setTheme(root, "DARK");		
-					}
-					
+					DataUtil.setTheme(root);
+
 					mController = loader.getController();
 					mController.setPrimaryStage(primaryStage);
 				}
@@ -148,11 +134,7 @@ public class LoginMainController implements Initializable {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/loginSub.fxml"));
 			Parent parent = loader.load();
-			if(theme) {
-				DataUtil.setTheme(parent, "LIGHT");				
-			}else {
-				DataUtil.setTheme(parent, "DARK");		
-			}
+			DataUtil.setTheme(parent);
 
 			LoginSubController lsController = loader.getController();
 			lsController.setDialog(dialog);
@@ -172,19 +154,8 @@ public class LoginMainController implements Initializable {
 	 * @param event
 	 */
 	public void btnChangeTheme(MouseEvent event) {
-		themeChange();
-	}
-
-	/**
-	 * themeChange() : 테마 설정
-	 * 
-	 */
-	private void themeChange() {
-		if (theme = !themeBtn.isSelected()) {
-			DataUtil.setTheme(root, "LIGHT");
-		} else {
-			DataUtil.setTheme(root, "DARK");
-		}
+		theme = !theme;
+		DataUtil.setTheme(root);
 	}
 
 	/**

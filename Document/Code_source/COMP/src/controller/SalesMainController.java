@@ -22,27 +22,15 @@ public class SalesMainController implements Initializable {
 	@FXML
 	private SalesTradeTabController salesTradeTabController;
 
-	private static boolean theme;
-
 	private Stage primaryStage;
 	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
 
-	public static boolean isTheme() {
-		return theme;
-	}
-
-	public static void setTheme(boolean theme) {
-		SalesMainController.theme = theme;
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		SalesWatchTabController.setTheme(theme);
 		salesWatchTabController.setSttController(salesTradeTabController);
-		
 		
 		salesMainPane.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue == trade) {
