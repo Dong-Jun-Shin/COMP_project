@@ -142,7 +142,7 @@ public class CustomerDAO {
 		ArrayList<CustomerVO> list = new ArrayList<CustomerVO>();
 		CustomerVO cvo = null;
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT c_num ,c_name ,c_id, c_pw, c_phone ,c_add ,c_birth ,c_email ,c_reg ");
+		sql.append("SELECT c_num ,c_name ,c_id, c_pw, c_phone ,c_add ,c_birth ,c_email ,TO_CHAR(c_reg, 'YYYY-MM-DD') AS c_reg ");
 		sql.append("FROM customer ");
 		sql.append("ORDER BY c_num ");
 
@@ -204,7 +204,7 @@ public class CustomerDAO {
 		ArrayList<CustomerVO> list = new ArrayList<CustomerVO>();
 		CustomerVO cvo = null;
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT c_num, c_name, c_id, c_pw, c_phone, c_add, c_birth, c_email, c_reg ");
+		sql.append("SELECT c_num, c_name, c_id, c_pw, c_phone, c_add, c_birth, c_email, TO_CHAR(c_reg, 'YYYY-MM-DD') AS c_reg ");
 		sql.append("FROM customer WHERE " + category + " LIKE ? ");
 		sql.append("ORDER BY c_num");
 

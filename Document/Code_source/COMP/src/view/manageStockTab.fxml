@@ -140,9 +140,9 @@
 				</HBox>
 				<TableView fx:id="productTableView" onMouseClicked="#productTableView" prefHeight="600.0" prefWidth="690.0">
 					<columns>
-						<TableColumn editable="false" prefWidth="75.0" text="제품번호" />
+						<TableColumn editable="false" prefWidth="100.0" text="제품번호" />
 						<TableColumn editable="false" prefWidth="250.0" text="제품명" />
-						<TableColumn editable="false" prefWidth="75.0" text="제품수량" />
+						<TableColumn editable="false" prefWidth="100.0" text="제품수량" />
 						<TableColumn editable="false" prefWidth="100.0" text="단가" />
 						<TableColumn editable="false" prefWidth="200.0" text="크기" />
 						<TableColumn editable="false" prefWidth="100.0" text="보증기간" />
