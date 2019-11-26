@@ -96,11 +96,11 @@ public class SalesWatchTabController implements Initializable {
 
 		for (int i = 0; i < itemName.length; i++) {
 			StringBuffer imgPath = new StringBuffer();
-			imgPath.append("/image/TreeView/");
+			imgPath.append("file:C:\\COMP_image\\TreeView\\");
 			imgPath.append(imgName[i]);
 			imgPath.append(".png");
 
-			Image pChildIcon = new Image(getClass().getResourceAsStream(imgPath.toString()), 10, 10, false, false);
+			Image pChildIcon = new Image(imgPath.toString(), 10, 10, false, false);
 			itemList[i] = new TreeItem<String>(itemName[i], new ImageView(pChildIcon));
 		}
 
@@ -110,7 +110,7 @@ public class SalesWatchTabController implements Initializable {
 
 		// 이미지 경로 설정과 root 설정
 		StringBuffer selImg = new StringBuffer();
-		selImg.append("/image/TreeView/");
+		selImg.append("file:C:\\COMP_image\\TreeView\\");
 
 		if (LoginMainController.isTheme()) {
 			selImg.append("COM_LIGHT.png");
@@ -118,7 +118,7 @@ public class SalesWatchTabController implements Initializable {
 			selImg.append("COM_DARK.png");
 		}
 
-		Image comChildIcon = new Image(getClass().getResourceAsStream(selImg.toString()), 10, 10, false, false);
+		Image comChildIcon = new Image(selImg.toString(), 10, 10, false, false);
 		TreeItem<String> root = new TreeItem("제품구성", new ImageView(comChildIcon));
 		root.setExpanded(true);
 
@@ -175,10 +175,9 @@ public class SalesWatchTabController implements Initializable {
 					selBackColor = "#555555";
 					selBorderColor = "skyblue";
 				}
-				
-				parent.setStyle(
-						"-fx-background-color: " + selBackColor + ";" + "-fx-border-color: " + selBorderColor + ";"
-								+ "-fx-border-width:2;" + "-fx-border-radius:3;" + "-fx-hgap:3;-fx-vgap:5;");
+
+				parent.setStyle("-fx-background-color: " + selBackColor + ";" + "-fx-border-color: " + selBorderColor
+						+ ";" + "-fx-border-width:2;" + "-fx-border-radius:3;" + "-fx-hgap:3;-fx-vgap:5;");
 
 				// 로드된 FXML의 Controller 연결
 				SalesWatchSubController swsController = loader.getController();
@@ -271,7 +270,7 @@ public class SalesWatchTabController implements Initializable {
 
 			// 페이지 변동
 			pPageNum += selFunc;
-			localUrl = "/image/" + key + "/";
+			localUrl = "COMP_image\\product\\" + key + "\\";
 
 			// 폴더의 존재 여부 확인
 
@@ -300,8 +299,8 @@ public class SalesWatchTabController implements Initializable {
 			// ImageView에 이미지 설정
 			for (int i = sIdx, j = 0; i <= eIdx; i++, j++) {
 				selectFileName[j] = String.format("%03d", i);
-				if (new File("src" + localUrl + selectFileName[j] + ".jpg").isFile()) {
-					localImage = new Image(getClass().getResourceAsStream(localUrl + selectFileName[j] + ".jpg"), 170,
+				if (new File("C:\\" + localUrl + selectFileName[j] + ".jpg").isFile()) {
+					localImage = new Image("file:C:\\" + localUrl + selectFileName[j] + ".jpg", 170,
 							170, false, false);
 					imgViewArr[j].setImage(localImage);
 				} else {
@@ -319,9 +318,8 @@ public class SalesWatchTabController implements Initializable {
 	 * @return count jpg의 개수를 반환
 	 */
 	private int getFileCount() {
-		File dir = new File("src" + localUrl);
+		File dir = new File("C:\\" + localUrl);
 		int count = 0;
-
 		if (dir.exists()) {
 			File[] files = dir.listFiles();
 			for (File item : files) {

@@ -282,7 +282,7 @@ public class DataUtil extends NumberFormatException {
 	 */
 	public static String getImgPath() {
 		// 이미지 지정
-		String localUrl = "file:src\\image\\Theme\\";
+		String localUrl = "file:C:\\COMP_image\\Theme\\";
 		StringBuffer selectFileName = new StringBuffer();
 		selectFileName.append("light\\");
 

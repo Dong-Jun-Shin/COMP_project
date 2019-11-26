@@ -307,7 +307,7 @@ public class ManageStockTabController implements Initializable {
 
 		int data = -1;
 		String fileName = null;
-		String dir = "src/image/" + dicKey.get(cbxPSort.getValue().toString());
+		String dir = "C:\\COMP_image\\product\\" + dicKey.get(cbxPSort.getValue().toString());
 		dirSave = new File(dir);
 
 		try {
@@ -322,7 +322,7 @@ public class ManageStockTabController implements Initializable {
 			// 이미지 파일명 생성
 			bis = new BufferedInputStream(new FileInputStream(file));
 			bos = new BufferedOutputStream(
-					new FileOutputStream(dirSave.getAbsolutePath() + "/" + selectFileName + ".jpg"));
+					new FileOutputStream(dirSave.getAbsolutePath() + "\\" + selectFileName + ".jpg"));
 
 			// 선택한 이미지 파일 InputStream의 마지막에 이르렀을 경우는 -1
 			while ((data = bis.read()) != -1) {
@@ -356,7 +356,7 @@ public class ManageStockTabController implements Initializable {
 		try {
 			// 삭제 이미지 파일
 			// getAbsolutePath() : 절대경로 표시
-			File fileDelete = new File(dirSave.getAbsolutePath() + "/" + selectFileName);
+			File fileDelete = new File(dirSave.getAbsolutePath() + "\\" + selectFileName);
 
 			// exists() : 해당 객체(파일 || 폴더)이 존재하는지 여부를 반환
 			if (fileDelete.exists()) {
@@ -454,7 +454,7 @@ public class ManageStockTabController implements Initializable {
 				String pSort = imgName.substring(0, imgName.indexOf("/"));
 
 				// 이미지 경로 설정
-				dirSave = new File("src/image/" + pSort);
+				dirSave = new File("C:\\COMP_image\\product\\" + pSort);
 				// 이미지 파일 설정
 				selectFileName = imgName.substring(imgName.indexOf("/") + 1, imgName.length());
 

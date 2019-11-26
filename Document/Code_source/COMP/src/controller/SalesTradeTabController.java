@@ -236,7 +236,7 @@ public class SalesTradeTabController implements Initializable {
 			return;
 		} else if (cdao.customerLoginOverlap(txtCId.getText())) {
 			CustomerVO cvo = cdao.getCustomerSelected("c_id", txtCId.getText()).get(0);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
+			SimpleDateFormat sdf = new SimpleDateFormat("YYMMdd");
 			String cdnumYear = sdf.format(new Date());
 			String serialNo = codao.getOrderCount(cdnumYear);
 
