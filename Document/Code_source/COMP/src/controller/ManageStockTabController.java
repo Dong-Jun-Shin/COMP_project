@@ -307,7 +307,7 @@ public class ManageStockTabController implements Initializable {
 
 		int data = -1;
 		String fileName = null;
-		String dir = "C:\\COMP_image\\product\\" + dicKey.get(cbxPSort.getValue().toString());
+		String dir = "C:\\COMP\\image\\product\\" + dicKey.get(cbxPSort.getValue().toString());
 		dirSave = new File(dir);
 
 		try {
@@ -454,7 +454,7 @@ public class ManageStockTabController implements Initializable {
 				String pSort = imgName.substring(0, imgName.indexOf("/"));
 
 				// 이미지 경로 설정
-				dirSave = new File("C:\\COMP_image\\product\\" + pSort);
+				dirSave = new File("C:\\COMP\\image\\product\\" + pSort);
 				// 이미지 파일 설정
 				selectFileName = imgName.substring(imgName.indexOf("/") + 1, imgName.length());
 

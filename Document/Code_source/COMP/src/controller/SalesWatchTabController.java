@@ -96,7 +96,7 @@ public class SalesWatchTabController implements Initializable {
 
 		for (int i = 0; i < itemName.length; i++) {
 			StringBuffer imgPath = new StringBuffer();
-			imgPath.append("file:C:\\COMP_image\\TreeView\\");
+			imgPath.append("file:C:\\COMP\\image\\TreeView\\");
 			imgPath.append(imgName[i]);
 			imgPath.append(".png");
 
@@ -110,7 +110,7 @@ public class SalesWatchTabController implements Initializable {
 
 		// 이미지 경로 설정과 root 설정
 		StringBuffer selImg = new StringBuffer();
-		selImg.append("file:C:\\COMP_image\\TreeView\\");
+		selImg.append("file:C:\\COMP\\image\\TreeView\\");
 
 		if (LoginMainController.isTheme()) {
 			selImg.append("COM_LIGHT.png");
@@ -270,7 +270,7 @@ public class SalesWatchTabController implements Initializable {
 
 			// 페이지 변동
 			pPageNum += selFunc;
-			localUrl = "COMP_image\\product\\" + key + "\\";
+			localUrl = "COMP\\image\\product\\" + key + "\\";
 
 			// 폴더의 존재 여부 확인
 

@@ -27,7 +27,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root);
 
 			primaryStage.setTitle("COMP(Component Order Management Program)[Ver1.0]");
-			primaryStage.getIcons().add(new Image("file:src\\image\\titleIcon.png"));
+			primaryStage.getIcons().add(new Image("/image/titleIcon.png"));
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.show();

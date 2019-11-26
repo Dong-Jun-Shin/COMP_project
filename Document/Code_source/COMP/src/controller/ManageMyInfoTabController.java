@@ -108,7 +108,7 @@ public class ManageMyInfoTabController implements Initializable {
 
 			// 판매없체의 정보를 파일로 쓰기
 			try (ObjectOutputStream oos = new ObjectOutputStream(
-					new FileOutputStream("src/properties_file/DealerVO.dat"))) {
+					new FileOutputStream("/properties_file/DealerVO.dat"))) {
 				// 판매업체 정보 쓰기
 				oos.writeObject(dvo);
 				pwDPasswd.clear();
