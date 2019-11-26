@@ -12,10 +12,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import model.DataUtil;
 import model.DealerVO;
 
 public class ManageMyInfoTabController implements Initializable {
+	@FXML
+	private ImageView imgMyInfo;
 	@FXML
 	private TextField txtDName;
 	@FXML
@@ -43,6 +47,11 @@ public class ManageMyInfoTabController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		//아이콘 설정
+		String imageName = DataUtil.getImgPath();
+		Image localImage = new Image(imageName + "d_id_card.png", 40, 40, false, false);
+		imgMyInfo.setImage(localImage);
+
 		dvo = DealerVO.getInstance();
 
 		// 각 필드에 판매업체 정보를 설정
@@ -99,7 +108,7 @@ public class ManageMyInfoTabController implements Initializable {
 
 			// 판매없체의 정보를 파일로 쓰기
 			try (ObjectOutputStream oos = new ObjectOutputStream(
-					new FileOutputStream("src/properties_file/DealerVO.dat"))) {
+					new FileOutputStream("/properties_file/DealerVO.dat"))) {
 				// 판매업체 정보 쓰기
 				oos.writeObject(dvo);
 				pwDPasswd.clear();

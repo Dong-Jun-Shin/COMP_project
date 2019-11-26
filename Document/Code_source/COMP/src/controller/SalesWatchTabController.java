@@ -96,11 +96,11 @@ public class SalesWatchTabController implements Initializable {
 
 		for (int i = 0; i < itemName.length; i++) {
 			StringBuffer imgPath = new StringBuffer();
-			imgPath.append("/image/TreeView/");
+			imgPath.append("file:C:\\COMP\\image\\TreeView\\");
 			imgPath.append(imgName[i]);
 			imgPath.append(".png");
 
-			Image pChildIcon = new Image(getClass().getResourceAsStream(imgPath.toString()), 10, 10, false, false);
+			Image pChildIcon = new Image(imgPath.toString(), 10, 10, false, false);
 			itemList[i] = new TreeItem<String>(itemName[i], new ImageView(pChildIcon));
 		}
 
@@ -108,8 +108,17 @@ public class SalesWatchTabController implements Initializable {
 		productTreeView.getStylesheets().add("/application/treeView.css");
 		productTreeView.getStyleClass().add("my-tree-view");
 
-		// root 설정
-		Image comChildIcon = new Image(getClass().getResourceAsStream("/image/TreeView/COM.png"), 10, 10, false, false);
+		// 이미지 경로 설정과 root 설정
+		StringBuffer selImg = new StringBuffer();
+		selImg.append("file:C:\\COMP\\image\\TreeView\\");
+
+		if (LoginMainController.isTheme()) {
+			selImg.append("COM_LIGHT.png");
+		} else {
+			selImg.append("COM_DARK.png");
+		}
+
+		Image comChildIcon = new Image(selImg.toString(), 10, 10, false, false);
 		TreeItem<String> root = new TreeItem("제품구성", new ImageView(comChildIcon));
 		root.setExpanded(true);
 
@@ -156,9 +165,19 @@ public class SalesWatchTabController implements Initializable {
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/salesWatchSub.fxml"));
 				Parent parent = loader.load();
 
-				// Popup의 배경색, 테두리 설정
-				parent.setStyle("-fx-background-color:white;" + "-fx-border-color: skyblue;" + "-fx-border-width:2;"
-						+ "-fx-border-radius:3;" + "-fx-hgap:3;-fx-vgap:5;");
+				// Popup의 배경색과 테두리 설정
+				String selBorderColor = "";
+				String selBackColor = "";
+				if (LoginMainController.isTheme()) {
+					selBackColor = "#EFF8FF";
+					selBorderColor = "black";
+				} else {
+					selBackColor = "#555555";
+					selBorderColor = "skyblue";
+				}
+
+				parent.setStyle("-fx-background-color: " + selBackColor + ";" + "-fx-border-color: " + selBorderColor
+						+ ";" + "-fx-border-width:2;" + "-fx-border-radius:3;" + "-fx-hgap:3;-fx-vgap:5;");
 
 				// 로드된 FXML의 Controller 연결
 				SalesWatchSubController swsController = loader.getController();
@@ -251,7 +270,7 @@ public class SalesWatchTabController implements Initializable {
 
 			// 페이지 변동
 			pPageNum += selFunc;
-			localUrl = "/image/" + key + "/";
+			localUrl = "COMP\\image\\product\\" + key + "\\";
 
 			// 폴더의 존재 여부 확인
 
@@ -280,8 +299,8 @@ public class SalesWatchTabController implements Initializable {
 			// ImageView에 이미지 설정
 			for (int i = sIdx, j = 0; i <= eIdx; i++, j++) {
 				selectFileName[j] = String.format("%03d", i);
-				if (new File("src" + localUrl + selectFileName[j] + ".jpg").isFile()) {
-					localImage = new Image(getClass().getResourceAsStream(localUrl + selectFileName[j] + ".jpg"), 170,
+				if (new File("C:\\" + localUrl + selectFileName[j] + ".jpg").isFile()) {
+					localImage = new Image("file:C:\\" + localUrl + selectFileName[j] + ".jpg", 170,
 							170, false, false);
 					imgViewArr[j].setImage(localImage);
 				} else {
@@ -299,9 +318,8 @@ public class SalesWatchTabController implements Initializable {
 	 * @return count jpg의 개수를 반환
 	 */
 	private int getFileCount() {
-		File dir = new File("src" + localUrl);
+		File dir = new File("C:\\" + localUrl);
 		int count = 0;
-
 		if (dir.exists()) {
 			File[] files = dir.listFiles();
 			for (File item : files) {
@@ -323,20 +341,20 @@ public class SalesWatchTabController implements Initializable {
 	class MyTreeCell extends TreeCell<String> {
 		public MyTreeCell() {
 			selectedProperty().addListener((observable, oldValue, newValue) -> {
-					// Root 선택시 기능제어
-					if (newValue && !getTreeItem().getValue().equals("제품구성")) {
-						// 페이지번호 초기화
-						pPageNum = 0;
-						// 현재 선택된 TreeItem에 따른 고유값 부여
-						setKey(getTreeItem().getValue());
-						// ImageView에 첫 페이지 이미지 설정
-						setImgView(0);
-						// 이동에 따른 첫 페이지 초기화
-						setPageBtn();
-					}
+				// Root 선택시 기능제어
+				if (newValue && !getTreeItem().getValue().equals("제품구성")) {
+					// 페이지번호 초기화
+					pPageNum = 0;
+					// 현재 선택된 TreeItem에 따른 고유값 부여
+					setKey(getTreeItem().getValue());
+					// ImageView에 첫 페이지 이미지 설정
+					setImgView(0);
+					// 이동에 따른 첫 페이지 초기화
+					setPageBtn();
+				}
 			});
 		}
-		
+
 		@Override
 		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);

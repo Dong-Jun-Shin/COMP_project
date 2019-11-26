@@ -12,7 +12,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -30,30 +34,40 @@ public class LoginMainController implements Initializable {
 	private Button btnLogin;
 	@FXML
 	private Button btnIdFindPopup;
+	@FXML
+	private ImageView imgLogin;
+	@FXML
+	private ToggleButton themeBtn;
+
+	private static boolean theme = true;
 
 	private DealerVO dVO = DealerVO.getInstance();
 
 	private Stage primaryStage;
 
+	private Parent root;
+
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
 
+	public static boolean isTheme() {
+		return theme;
+	}
+
+	public Parent getRoot() {
+		return root;
+	}
+
+	public void setRoot(Parent root) {
+		this.root = root;
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
-	}
-
-	public void menuClose(ActionEvent event) {
-		MenuController.menuClose();
-	}
-
-	public void menuConnectInfo(ActionEvent event) {
-		MenuController.menuConnectInfo();
-	}
-
-	public void menuProgramInfo(ActionEvent event) {
-		MenuController.menuProgramInfo();
+		String imageName = DataUtil.getImgPath();
+		Image localImage = new Image(imageName + "padlock.png", 100, 100, false, false);
+		imgLogin.setImage(localImage);
 	}
 
 	/**
@@ -70,21 +84,26 @@ public class LoginMainController implements Initializable {
 
 		if (txtLoginId.getText().equals(dVO.getDId()) && pwLoginPasswd.getText().equals(dVO.getDPasswd())) {
 			try {
+				String selTab = groupChoice.getSelectedToggle().getUserData().toString();
 				FXMLLoader loader = null;
 				Parent root = null;
-				
+
 				SalesMainController sController = null;
 				ManageMainController mController = null;
-				
+
 				// 라디오 버튼에 따른 창을 로드
-				if (groupChoice.getSelectedToggle().getUserData().toString().equals("salesLogin")) {
+				if (selTab.equals("salesLogin")) {
 					loader = new FXMLLoader(getClass().getResource("/view/salesMain.fxml"));
 					root = loader.load();
+					DataUtil.setTheme(root);
+
 					sController = loader.getController();
 					sController.setPrimaryStage(primaryStage);
-				} else if (groupChoice.getSelectedToggle().getUserData().toString().equals("managerLogin")) {
+				} else if (selTab.equals("managerLogin")) {
 					loader = new FXMLLoader(getClass().getResource("/view/manageMain.fxml"));
 					root = loader.load();
+					DataUtil.setTheme(root);
+
 					mController = loader.getController();
 					mController.setPrimaryStage(primaryStage);
 				}
@@ -102,7 +121,7 @@ public class LoginMainController implements Initializable {
 	}
 
 	/**
-	 * btnIdFindPopup() : 'ID & PW 찾기' Modal을 띄운다. 
+	 * btnIdFindPopup() : 'ID & PW 찾기' Modal을 띄운다.
 	 * 
 	 * @param event
 	 */
@@ -115,6 +134,7 @@ public class LoginMainController implements Initializable {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/loginSub.fxml"));
 			Parent parent = loader.load();
+			DataUtil.setTheme(parent);
 
 			LoginSubController lsController = loader.getController();
 			lsController.setDialog(dialog);
@@ -127,4 +147,27 @@ public class LoginMainController implements Initializable {
 			System.out.println("btnIdFindPopup() error = " + e.getMessage());
 		}
 	}
+
+	/**
+	 * btnChangeTheme() : 테마 변경
+	 * 
+	 * @param event
+	 */
+	public void btnChangeTheme(MouseEvent event) {
+		theme = !theme;
+		DataUtil.setTheme(root);
+	}
+
+	public void menuClose(ActionEvent event) {
+		MenuController.menuClose();
+	}
+
+	public void menuConnectInfo(ActionEvent event) {
+		MenuController.menuConnectInfo();
+	}
+
+	public void menuProgramInfo(ActionEvent event) {
+		MenuController.menuProgramInfo();
+	}
+
 }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,10 +26,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.DataUtil;
@@ -36,6 +39,8 @@ import model.ProductDAO;
 import model.ProductVO;
 
 public class ManageStockTabController implements Initializable {
+	@FXML
+	private ImageView imgStock;
 	@FXML
 	private TextField txtPNum;
 	@FXML
@@ -100,6 +105,11 @@ public class ManageStockTabController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// 아이콘 설정
+		String imageName = DataUtil.getImgPath();
+		Image localImage = new Image(imageName + "warehouse.png", 40, 40, false, false);
+		imgStock.setImage(localImage);
+		
 		// 테이블뷰의 컬럼이름이 될 필드명을 가져온다.
 		List<String> title = DataUtil.fieldName(new ProductVO());
 
@@ -267,10 +277,20 @@ public class ManageStockTabController implements Initializable {
 			fc.setInitialDirectory(new File("C:/"));
 
 			selectedFile = fc.showOpenDialog(primaryStage);
-			if (selectedFile != null) {
+
+			// 확장자명 얻기
+			String chkStr = selectedFile.getAbsolutePath();
+			chkStr = chkStr.substring(chkStr.length() - 4, chkStr.length());
+
+			// 선택한 파일 타입을 체크 후, 이미지 지정
+			if (selectedFile != null && chkStr.equals(".jpg")) {
 				txtPImg.setText(dicKey.get(cbxPSort.getValue().toString()) + "/" + selectFileName + ".jpg");
+			} else {
+				selectedFile = null;
+				DataUtil.showAlert("이미지 선택 오류", "이미지 파일을 선택해주세요.");
 			}
-		} catch (Exception e) { /* MalformedURLException */
+
+		} catch (Exception e) {
 			System.out.println("btnImgChoice() error = " + e.getMessage());
 		}
 	}
@@ -287,7 +307,7 @@ public class ManageStockTabController implements Initializable {
 
 		int data = -1;
 		String fileName = null;
-		String dir = "src/image/" + dicKey.get(cbxPSort.getValue().toString());
+		String dir = "C:\\COMP\\image\\product\\" + dicKey.get(cbxPSort.getValue().toString());
 		dirSave = new File(dir);
 
 		try {
@@ -302,7 +322,7 @@ public class ManageStockTabController implements Initializable {
 			// 이미지 파일명 생성
 			bis = new BufferedInputStream(new FileInputStream(file));
 			bos = new BufferedOutputStream(
-					new FileOutputStream(dirSave.getAbsolutePath() + "/" + selectFileName + ".jpg"));
+					new FileOutputStream(dirSave.getAbsolutePath() + "\\" + selectFileName + ".jpg"));
 
 			// 선택한 이미지 파일 InputStream의 마지막에 이르렀을 경우는 -1
 			while ((data = bis.read()) != -1) {
@@ -336,10 +356,8 @@ public class ManageStockTabController implements Initializable {
 		try {
 			// 삭제 이미지 파일
 			// getAbsolutePath() : 절대경로 표시
-			File fileDelete = new File(dirSave.getAbsolutePath() + "/" + selectFileName);
-			
-			// isDirecctory() : 경로 객체를 확인
-			// isFile() : 파일명 객체를 확인
+			File fileDelete = new File(dirSave.getAbsolutePath() + "\\" + selectFileName);
+
 			// exists() : 해당 객체(파일 || 폴더)이 존재하는지 여부를 반환
 			if (fileDelete.exists()) {
 				result = fileDelete.delete();
@@ -405,6 +423,7 @@ public class ManageStockTabController implements Initializable {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/manageStockSub.fxml"));
 			Parent parent = loader.load();
+			DataUtil.setTheme(parent);
 
 			ManageStockSubController mssController = loader.getController();
 			mssController.setPrimaryStage(primaryStage);
@@ -435,7 +454,7 @@ public class ManageStockTabController implements Initializable {
 				String pSort = imgName.substring(0, imgName.indexOf("/"));
 
 				// 이미지 경로 설정
-				dirSave = new File("src/image/" + pSort);
+				dirSave = new File("C:\\COMP\\image\\product\\" + pSort);
 				// 이미지 파일 설정
 				selectFileName = imgName.substring(imgName.indexOf("/") + 1, imgName.length());
 
@@ -498,7 +517,6 @@ public class ManageStockTabController implements Initializable {
 		txtPQty.clear();
 		txtPSearchValue.clear();
 		txtPSize.clear();
-		cbxPSort.getEditor().setEditable(true);
 		setDisable(false);
 		productTotalList();
 	}
@@ -535,13 +553,15 @@ public class ManageStockTabController implements Initializable {
 	public void setPNum(MouseEvent event) {
 		try {
 			if (cbxPSort.getValue().toString() != "") {
-				StringBuffer sb = new StringBuffer();
-				String numVal = dicKey.get(cbxPSort.getValue().toString());
-				sb.append(numVal + "_");
-				sb.append((selectFileName = pddao.getProductCount(numVal)));
-				txtPNum.setText(sb.toString());
+				if (selectedProductIndex == null) {
+					StringBuffer sb = new StringBuffer();
+					String numVal = dicKey.get(cbxPSort.getValue().toString());
+					sb.append(numVal + "_");
+					sb.append((selectFileName = pddao.getProductCount(numVal)));
+					txtPNum.setText(sb.toString());
 
-				btnImgChoice.setDisable(false);
+					btnImgChoice.setDisable(false);
+				}
 			} else {
 				DataUtil.showInfoAlert("제품 선택", "제품 구분을 먼저 선택해주세요.");
 			}
@@ -550,12 +570,12 @@ public class ManageStockTabController implements Initializable {
 			DataUtil.showInfoAlert("제품 선택", "제품 구분을 먼저 선택해주세요.");
 		}
 	}
-	
+
 	/**
 	 * setDisable() : 각 필드의 수정 여부를 설정
 	 * 
 	 * @param bool true면 수정가능, false면 수정불가
-	 */	
+	 */
 	public void setDisable(boolean bool) {
 		btnImgChoice.setDisable(!bool);
 		btnPInsert.setDisable(bool);

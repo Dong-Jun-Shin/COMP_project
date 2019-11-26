@@ -1,12 +1,14 @@
 package application;
-	
+
 import controller.LoginMainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
+import javafx.scene.image.Image;
 
 public class Main extends Application {
 	@Override
@@ -17,22 +19,24 @@ public class Main extends Application {
 
 			LoginMainController controller = loader.getController();
 			controller.setPrimaryStage(primaryStage);
+			controller.setRoot(root);
 
-			Scene scene = new Scene(root);
-//			scene.getStylesheets().add(getClass().getResource("/view/application.css").toExternalForm());
+			new JMetro(root, Style.LIGHT);
+			root.setStyle("-fx-background-color:#EFF8FF;");
 			
+			Scene scene = new Scene(root);
+
 			primaryStage.setTitle("COMP(Component Order Management Program)[Ver1.0]");
+			primaryStage.getIcons().add(new Image("/image/titleIcon.png"));
 			primaryStage.setScene(scene);
 			primaryStage.setResizable(false);
 			primaryStage.show();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("start() error = " + e.getMessage());
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
 }
-
-//TODO 화면 전환 시, 페이드 인아웃 처리, Jmetro 적용

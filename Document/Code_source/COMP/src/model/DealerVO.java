@@ -1,6 +1,5 @@
 package model;
 
-import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 
@@ -141,7 +140,8 @@ public class DealerVO implements Serializable {
 	 */
 	public void reset() {
 		// 판매업체 정보 읽기
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/properties_file/DealerVO.dat"))) {
+		
+		try (ObjectInputStream ois = new ObjectInputStream(DealerVO.class.getResourceAsStream("/properties_file/DealerVO.dat"))) {
 			while (true) {
 				instance = (DealerVO) ois.readObject();
 				// 자료가 들어갔으면 멈춘다.
@@ -151,7 +151,7 @@ public class DealerVO implements Serializable {
 					throw new Exception();
 				}
 			}
-		} catch (Exception e) {
+		} catch (Exception e) {			
 			DataUtil.showAlert("정보 읽기 실패", "정보를 읽는 중 문제가 생겼습니다.");
 		}
 	}

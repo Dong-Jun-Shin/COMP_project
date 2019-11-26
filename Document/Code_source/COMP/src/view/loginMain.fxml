@@ -9,7 +9,9 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -24,13 +26,13 @@
 			<menus>
 				<Menu mnemonicParsing="false" text="메뉴">
 					<items>
-						<MenuItem mnemonicParsing="false" text="종료" onAction="#menuClose"/>
+						<MenuItem mnemonicParsing="false" onAction="#menuClose" text="종료" />
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="정보">
 					<items>
-						<MenuItem mnemonicParsing="false" text="문의하기" onAction="#menuConnectInfo"/>
-						<MenuItem mnemonicParsing="false" text="프로그램 정보" onAction="#menuProgramInfo"/>
+						<MenuItem mnemonicParsing="false" onAction="#menuConnectInfo" text="문의하기" />
+						<MenuItem mnemonicParsing="false" onAction="#menuProgramInfo" text="프로그램 정보" />
 					</items>
 				</Menu>
 			</menus>
@@ -42,23 +44,28 @@
 				<Insets bottom="200.0" left="300.0" right="300.0" top="100.0" />
 			</BorderPane.margin>
 			<children>
-				<Label text="관리자  로그인">
-					<font>
-						<Font size="30.0" />
-					</font>
-					<VBox.margin>
-						<Insets bottom="5.0" left="5.0" />
-					</VBox.margin>
-					<padding>
-						<Insets bottom="30.0" />
-					</padding>
-				</Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <children>
+      				<Label text="Welcome On">
+      					<font>
+      						<Font size="60.0" />
+      					</font>
+      				</Label>
+                  <ImageView fx:id="imgLogin" fitHeight="94.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </HBox>
 				<HBox alignment="BOTTOM_LEFT" prefHeight="26.0" prefWidth="490.0" spacing="80.0">
 					<children>
-						<RadioButton mnemonicParsing="false" selected="true" text="판매" toggleGroup="$groupChoice" userData="salesLogin">
+						<RadioButton mnemonicParsing="false" selected="true" text="판매" userData="salesLogin">
 							<font>
 								<Font size="15.0" />
 							</font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="groupChoice" />
+                     </toggleGroup>
 						</RadioButton>
 						<RadioButton mnemonicParsing="false" text="관리" toggleGroup="$groupChoice" userData="managerLogin">
 							<font>
@@ -122,4 +129,18 @@
 			</children>
 		</VBox>
 	</center>
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <ToggleButton fx:id="themeBtn" mnemonicParsing="false" onMouseClicked="#btnChangeTheme" prefHeight="30.0" prefWidth="150.0" text="Dark / Light">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="40.0" />
+               </HBox.margin>
+            </ToggleButton>
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

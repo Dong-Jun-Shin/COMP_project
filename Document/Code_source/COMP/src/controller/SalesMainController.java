@@ -23,7 +23,7 @@ public class SalesMainController implements Initializable {
 	private SalesTradeTabController salesTradeTabController;
 
 	private Stage primaryStage;
-
+	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}

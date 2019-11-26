@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -190,6 +189,7 @@ public class SalesTradeTabController implements Initializable {
 		setList();
 		editable();
 		reset();
+		setSpineerDefaultValue();
 	}
 
 	/**
@@ -235,7 +235,7 @@ public class SalesTradeTabController implements Initializable {
 			return;
 		} else if (cdao.customerLoginOverlap(txtCId.getText())) {
 			CustomerVO cvo = cdao.getCustomerSelected("c_id", txtCId.getText()).get(0);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
+			SimpleDateFormat sdf = new SimpleDateFormat("YYMMdd");
 			String cdnumYear = sdf.format(new Date());
 			String serialNo = codao.getOrderCount(cdnumYear);
 
@@ -376,7 +376,11 @@ public class SalesTradeTabController implements Initializable {
 		for (int i = 0; i < txtPriceList.length; i++) {
 			txtPriceList[i].setText("0");
 		}
-
+		
+		for (int i = 0; i < pvoList.length; i++) {
+			pvoList[i] = null;
+		}
+		
 		txtCDNum.clear();
 		txtCId.clear();
 		txtCName.clear();
@@ -387,6 +391,7 @@ public class SalesTradeTabController implements Initializable {
 		btnIdChk.setDisable(false);
 		btnOrderInsert.setDisable(true);
 		txtTotalPrice.setText("0");
+		
 		setSpineerDefaultValue();
 	}
 
@@ -479,7 +484,7 @@ public class SalesTradeTabController implements Initializable {
 		DealerVO dvo = DealerVO.getInstance();
 		dvo.reset();
 
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("src/properties_file/DealerVO.dat"))) {
+		try (ObjectInputStream ois = new ObjectInputStream(DealerVO.class.getResourceAsStream("/properties_file/DealerVO.dat"))) {
 			dvo = (DealerVO) ois.readObject();
 			// 자료가 들어갔으면 멈춘다.
 			if (dvo != null) {
@@ -496,7 +501,7 @@ public class SalesTradeTabController implements Initializable {
 		 * ------------------- 총금액 판매자 - 계좌주, 계좌번호, 계좌 번호
 		 */
 		StringBuffer sbHead = new StringBuffer();
-		sbHead.append(txtCName.toString() + "님, 주문하신 내역입니다.");
+		sbHead.append(txtCName.getText() + "님, 주문하신 내역입니다.");
 
 		StringBuffer sbSubject = new StringBuffer();
 		sbSubject.append(dvo.getDName() + "에서 구매해주셔서 감사합니다.\n 다음은 주문해주신 내역입니다.\n");

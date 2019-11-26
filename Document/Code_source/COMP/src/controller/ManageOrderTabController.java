@@ -243,7 +243,7 @@ public class ManageOrderTabController implements Initializable {
 		sbHead.append(ccvo.getC_name() + "님, 주문취소가 완료되었습니다.");
 
 		StringBuffer sbSubject = new StringBuffer();
-		sbSubject.append(dvo.getDName() + "에서 구매해주셔서 감사합니다.\n 다음은 주문해주신 내역입니다.\n");
+		sbSubject.append(dvo.getDName() + "에서 구매하신 내역에 대해 취소되었습니다.\n 다음은 처리된 내역입니다.\n");
 		sbSubject.append("고객 정보 - " + ccvo.getC_name() + ", " + ccvo.getC_phone() + ", " + ccvo.getC_add() + "\n\n");
 		sbSubject.append("--------------------- 총금액 : " + ccvo.getCd_price() + " ---------------------\n\n");
 		sbSubject.append("입금 정보 - " + dvo.getDBName() + ", " + dvo.getDBNum() + ", " + dvo.getDBOwner() + "\n");

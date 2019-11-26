@@ -49,13 +49,13 @@ public class ManageStockSubController implements Initializable {
 
 	private ManageStockTabController mstController;
 
-	private Stage stage;
-	private Stage primaryStage;
-
 	private ObservableList<WarehouseVO> whDataList = FXCollections.observableArrayList();
 
 	private WarehouseDAO whdao = WarehouseDAO.getInstance();
 	private ProductVO pvo;
+
+	private Stage primaryStage;
+	private Stage stage;
 
 	public TextField getTxtTRNum() {
 		return txtTRNum;
@@ -69,12 +69,12 @@ public class ManageStockSubController implements Initializable {
 		this.pvo = pvo;
 	}
 
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
-
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 
 	@Override
@@ -113,6 +113,7 @@ public class ManageStockSubController implements Initializable {
 			// 팝업의 FXML 로드
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/manageWareHouseSub.fxml"));
 			Parent parent = loader.load();
+			DataUtil.setTheme(parent);
 
 			ManageWHSubController mwsController = loader.getController();
 			mwsController.setMssController(this);
@@ -240,7 +241,7 @@ public class ManageStockSubController implements Initializable {
 		sb.append(whdao.getWareHouseCount());
 		txtWHNum.setText(sb.toString());
 	}
-	
+
 	/**
 	 * setInsertBtn() : 버튼의 활성화를 제어
 	 * 

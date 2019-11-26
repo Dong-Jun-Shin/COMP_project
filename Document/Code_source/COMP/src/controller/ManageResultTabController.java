@@ -47,7 +47,8 @@ public class ManageResultTabController implements Initializable {
 			columnName.setCellValueFactory(new PropertyValueFactory<>(title.get(i)));
 		}
 		mComponentRank.setItems(rankDataList);
-
+		
+		setTheme();
 		reset();
 	}
 
@@ -56,7 +57,6 @@ public class ManageResultTabController implements Initializable {
 	 * 
 	 */
 	public void rankTotalList() {
-		// TODO 월 단위로 수정하기
 		rankDataList.removeAll(rankDataList);
 		RankVO rvo = null;
 		ArrayList<RankVO> list;
@@ -191,5 +191,21 @@ public class ManageResultTabController implements Initializable {
 		setMOrderBarChart();
 		setMSalesBarChart();
 		setYSalesLineChart();
+	}
+	
+	/**
+	 * setTheme() : 선택한 테마의 색상으로 설정
+	 */
+	private void setTheme() {
+		if(!LoginMainController.isTheme()) {
+			ySalesPieChart.setStyle("-fx-pie-fill: white;");
+			ySalesLineChart.getXAxis().setStyle("-fx-tick-label-fill : white;");
+			ySalesLineChart.getYAxis().setStyle("-fx-tick-label-fill : white;");
+			mOrderBarChart.getXAxis().setStyle("-fx-tick-label-fill : white;");
+			mOrderBarChart.getYAxis().setStyle("-fx-tick-label-fill : white;");
+			mSalesBarChart.getXAxis().setStyle("-fx-tick-label-fill : white;");
+			mSalesBarChart.getYAxis().setStyle("-fx-tick-label-fill : white;");
+		}
+		
 	}
 }

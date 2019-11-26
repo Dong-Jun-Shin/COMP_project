@@ -8,8 +8,12 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 import org.apache.log4j.Logger;
 
+import controller.LoginMainController;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 
 public class DataUtil extends NumberFormatException {
 	private static final long serialVersionUID = -598464327373022988L;
@@ -40,7 +44,7 @@ public class DataUtil extends NumberFormatException {
 	 * validityCheck() : 값 입력 체크 메소드
 	 * 
 	 * @param value 입력 대상
-	 * @param data 출력문
+	 * @param data  출력문
 	 * @return result 검사 결과
 	 */
 	public static boolean validityCheck(String value, String data) {
@@ -77,9 +81,10 @@ public class DataUtil extends NumberFormatException {
 	}
 
 	/**
-	 * valLimitCheck() : 각 자리의 데이터 범위 유효여부를 체크 (name, id, pw, phone, address, email, bNum)
+	 * valLimitCheck() : 각 자리의 데이터 범위 유효여부를 체크 (name, id, pw, phone, address, email,
+	 * bNum)
 	 * 
-	 * @param value 확인할 데이터 문자열
+	 * @param value     확인할 데이터 문자열
 	 * @param fieldName 데이터 범위의 기준 (이름, id, 전화번호...)
 	 * @return result 이상 없으면 true
 	 */
@@ -205,7 +210,7 @@ public class DataUtil extends NumberFormatException {
 		alert.setContentText(content);
 		alert.showAndWait();
 	}
-	
+
 	/**
 	 * send() : 이메일을 전송
 	 * 
@@ -251,5 +256,44 @@ public class DataUtil extends NumberFormatException {
 			result = "Failure";
 		}
 		return result;
+	}
+
+	/**
+	 * setTheme() : 선택한 테마를 적용해서 반환
+	 * 
+	 * @param root  적용할 Parent
+	 * @param theme LIGHT, DARK
+	 * @return root 적용된 Parent
+	 */
+	public static void setTheme(Parent root) {
+		if (LoginMainController.isTheme()) {
+			new JMetro(root, Style.LIGHT);
+			root.setStyle("-fx-background-color:#EFF8FF;");
+		} else {
+			new JMetro(root, Style.DARK);
+			root.setStyle("-fx-background-color:#555555;");
+		}
+	}
+	
+	/**
+	 * getImgPath() : 테마에 따른 이미지 경로를 반환한다.
+	 * 
+	 * @return 이미지 경로와 이름
+	 */
+	public static String getImgPath() {
+		// 이미지 지정
+		String localUrl = "file:C:\\COMP\\image\\Theme\\";
+		StringBuffer selectFileName = new StringBuffer();
+		selectFileName.append("light\\");
+
+		if (LoginMainController.isTheme()) {
+			selectFileName = new StringBuffer();
+			selectFileName.append("light\\");
+		} else {
+			selectFileName = new StringBuffer();
+			selectFileName.append("dark\\");
+		}
+
+		return localUrl + selectFileName.toString();
 	}
 }
