@@ -17,12 +17,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import model.CustomerDAO;
 import model.CustomerVO;
 import model.DataUtil;
 
 public class ManageCustomerTabController implements Initializable {
+	@FXML
+	private ImageView imgCustomer;
 	@FXML
 	private TextField txtCNum;
 	@FXML
@@ -61,9 +65,14 @@ public class ManageCustomerTabController implements Initializable {
 	private static ObservableList<CustomerVO> customerDataList = FXCollections.observableArrayList();
 
 	private CustomerDAO cdao = CustomerDAO.getInstance();
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// 아이콘 설정
+		String imageName = DataUtil.getImgPath();
+		Image localImage = new Image(imageName + "id_card.png", 40, 40, false, false);
+		imgCustomer.setImage(localImage);
+
 		// 테이블뷰의 컬럼이름이 될 필드명을 가져온다.
 		List<String> title = DataUtil.fieldName(new CustomerVO());
 		// 컬럼 중 pw필드를 건너띈다.
@@ -213,7 +222,7 @@ public class ManageCustomerTabController implements Initializable {
 	 */
 	public void btnCDelete(ActionEvent event) {
 		boolean success = false;
-		
+
 		try {
 			CustomerVO cvo = new CustomerVO();
 			cvo.setC_num(selectedCustomerIndex);

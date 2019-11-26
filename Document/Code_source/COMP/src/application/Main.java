@@ -40,5 +40,3 @@ public class Main extends Application {
 		launch(args);
 	}
 }
-
-//TODO 화면 전환 시, 페이드 인아웃 처리

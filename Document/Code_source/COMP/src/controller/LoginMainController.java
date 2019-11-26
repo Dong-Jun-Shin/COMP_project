@@ -41,8 +41,6 @@ public class LoginMainController implements Initializable {
 
 	private static boolean theme = true;
 
-	private StringBuffer selectFileName = new StringBuffer();
-
 	private DealerVO dVO = DealerVO.getInstance();
 
 	private Stage primaryStage;
@@ -67,7 +65,9 @@ public class LoginMainController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		imgChange();
+		String imageName = DataUtil.getImgPath();
+		Image localImage = new Image(imageName + "padlock.png", 100, 100, false, false);
+		imgLogin.setImage(localImage);
 	}
 
 	/**
@@ -156,30 +156,6 @@ public class LoginMainController implements Initializable {
 	public void btnChangeTheme(MouseEvent event) {
 		theme = !theme;
 		DataUtil.setTheme(root);
-	}
-
-	/**
-	 * imgChange() : 테마에 따른 이미지 설정
-	 * 
-	 */
-	private void imgChange() {
-		// 이미지 지정
-		String localUrl = "file:src\\image\\Theme\\";
-		selectFileName.append("light\\");
-
-		if (!themeBtn.isSelected()) {
-			selectFileName = new StringBuffer();
-			selectFileName.append("light\\");
-		} else {
-			selectFileName = new StringBuffer();
-			selectFileName.append("dark\\");
-		}
-
-		selectFileName.append("padlock.png");
-
-		Image localImage = new Image(localUrl + selectFileName.toString(), 100, 100, false, false);
-
-		imgLogin.setImage(localImage);
 	}
 
 	public void menuClose(ActionEvent event) {

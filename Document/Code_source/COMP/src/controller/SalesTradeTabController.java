@@ -190,6 +190,7 @@ public class SalesTradeTabController implements Initializable {
 		setList();
 		editable();
 		reset();
+		setSpineerDefaultValue();
 	}
 
 	/**
@@ -376,7 +377,11 @@ public class SalesTradeTabController implements Initializable {
 		for (int i = 0; i < txtPriceList.length; i++) {
 			txtPriceList[i].setText("0");
 		}
-
+		
+		for (int i = 0; i < pvoList.length; i++) {
+			pvoList[i] = null;
+		}
+		
 		txtCDNum.clear();
 		txtCId.clear();
 		txtCName.clear();
@@ -387,6 +392,7 @@ public class SalesTradeTabController implements Initializable {
 		btnIdChk.setDisable(false);
 		btnOrderInsert.setDisable(true);
 		txtTotalPrice.setText("0");
+		
 		setSpineerDefaultValue();
 	}
 

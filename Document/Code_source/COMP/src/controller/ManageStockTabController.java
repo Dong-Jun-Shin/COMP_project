@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,10 +26,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.DataUtil;
@@ -36,6 +39,8 @@ import model.ProductDAO;
 import model.ProductVO;
 
 public class ManageStockTabController implements Initializable {
+	@FXML
+	private ImageView imgStock;
 	@FXML
 	private TextField txtPNum;
 	@FXML
@@ -100,6 +105,11 @@ public class ManageStockTabController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// 아이콘 설정
+		String imageName = DataUtil.getImgPath();
+		Image localImage = new Image(imageName + "warehouse.png", 40, 40, false, false);
+		imgStock.setImage(localImage);
+		
 		// 테이블뷰의 컬럼이름이 될 필드명을 가져온다.
 		List<String> title = DataUtil.fieldName(new ProductVO());
 

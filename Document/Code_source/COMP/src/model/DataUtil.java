@@ -274,4 +274,26 @@ public class DataUtil extends NumberFormatException {
 			root.setStyle("-fx-background-color:#555555;");
 		}
 	}
+	
+	/**
+	 * getImgPath() : 테마에 따른 이미지 경로를 반환한다.
+	 * 
+	 * @return 이미지 경로와 이름
+	 */
+	public static String getImgPath() {
+		// 이미지 지정
+		String localUrl = "file:src\\image\\Theme\\";
+		StringBuffer selectFileName = new StringBuffer();
+		selectFileName.append("light\\");
+
+		if (LoginMainController.isTheme()) {
+			selectFileName = new StringBuffer();
+			selectFileName.append("light\\");
+		} else {
+			selectFileName = new StringBuffer();
+			selectFileName.append("dark\\");
+		}
+
+		return localUrl + selectFileName.toString();
+	}
 }

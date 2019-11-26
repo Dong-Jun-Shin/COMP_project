@@ -16,12 +16,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import model.DataUtil;
 import model.TraderDAO;
 import model.TraderVO;
 
 public class ManageTraderTabController implements Initializable {
+	@FXML
+	private ImageView imgTrader;
 	@FXML
 	private TextField txtTRNum;
 	@FXML
@@ -61,6 +65,11 @@ public class ManageTraderTabController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// 아이콘 설정
+		String imageName = DataUtil.getImgPath();
+		Image localImage = new Image(imageName + "id_card.png", 40, 40, false, false);
+		imgTrader.setImage(localImage);
+
 		List<String> title = DataUtil.fieldName(new TraderVO());
 
 		for (int i = 0; i < title.size(); i++) {

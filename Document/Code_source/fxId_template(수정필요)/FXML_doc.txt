@@ -4,6 +4,7 @@ TextField txtLoginId
 PasswordField pwLoginPasswd
 Button btnLogin
 Button btnIdFindPopup
+ImageView imgLogin
 ToggleButton themeBtn
 
 #salesLogin()
@@ -156,22 +157,6 @@ Button btnOrderClr
 #btnIdChk(ActionEvent event)
 #btnOrderClr(ActionEvent event)
 
--------------[manageSummary]
-Label lblLoginDate
-Label lblDId
-Label lblDName
-TextArea txtNoticeArea
-Label lblOrderDate
-Label lblOrderCount
-TableView orderSummaryView
-Button btnManageMove
-BarChart mSalesBarChart
-LineChart ySalesLineChart
-
-#orderSummaryView(MouseEvent event)
-#btnManageMove(ActionEvent event)
-
-
 -------------[manageMain]
 TabPane manageMainPane
 Tab stock
@@ -193,6 +178,7 @@ ManageTraderTabController manageTraderTabController
 
 
 -------------[manageStockTab]
+ImageView imgStock
 TextField txtPNum
 ComboBox cmbPSort
 TextField txtPName
@@ -255,6 +241,7 @@ LineChart ySalesLineChart
 
 
 -------------[manageCustomerTab]
+ImageView imgCustomer
 TextField txtCNum
 TextField txtCName
 TextField txtCId
@@ -294,6 +281,7 @@ TableView orderHistoryView
 
 
 -------------[manageMyInfoTab]
+ImageView imgMyInfo
 TextField txtDName
 TextField txtDId
 PasswordField pwDPasswd
@@ -308,6 +296,7 @@ Button btnDUpdate
 
 
 -------------[manageTraderTab]
+ImageView imgTrader
 TextField txtTRNum
 TextField txtTRName
 TextField txtTRPhone
