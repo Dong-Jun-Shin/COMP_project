@@ -53,7 +53,7 @@ public class CdOrderDAO {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT cd_num, cd_sort, cd_reg, cd_price, c_num");
 		sql.append("FROM cd_order WHERE cd_sort like '거래중' ");
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -107,7 +107,7 @@ public class CdOrderDAO {
 		sql.append("SELECT cd_num, cd_sort, cd_reg, cd_price, c_num");
 		sql.append("FROM cd_order WHERE cd_sort like '거래완료' OR cd_sort like '거래취소' ");
 		CdOrderVO cvo = null;
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -145,7 +145,7 @@ public class CdOrderDAO {
 				System.out.println("[  getHistoryOrderList()  ]    [ Closed Error ]");
 			}
 		}
-		
+
 		return list;
 	}
 
@@ -205,17 +205,17 @@ public class CdOrderDAO {
 	 */
 	public boolean cd_orderInsert(CdOrderVO covo) {
 		boolean result = false;
-		
+
 		String proc = "{call reset_seq('ch_num_seq')}";
-		
+
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO cd_order (cd_num, cd_price, c_num) ");
 		sql.append("VALUES (?, ?, ?) ");
-		
+
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		CallableStatement cstmt = null;
-		
+
 		try {
 			con = getConnection();
 			cstmt = con.prepareCall(proc);
@@ -310,18 +310,16 @@ public class CdOrderDAO {
 	 */
 	public Map<String, Integer> getChartMonthPrice() {
 		Map<String, Integer> resultMap = new HashMap<>();
+
+		String week = "TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') ";
+		String query = "SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND " + week;
 		StringBuffer sql = new StringBuffer();
-		sql.append(
-				"SELECT (SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND  TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '1') AS w1, ");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '2') AS w2, ");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '3') AS w3, ");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '4') AS w4, ");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '5') AS w5 ");
-		sql.append("FROM cd_order GROUP BY TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W')");
+		sql.append("SELECT (" + query + "= '1') AS w1, ");
+		sql.append("(" + query + "= '2') AS w2, ");
+		sql.append("(" + query + "= '3') AS w3, ");
+		sql.append("(" + query + "= '4') AS w4, ");
+		sql.append("(" + query + "= '5') AS w5 ");
+		sql.append("FROM cd_order GROUP BY " + week);
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -369,19 +367,16 @@ public class CdOrderDAO {
 	 */
 	public Map<String, Integer> getChartMonthOrder() {
 		Map<String, Integer> resultMap = new HashMap<>();
-		StringBuffer sql = new StringBuffer();
 
-		sql.append("SELECT (SELECT COUNT(DISTINCT(cd_num)) FROM cd_order ");
-		sql.append(" WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '1') AS w1, ");
-		sql.append(" (SELECT COUNT(DISTINCT(cd_num)) FROM cd_order  ");
-		sql.append(" WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '2') AS w2, ");
-		sql.append(" (SELECT COUNT(DISTINCT(cd_num)) FROM cd_order ");
-		sql.append(" WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '3') AS w3, ");
-		sql.append(" (SELECT COUNT(DISTINCT(cd_num)) FROM cd_order ");
-		sql.append(" WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '4') AS w4, ");
-		sql.append(" (SELECT COUNT(DISTINCT(cd_num)) FROM cd_order ");
-		sql.append(" WHERE cd_sort like '거래완료' AND TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') = '5') AS w5 ");
-		sql.append(" FROM cd_order GROUP BY TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W')");
+		String week = "TO_CHAR(TO_DATE(SUBSTR(cd_num,1,6),'yymmdd'),'W') ";
+		String query = "SELECT COUNT(DISTINCT(cd_num)) FROM cd_order WHERE cd_sort like '거래완료' AND " + week;
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT (" + query + "= '1') AS w1, ");
+		sql.append("(" + query + "= '2') AS w2, ");
+		sql.append("(" + query + "= '3') AS w3, ");
+		sql.append("(" + query + "= '4') AS w4, ");
+		sql.append("(" + query + "= '5') AS w5 ");
+		sql.append(" FROM cd_order GROUP BY " + week);
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -421,7 +416,70 @@ public class CdOrderDAO {
 
 		return resultMap;
 	}
+	
+	/**
+	 * getChartYearOrder() : 월별 연간 총 주문량 합산 값 리턴 메소드
+	 * 
+	 * @return Map<String, Integer> 월별 합산 값에 대한 데이터를 출력
+	 */
+	public Map<String, Integer> getChartYearOrder() {
+		Map<String, Integer> resultMap = new TreeMap<>();
 
+		String query = "SELECT COUNT(DISTINCT(cd_num)) FROM cd_order WHERE cd_sort like '거래완료' AND  SUBSTR(cd_num,3,2)";
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT (" + query + "= '01') AS m01 , ");
+		sql.append("(" + query + "= '02') AS m02 , ");
+		sql.append("(" + query + "= '03') AS m03 , ");
+		sql.append("(" + query + "= '04') AS m04 , ");
+		sql.append("(" + query + "= '05') AS m05 , ");
+		sql.append("(" + query + "= '06') AS m06 , ");
+		sql.append("(" + query + "= '07') AS m07 , ");
+		sql.append("(" + query + "= '08') AS m08 , ");
+		sql.append("(" + query + "= '09') AS m09 , ");
+		sql.append("(" + query + "= '10') AS m10 , ");
+		sql.append("(" + query + "= '11') AS m11 , ");
+		sql.append("(" + query + "= '12') AS m12 ");
+		sql.append("FROM cd_order GROUP BY SUBSTR(cd_num,1,2) ");
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ResultSetMetaData rsmd = null;
+
+		try {
+			con = getConnection();
+			pstmt = con.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			rsmd = rs.getMetaData();
+
+			if (rs.next()) {
+				for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+					resultMap.put(rsmd.getColumnName(i), rs.getInt(i));
+				}
+			}
+		} catch (SQLException sqle) {
+			System.out.println("[  getChartYearPrice()  ]    [ SQLException ]");
+		} catch (Exception e) {
+			System.out.println("[  getChartYearPrice()  ]    [ Unknown Exception ]");
+		} finally {
+			try {
+				if (con != null) {
+					con.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (Exception e) {
+				System.out.println("[  getChartYearPrice()  ]    [ Closed Error ]");
+			}
+		}
+
+		return resultMap;
+	}
+	
 	/**
 	 * getChartYearPrice() : 월별 연간 총 주문 금액 합산 값 리턴 메소드
 	 * 
@@ -429,32 +487,23 @@ public class CdOrderDAO {
 	 */
 	public Map<String, Integer> getChartYearPrice() {
 		Map<String, Integer> resultMap = new TreeMap<>();
+
+		String query = "SELECT  NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2)";
 		StringBuffer sql = new StringBuffer();
-		sql.append(
-				"SELECT (SELECT  NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '01') AS m01 , ");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '02') AS m02 ,");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '03') AS m03 ,");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '04') AS m04 ,");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '05') AS m05 ,");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '06') AS m06 ,");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '07') AS m07 ,");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '08') AS m08 ,");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '09') AS m09 ,");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '10') AS m10 ,");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '11') AS m11 , ");
-		sql.append(
-				"(SELECT NVL(SUM(cd_price),0) FROM cd_order WHERE cd_sort like '거래완료' AND SUBSTR(cd_num,3,2) = '12') AS m12 ");
+		sql.append("SELECT (" + query + "= '01') AS m01 , ");
+		sql.append("(" + query + "= '02') AS m02 , ");
+		sql.append("(" + query + "= '03') AS m03 , ");
+		sql.append("(" + query + "= '04') AS m04 , ");
+		sql.append("(" + query + "= '05') AS m05 , ");
+		sql.append("(" + query + "= '06') AS m06 , ");
+		sql.append("(" + query + "= '07') AS m07 , ");
+		sql.append("(" + query + "= '08') AS m08 , ");
+		sql.append("(" + query + "= '09') AS m09 , ");
+		sql.append("(" + query + "= '10') AS m10 , ");
+		sql.append("(" + query + "= '11') AS m11 , ");
+		sql.append("(" + query + "= '12') AS m12 ");
 		sql.append("FROM cd_order GROUP BY SUBSTR(cd_num,1,2) ");
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

@@ -348,6 +348,7 @@ public class ProductDAO {
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[  productDelete(ProductVO pvo)  ] [  SQLException  ]");
+			DataUtil.showAlert("삭제 결과", "주문 내역이나 입고 내역이 있는 제품은 삭제할 수 없습니다.");
 		} catch (Exception e) {
 			System.out.println("[  productDelete(ProductVO pvo)  ] [  Exception  ]");
 		} finally {

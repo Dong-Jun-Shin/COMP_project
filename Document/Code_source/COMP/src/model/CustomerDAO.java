@@ -380,6 +380,7 @@ public class CustomerDAO {
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[  CustomerDelete(CustomerVO cvo)  ] [  SQLException  ]");
+			DataUtil.showAlert("삭제 결과", "주문 내역이 있는 고객은 삭제할 수 없습니다.");
 		} catch (Exception e) {
 			System.out.println("[  CustomerDelete(CustomerVO cvo)  ] [  Exception  ]");
 		} finally {

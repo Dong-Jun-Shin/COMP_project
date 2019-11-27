@@ -93,7 +93,7 @@ public class ManageResultTabController implements Initializable {
 	 * 
 	 */
 	public void setYSalesPieChart() {
-		Map<String, Integer> resultMap = codao.getChartYearPrice();
+		Map<String, Integer> resultMap = codao.getChartYearOrder();
 		ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
 		for (Map.Entry<String, Integer> result : resultMap.entrySet()) {

@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -47,7 +48,7 @@ public class ManageMyInfoTabController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//아이콘 설정
+		// 아이콘 설정
 		String imageName = DataUtil.getImgPath();
 		Image localImage = new Image(imageName + "d_id_card.png", 40, 40, false, false);
 		imgMyInfo.setImage(localImage);
@@ -108,13 +109,15 @@ public class ManageMyInfoTabController implements Initializable {
 
 			// 판매없체의 정보를 파일로 쓰기
 			try (ObjectOutputStream oos = new ObjectOutputStream(
-					new FileOutputStream("/properties_file/DealerVO.dat"))) {
+					new FileOutputStream(new File("C:\\COMP\\data\\DealerVO.dat")))) {
 				// 판매업체 정보 쓰기
 				oos.writeObject(dvo);
 				pwDPasswd.clear();
 				DataUtil.showInfoAlert("정보 변경 성공", "변경된 정보가 적용되었습니다.");
 			} catch (IOException io) {
 				System.out.println("btnDUpdate() error = " + io.getMessage());
+			} catch (Exception e) {
+				System.out.println("btnDUpdate() error = " + e.getMessage());
 			}
 		} else {
 			DataUtil.showAlert("정보 변경 실패", "비밀번호가 일치하지 않습니다.");

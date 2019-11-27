@@ -329,6 +329,7 @@ public class TraderDAO {
 			}
 		} catch (SQLException sqle) {
 			System.out.println("[   traderDelete(TraderVO cvo)  ] [  SQLException  ]");
+			DataUtil.showAlert("삭제 결과", "입고 내역이 있는 거래처는 삭제할 수 없습니다.");
 		} catch (Exception e) {
 			System.out.println("[   traderDelete(TraderVO cvo)  ] [  Exception  ]");
 		} finally {
