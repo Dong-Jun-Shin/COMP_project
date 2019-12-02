@@ -245,6 +245,7 @@ ImageView imgCustomer
 TextField txtCNum
 TextField txtCName
 TextField txtCId
+Button idCheck
 PasswordField pwCPasswd
 TextField txtCPhone
 TextField txtCAddress
@@ -259,6 +260,7 @@ TextField txtCSearchValue
 Button btnCSearch
 TableView customerTableView
 
+#btnIdCheck(ActionEvent event)
 #btnCInsert(ActionEvent event)
 #btnCUpdate(ActionEvent event)
 #btnCDelete(ActionEvent event)

@@ -48,11 +48,21 @@
 				</VBox>
 				<VBox alignment="BOTTOM_CENTER" prefHeight="150.0" prefWidth="100.0" spacing="20.0">
 					<children>
-						<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
+						<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0">
 							<children>
-								<Label alignment="CENTER" prefWidth="60.0" text="고객명" />
-								<TextField fx:id="txtCName" onMouseClicked="#setCNum" prefWidth="160.0" />
+								<Label alignment="CENTER" prefWidth="60.0" text="고객명">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin></Label>
+								<TextField fx:id="txtCName" onMouseClicked="#setCNum" prefWidth="160.0">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin></TextField>
+                        <Button fx:id="btnIdCheck" mnemonicParsing="false" onAction="#btnIdCheck" prefWidth="60.0" text="ID체크" />
 							</children>
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding>
 						</HBox>
 						<HBox alignment="CENTER" prefHeight="30.0" prefWidth="280.0" spacing="20.0">
 							<children>

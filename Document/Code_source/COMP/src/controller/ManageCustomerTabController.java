@@ -34,6 +34,8 @@ public class ManageCustomerTabController implements Initializable {
 	@FXML
 	private TextField txtCId;
 	@FXML
+	private Button btnIdCheck;
+	@FXML
 	private PasswordField pwCPasswd;
 	@FXML
 	private TextField txtCPhone;
@@ -107,6 +109,24 @@ public class ManageCustomerTabController implements Initializable {
 		txtCNum.setText(sb.toString());
 	}
 
+	/**
+	 * btnIdCheck() : 고객 입력 시, 아이디 체크를 활성화한다.
+	 *  
+	 * @param event
+	 */
+	public void btnIdCheck(ActionEvent event) {
+		//일치하는게 있으면 True, 없으면 False
+		boolean success = cdao.customerLoginOverlap(txtCId.getText());
+		
+		if(!success) {
+			DataUtil.showInfoAlert("ID 체크", "사용 가능한 ID입니다.");
+			btnIdCheck.setDisable(true);
+			btnCInsert.setDisable(false);
+		}else {
+			DataUtil.showAlert("ID 체크", "이미 사용중인 ID입니다.");
+		}
+	}
+	
 	/**
 	 * btnCInsert() : 새로운 고객을 입력한다.
 	 * 
@@ -393,7 +413,8 @@ public class ManageCustomerTabController implements Initializable {
 	 * @param bool true면 등록 활성화, false면 수정과 삭제 활성화
 	 */
 	private void setInsertBtn(boolean bool) {
-		btnCInsert.setDisable(!bool);
+		btnIdCheck.setDisable(!bool);
+		btnCInsert.setDisable(bool);
 		btnCUpdate.setDisable(bool);
 		btnCDelete.setDisable(bool);
 	}
