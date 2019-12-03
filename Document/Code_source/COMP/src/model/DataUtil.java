@@ -142,6 +142,9 @@ public class DataUtil extends NumberFormatException {
 		} catch (NumberFormatException nfe) {
 			DataUtil.showAlert("날짜 입력 오류", "날짜를 'YYYY-MM-DD'의 형식으로 쓰고, 년월일의 범위 안으로 입력해주세요.\n월(1~12), 일(1~31)");
 			return null;
+		} catch (StringIndexOutOfBoundsException stre) {
+			DataUtil.showAlert("날짜 입력 오류", "날짜를 'YYYY-MM-DD'의 형식으로 쓰고, 년월일의 범위 안으로 입력해주세요.\n월(1~12), 일(1~31)");
+			return null;
 		}
 
 		return sb;

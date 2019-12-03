@@ -120,6 +120,7 @@ public class ManageCustomerTabController implements Initializable {
 		
 		if(!success) {
 			DataUtil.showInfoAlert("ID 체크", "사용 가능한 ID입니다.");
+			txtCId.setEditable(false);
 			btnIdCheck.setDisable(true);
 			btnCInsert.setDisable(false);
 		}else {
