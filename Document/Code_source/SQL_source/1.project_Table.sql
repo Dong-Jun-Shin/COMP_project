@@ -86,7 +86,6 @@ CREATE TABLE order_chart
 	ch_qty               NUMBER DEFAULT  0  NOT NULL ,
 	cd_num               VARCHAR2(10) NOT NULL ,
 
-	CONSTRAINT  CH_NUM_PK PRIMARY KEY (ch_num),
 	CONSTRAINT R_16 FOREIGN KEY (cd_num) REFERENCES CD_ORDER (cd_num),
 	CONSTRAINT R_18 FOREIGN KEY (p_num) REFERENCES PRODUCT (p_num)
 );
