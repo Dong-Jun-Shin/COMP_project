@@ -9,6 +9,6 @@ Java, Oracle DB / Eclipse, SQLdeveloper, JavaFX, SceneBuilder
 -참여인원 : 조수한(suhan-cho), 신동준(Dongjun-Shin)
 
 
--파일 설명 <br />
+-파일 설명
  <br />  .Document - 각종 문서 소스, 코드 소스, 참고 자료
  <br />  .ReadMe - 실행파일(결과물), PPT문서(문서 내용 정리)
